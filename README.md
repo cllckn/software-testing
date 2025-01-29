@@ -15,6 +15,7 @@ By the end of this course, students will be able to:
 
 ## Course Content
 The course will cover the following topics:
+
 ### Module 1: Introduction to Software Testing
     What is software testing?
     Importance of testing in software development.
