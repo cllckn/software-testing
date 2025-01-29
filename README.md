@@ -54,9 +54,12 @@ The course will cover the following topics:
     Organizing test suites.
     Debugging failing tests.
 
+### Evaluation Method
+?
+
 ### Course Policies
-    Attendance: Regular attendance is mandatory. More than 3 unexcused absences may result in a grade penalty.
-    Late Submissions: Assignments submitted late will incur a 10% penalty per day.
+    Attendance: ?
+    Late Submissions: ?
     Academic Integrity: Plagiarism or cheating will result in disciplinary action as per university policy.
     Communication: All course-related communication will be done via the university’s learning management system (LMS) or instructor’s e-mail. Check your university email regularly for updates and announcements.
 
