@@ -68,7 +68,7 @@ The course will cover the following topics:
     JUnit (IntelliJ IDEA -> Preferences -> JUnit )
     HTTP Client JUnit (IntelliJ IDEA -> Preferences -> HTTP Client )
     Cypress (https://www.cypress.io/)
-    Node.js (https://nodejs.org/en/download) (IntelliJ IDEA -> Preferences -> JUnit )
+    Node.js (https://nodejs.org/en/download) (IntelliJ IDEA -> Preferences -> Node.js )
     Postman (optional).
 
 ### Resources
