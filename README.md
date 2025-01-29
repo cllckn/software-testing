@@ -40,17 +40,16 @@ The course will cover the following topics:
     Developing RESTful endpoints using NodeJS
     Introduction to IntelliJ HTTP Client.
     Writing and executing API tests.
-### Module 5: Advanced API Testing
     Testing different HTTP methods: GET, POST, PUT, DELETE.
     Validating response status codes and JSON payloads.
-### Module 6: Introduction to Web Testing
+### Module 5: Introduction to Web Testing
     What is end-to-end testing?
     Overview of Cypress.
     Writing your first Cypress test.
-### Module 7: Integration Testing
+### Module 6: Integration Testing And Test Automation Best Practices
     What is integration testing?
     Writing integration tests with JUnit.
-    Module 8: Test Automation Best Practices
+    Test Automation Best Practices
     Writing maintainable and reusable test cases.
     Organizing test suites.
     Debugging failing tests.
@@ -64,14 +63,21 @@ The course will cover the following topics:
     Academic Integrity: Plagiarism or cheating will result in disciplinary action as per university policy.
     Communication: All course-related communication will be done via the university’s learning management system (LMS) or instructor’s e-mail. Check your university email regularly for updates and announcements.
 
+### Tools:
+    IntelliJ IDEA Ultimate  (https://www.jetbrains.com/idea/download)
+    JUnit (IntelliJ IDEA -> Preferences -> JUnit )
+    HTTP Client JUnit (IntelliJ IDEA -> Preferences -> HTTP Client )
+    Cypress (https://www.cypress.io/)
+    Node.js (https://nodejs.org/en/download) (IntelliJ IDEA -> Preferences -> JUnit )
+    Postman (optional).
+
 ### Resources
     Main:
     https://github.com/cllckn/software-testing
     Textbooks:
     "Foundations of Software Testing" by Dorothy Graham, Rex Black, and Erik van Veenendaal.
     "Software Testing and Continuous Quality Improvement" by William Lewis.
-    Tools:
-    JUnit, Cypress, IntelliJ IDEA (HTTP Client), Node.js, Postman (optional).
+    
     Online Resources:
     JUnit official documentation.
     Cypress official documentation.
