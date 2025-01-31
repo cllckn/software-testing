@@ -6,6 +6,17 @@
 
 ## Node.js (https://nodejs.org/en/download) (IntelliJ IDEA -> Preferences -> Node.js )
 
+* Initialize a Node.js project
+      mkdir hello-world-app &&
+      cd hello-world-app
+      npm init -y
+
+* Make an hello-world.js file and write the following code:
+      console.log('Hello world.');
+      
+* Run the app:
+      node hello-world.js
+  
 ## Cypress (https://www.cypress.io/)
 
 ## Postman (optional).
