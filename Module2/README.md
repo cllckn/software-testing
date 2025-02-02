@@ -14,7 +14,49 @@ Unit testing is the process of testing individual components (or "units") of a s
     Acts as documentation for how the code is supposed to behave.
 
 ## Writing Your First Unit Test with JUnit
-Let’s write a simple unit test for the following Java Product class:
+Let’s write a simple unit test for the Java Product class given below.
+
+* Initialize a new Java project in IntelliJ with Maven support.
+* Add the following JUnit libraries into the pom.xml file located in the root folder of the project.
+    ~~~xml
+  <dependencies>
+         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- For Parameterized Tests (@ParameterizedTest, @CsvSource) -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- JUnit Platform Suite (for @Suite and @SelectClasses) -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-api</artifactId>
+            <version>1.10.0</version> <!-- Use the latest version -->
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-engine</artifactId>
+            <version>1.10.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+  ~~~
+* Add the Product and ProductMain classes in the project.
 ~~~java
 public class Product {
     private int id;
@@ -41,6 +83,16 @@ public class Product {
     }
 
     // Other getters and setters...
+
+    @Override
+    public String toString() {
+        return "st.module1.Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", stock=" + stock +
+                '}';
+    }
 }
 ~~~
 ~~~java
@@ -52,13 +104,14 @@ public class ProductMain {
 }
 ~~~
 
-The following is an example of a test case for the reduceStock method:
+* Write a unit test for the reduceStock method in the Product class.
 ~~~java
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 public class ProductTest {
 
+    // Test case
     @Test
     public void testReduceStock() {
         // Arrange
@@ -74,17 +127,29 @@ public class ProductTest {
 
 ~~~
 
-## Test Cases, Assertions, and Test Suites
-### Test Case: A single scenario to test a specific behavior of a method.
-    
-    In a test case there are 3 divisions:
-    
-      Arrange: Set up the initial conditions (initialize a Product object with 10 units in stock).
-    
-      Act: Perform the action to test (reduce stock by 3).
-      
-      Assert: Verify the result (stock should now be 7).
+## Test Cases, Assertions, Parameterized Tests and Test Suites
+### Test Case
 
+A test case is a single scenario that tests a specific behavior or functionality of a unit (e.g., a method or class).
+It typically consists of:
+
+    Input: The data or conditions provided to the unit.
+    
+    Execution: The action or method being tested.
+    
+    Expected Output: The result or behavior that should occur.
+    
+    Assertion: A check to verify that the actual output matches the expected output.
+
+In a test case there are 3 divisions:
+    
+    Arrange: Set up the initial conditions (initialize a Product object with 10 units in stock).
+    
+    Act: Perform the action to test (reduce stock by 3).
+      
+    Assert: Verify the result (stock should now be 7).
+
+testReduceStock() function in the code given above is a test case.
 
 ### Assertions: Used to verify that the actual output matches the expected output. The followings are JUnit assertions:
 
@@ -136,7 +201,7 @@ public class ProductTest1 {
     @Test
     public void testReduceStockThrowsException() {
         Product product = new Product(1, "Laptop", 1000.0, 5);
-        assertThrows(IllegalArgumentException.class, () -> product.reduceStock(8));
+        assertThrows(IllegalArgumentException.class, () -> product.reduceStock(8), "Reducing more stock than available throws an exception");
     }
 
     @Test
@@ -154,8 +219,56 @@ public class ProductTest1 {
 ~~~
 
 
+###  Parameterized Tests
+Parameterized tests allow test developer to run the same test with different inputs. 
+This is useful for testing multiple scenarios without writing redundant code.
 
+~~~java
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+public class ProductParameterizedTest {
+
+    @ParameterizedTest //Marks the method as a parameterized test.
+    @CsvSource({        // Provides a list of comma-separated values as input parameters.
+        "10, 3, 7",  // Initial stock: 10, reduce by 3, expected stock: 7
+        "5, 5, 0",   // Initial stock: 5, reduce by 5, expected stock: 0
+        "8, 0, 8"    // Initial stock: 8, reduce by 0, expected stock: 8
+    })
+    public void testReduceStock(int initialStock, int reduceAmount, int expectedStock) {
+        // Arrange
+        Product product = new Product(1, "Laptop", 999.99, initialStock);
+
+        // Act
+        product.reduceStock(reduceAmount);
+
+        // Assert
+        assertEquals(expectedStock, product.getStock(), "Stock reduction failed");
+    }
+}
+~~~
 ### Test Suite: A collection of test cases grouped together.
+
+A test suite is a collection of test cases grouped together for execution. It allows test developer to run multiple tests as a single unit. Test suites are useful for:
+
+    Organizing related tests (e.g., all tests for a specific class or module).
+    
+    Running tests in a specific order (if needed).
+    
+    Simplifying test execution (e.g., running all tests with a single command).
+
+
+~~~java
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
+
+@Suite
+@SelectClasses({ProductTest.class, ProductParameterizedTest.class})
+public class ProductTestSuite {
+    // This class is a container for the test suite.
+}
+~~~
+
 
 
 ## JUnit Annotations
@@ -241,7 +354,16 @@ public class ProductTest2 {
 
 
 
+## Best Practices
+Separating source code and test code is a widely followed convention in software development.
 
+    Better Organization – Keeps the main application code and tests structured.
+    Easier Maintenance – Helps developers focus on either implementation or testing.
+    Prevents Accidental Inclusion – Ensures test code isn’t bundled into the final build.
+    Follows Industry Best Practices – Used in frameworks like Maven, Gradle, and IntelliJ IDEA.
+
+
+## Exercises
 
 
 
