@@ -55,13 +55,31 @@ The course will cover the following topics:
     Debugging failing tests.
 
 ### Evaluation Method
-?
+
+Students will be evaluated based on the following components:  
+
+| **Component**                  | **Weight** |
+|--------------------------------|-----------|
+| Assignment 1 & Oral Examination | 25%       |
+| Assignment 2 & Oral Examination | 25%       |
+| Final Project & Oral Examination | 50%       |
+
+## Assignments and Exams Schedule  
+
+| **Assignment**   | **Release Date** | **Due Date**  |
+|-----------------|-----------------|--------------|
+| Assignment 1   | TBA              | Week 6       |
+| Assignment 2   | TBA              | Week 10      |
+| Final Project  | TBA              | Week 14      |
+
 
 ### Course Policies
-    Attendance: ?
-    Late Submissions: ?
-    Academic Integrity: Plagiarism or cheating will result in disciplinary action as per university policy.
-    Communication: All course-related communication will be done via the university’s learning management system (LMS) or instructor’s e-mail. Check your university email regularly for updates and announcements.
+
+- **Attendance:** Regular attendance is **mandatory**. More than **three unexcused absences** may result in a **grade penalty**.  
+- **Late Submissions & Defense:** Submission policies, penalties, and defense requirements will be **detailed in assignment documents**.  
+- **Academic Integrity:** Any form of **plagiarism or cheating** will result in **disciplinary action** as per **university policy**.  
+- **Communication:** All course-related communication will take place via the **university’s Learning Management System (LMS)** or the **instructor’s email** (`cceken@ku.edu.kz`). Students are expected to **check their university email regularly** for updates and announcements.  
+
 
 ### Tools:
     IntelliJ IDEA Ultimate  (https://www.jetbrains.com/idea/download)
