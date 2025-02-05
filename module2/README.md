@@ -81,8 +81,21 @@ public class Product {
     public int getStock() {
         return stock;
     }
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-    // Other getters and setters...
+    public double getPrice() {
+        return price;
+    }
+
+     public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     @Override
     public String toString() {
