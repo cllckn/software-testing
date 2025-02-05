@@ -34,10 +34,7 @@ Implement a method to apply a discount to the product’s price (a percentage or
 
 Implement validation to ensure the product has a valid price (e.g., it should not be negative).
 
-
-
-
-
+---
 
 ## Hands-on Exercise2: Implementing an Order Class and Writing Unit Tests
 ### Objective:
