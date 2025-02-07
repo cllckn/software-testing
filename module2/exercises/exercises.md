@@ -72,3 +72,47 @@ These tasks are for students to implement at home:
     Implement a method to add multiple items to an order and update the total price accordingly.
     Implement validation to ensure the order is valid before applying any discounts or taxes (e.g., check if the totalAmount is positive).
 
+
+
+---
+
+
+# **Hands-on Exercise3: Implementing Parameterized Tests in JUnit**
+
+## **Objective**
+This exercise will help you:
+- Implement **parameterized tests** using JUnit.
+- Modify the source code to introduce a bug and observe how it affects test results.
+
+
+
+## **Task 1: Convert a Test to Use Parameterized Tests**
+Modify the existing `testApplyValidDiscount` method to use **JUnit parameterized tests**.
+
+1. Use `@ParameterizedTest` and `@CsvSource` to test multiple discount scenarios.
+2. Ensure the test checks if valid discounts correctly reduce the total amount.
+
+
+## **Task 2: Modify the `Order` Class to Introduce a Bug**
+Modify the `applyDiscount` method to **intentionally introduce a faulty calculation**.
+
+1. Change the discount application logic so that it does **not correctly deduct** the full discount.
+
+
+## **Task 3: Fix the Bug and Re-run the Tests**
+1. Correct the bug in the `applyDiscount` method.
+2. Re-run the parameterized test.
+3. Ensure all test cases pass.
+
+
+### Additional Challenges (Optional)
+
+These tasks are for students to implement at home:
+
+
+Extend the parameterized test to include **boundary values**, such as:
+- A discount equal to the total amount.
+- A discount of `0` (no reduction).
+- A discount slightly greater than the total amount.
+
+
