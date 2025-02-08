@@ -26,13 +26,16 @@ The course will cover the following topics:
 ### Module 2: Introduction to Unit Testing
     What is unit testing?
     Writing your first unit test with JUnit.
-    Test cases, assertions, and test suites.
-    JUnit annotations: @Test, @Before, @After, @BeforeClass, @AfterClass.
-    Assertions: assertEquals, assertTrue, assertFalse, etc.
+    Test cases, assertions, annotations.
     Parameterized tests.
+    Test Suit.
+    Generating test report.
+    Hands-on exercises.
+
 ### Module 3: Test-Driven Development (TDD)
     What is TDD?
     Red-Green-Refactor cycle.
+    Hands-on exercises.
 ### Module 4: Testing REST APIs
     What is a REST API?
     HTTP methods: GET, POST, PUT, DELETE.
@@ -42,10 +45,12 @@ The course will cover the following topics:
     Writing and executing API tests.
     Testing different HTTP methods: GET, POST, PUT, DELETE.
     Validating response status codes and JSON payloads.
+    Hands-on exercises.
 ### Module 5: Introduction to Web Testing
     What is end-to-end testing?
     Overview of Cypress.
     Writing your first Cypress test.
+    Hands-on exercises.
 ### Module 6: Integration Testing And Test Automation Best Practices
     What is integration testing?
     Writing integration tests with JUnit.
@@ -53,6 +58,7 @@ The course will cover the following topics:
     Writing maintainable and reusable test cases.
     Organizing test suites.
     Debugging failing tests.
+    Hands-on exercises.
 
 ### Evaluation Method
 
