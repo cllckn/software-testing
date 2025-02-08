@@ -16,49 +16,52 @@ By the end of this course, students will be able to:
 ## Course Content
 The course will cover the following topics:
 
-### Module 1: Introduction to Software Testing
-    What is software testing?
-    Importance of testing in software development.
-    Types of testing: Unit, Integration, System, and Acceptance Testing.
-    Overview of testing tools: JUnit, Cypress, IntelliJ HTTP Client.
-    Setting Up the Environment
+### Module 1: Introduction To Software Testing  
+- What Is Software Testing  
+- Importance Of Testing In Software Development  
+- Types Of Testing: Unit, Integration, System, And Acceptance Testing  
+- Overview Of Testing Tools: JUnit, Cypress, IntelliJ HTTP Client  
+- Setting Up The Environment  
 
-### Module 2: Introduction to Unit Testing
-    What is unit testing?
-    Writing your first unit test with JUnit.
-    Test cases, assertions, annotations.
-    Parameterized tests.
-    Test Suit.
-    Generating test report.
-    Hands-on exercises.
+### Module 2: Introduction To Unit Testing  
+- What Is Unit Testing  
+- Writing Your First Unit Test With JUnit  
+- Test Cases, Assertions, Annotations  
+- Parameterized Tests  
+- Test Suit  
+- Generating Test Report  
+- Hands-On Exercises  
 
-### Module 3: Test-Driven Development (TDD)
-    What is TDD?
-    Red-Green-Refactor cycle.
-    Hands-on exercises.
-### Module 4: Testing REST APIs
-    What is a REST API?
-    HTTP methods: GET, POST, PUT, DELETE.
-    Status codes and response formats (JSON, XML).
-    Developing RESTful endpoints using NodeJS
-    Introduction to IntelliJ HTTP Client.
-    Writing and executing API tests.
-    Testing different HTTP methods: GET, POST, PUT, DELETE.
-    Validating response status codes and JSON payloads.
-    Hands-on exercises.
-### Module 5: Introduction to Web Testing
-    What is end-to-end testing?
-    Overview of Cypress.
-    Writing your first Cypress test.
-    Hands-on exercises.
-### Module 6: Integration Testing And Test Automation Best Practices
-    What is integration testing?
-    Writing integration tests with JUnit.
-    Test Automation Best Practices
-    Writing maintainable and reusable test cases.
-    Organizing test suites.
-    Debugging failing tests.
-    Hands-on exercises.
+### Module 3: Test-Driven Development (TDD)  
+- What Is TDD  
+- Red-Green-Refactor Cycle  
+- Hands-On Exercises  
+
+### Module 4: Testing REST APIs  
+- What Is A REST API  
+- HTTP Methods: GET, POST, PUT, DELETE  
+- Status Codes And Response Formats (JSON, XML)  
+- Developing RESTful Endpoints Using NodeJS  
+- Introduction To IntelliJ HTTP Client  
+- Writing And Executing API Tests  
+- Testing Different HTTP Methods: GET, POST, PUT, DELETE  
+- Validating Response Status Codes And JSON Payloads  
+- Hands-On Exercises  
+
+### Module 5: Introduction To Web Testing  
+- What Is End-To-End Testing  
+- Overview Of Cypress  
+- Writing Your First Cypress Test  
+- Hands-On Exercises  
+
+### Module 6: Integration Testing And Test Automation Best Practices  
+- What Is Integration Testing  
+- Writing Integration Tests With JUnit  
+- Test Automation Best Practices  
+- Writing Maintainable And Reusable Test Cases  
+- Organizing Test Suites  
+- Debugging Failing Tests  
+- Hands-On Exercises  
 
 ### Evaluation Method
 
