@@ -14,9 +14,9 @@ Unit testing is the process of testing individual components (or "units") of a s
     Acts as documentation for how the code is supposed to behave.
 
 ## Writing Your First Unit Test with JUnit
-Let’s write a simple unit test for the Java Product class given below.
+Writing a simple unit test for the Java Product class given below.
 
-* Initialize a new Java project in IntelliJ with Maven support.
+* Initialize a new Java project in IntelliJ with Maven (package manager) support.
 * Add the following JUnit libraries into the pom.xml file located in the root folder of the project.
     ~~~xml
   <dependencies>
@@ -56,7 +56,7 @@ Let’s write a simple unit test for the Java Product class given below.
         </dependency>
     </dependencies>
   ~~~
-* Add the Product and ProductMain classes in the project.
+* Add the following Product and ProductMain classes in the project.
 ~~~java
 public class Product {
     private int id;
@@ -140,7 +140,7 @@ public class ProductTest {
 
 ~~~
 
-## Test Cases, Assertions, Parameterized Tests and Test Suites
+## Test Cases, Assertions, Annotations
 ### Test Case
 
 A test case is a single scenario that tests a specific behavior or functionality of a unit (e.g., a method or class).
@@ -164,7 +164,8 @@ In a test case there are 3 divisions:
 
 testReduceStock() function in the code given above is a test case.
 
-### Assertions: Used to verify that the actual output matches the expected output. The followings are JUnit assertions:
+### Assertions 
+Used to verify that the actual output matches the expected output. The followings are JUnit assertions:
 
 | Assertion                          | Description                                  |
 |------------------------------------|----------------------------------------------|
@@ -176,7 +177,7 @@ testReduceStock() function in the code given above is a test case.
 | `assertAll("message", () -> {...})`           | Groups multiple assertions together; fails if any assertion fails. It can group multiple assertions, making it easier to test related conditions in one block. |
 
 
-Here’s a complete example that combines all the assertions:
+A complete example that combines all the assertions:
 
 ~~~java
 import static org.junit.jupiter.api.Assertions.*;
@@ -232,59 +233,7 @@ public class ProductTest1 {
 ~~~
 
 
-###  Parameterized Tests
-Parameterized tests allow test developer to run the same test with different inputs. 
-This is useful for testing multiple scenarios without writing redundant code.
-
-~~~java
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-
-public class ProductParameterizedTest {
-
-    @ParameterizedTest //Marks the method as a parameterized test.
-    @CsvSource({        // Provides a list of comma-separated values as input parameters.
-        "10, 3, 7",  // Initial stock: 10, reduce by 3, expected stock: 7
-        "5, 5, 0",   // Initial stock: 5, reduce by 5, expected stock: 0
-        "8, 0, 8"    // Initial stock: 8, reduce by 0, expected stock: 8
-    })
-    public void testReduceStock(int initialStock, int reduceAmount, int expectedStock) {
-        // Arrange
-        Product product = new Product(1, "Laptop", 999.99, initialStock);
-
-        // Act
-        product.reduceStock(reduceAmount);
-
-        // Assert
-        assertEquals(expectedStock, product.getStock(), "Stock reduction failed");
-    }
-}
-~~~
-### Test Suite: A collection of test cases grouped together.
-
-A test suite is a collection of test cases grouped together for execution. It allows test developer to run multiple tests as a single unit. Test suites are useful for:
-
-    Organizing related tests (e.g., all tests for a specific class or module).
-    
-    Running tests in a specific order (if needed).
-    
-    Simplifying test execution (e.g., running all tests with a single command).
-
-
-~~~java
-import org.junit.platform.suite.api.SelectClasses;
-import org.junit.platform.suite.api.Suite;
-
-@Suite
-@SelectClasses({ProductTest.class, ProductParameterizedTest.class})
-public class ProductTestSuite {
-    // This class is a container for the test suite.
-}
-~~~
-
-
-
-## JUnit Annotations
+### JUnit Annotations
 
 JUnit uses annotations to define test methods and setup/teardown methods. Here are the most common annotations:
 
@@ -296,22 +245,24 @@ JUnit uses annotations to define test methods and setup/teardown methods. Here a
 | `@BeforeAll`  | Runs once before all tests (e.g., database setup). |
 | `@AfterAll`   | Runs once after all tests (e.g., closing resources). |
 
-### @Test Annotation
+**@Test**
 The @Test annotation marks a method as a test case. JUnit will execute all methods annotated with @Test.
 
-### @Before and @After Annotations
+**@Before and @After**
+
 @Before: Methods annotated with @Before run before each test method. Use this to set up common test data or initialize objects.
 
 @After: Methods annotated with @After run after each test method. Use this to clean up resources or reset states.
 
 
-### @BeforeClass and @AfterClass Annotations
+**@BeforeClass and @AfterClass**
+
 @BeforeClass: Methods annotated with @BeforeClass run once before all test methods in the class. Use this for expensive setup operations (e.g., database connections).
 
 @AfterClass: Methods annotated with @AfterClass run once after all test methods in the class. Use this for cleanup operations.
 
 
-Here’s a complete example that combines all the annotations:
+A complete example that combines all the annotations:
 
 ~~~java
 import static org.junit.jupiter.api.Assertions.*;
@@ -365,6 +316,77 @@ public class ProductTest2 {
 ~~~
 
 
+
+
+##  Parameterized Tests
+Parameterized tests allow test developer to run the same test with different inputs. 
+This is useful for testing multiple scenarios without writing redundant code.
+
+~~~java
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+public class ProductParameterizedTest {
+
+    @ParameterizedTest //Marks the method as a parameterized test.
+    @CsvSource({        // Provides a list of comma-separated values as input parameters.
+        "10, 3, 7",  // Initial stock: 10, reduce by 3, expected stock: 7
+        "5, 5, 0",   // Initial stock: 5, reduce by 5, expected stock: 0
+        "8, 0, 8"    // Initial stock: 8, reduce by 0, expected stock: 8
+    })
+    public void testReduceStock(int initialStock, int reduceAmount, int expectedStock) {
+        // Arrange
+        Product product = new Product(1, "Laptop", 999.99, initialStock);
+
+        // Act
+        product.reduceStock(reduceAmount);
+
+        // Assert
+        assertEquals(expectedStock, product.getStock(), "Stock reduction failed");
+    }
+}
+~~~
+## Test Suite:
+
+A test suite is a collection of test cases grouped together for execution. It allows test developer to run multiple tests as a single unit. Test suites are useful for:
+
+    Organizing related tests (e.g., all tests for a specific class or module).
+    
+    Running tests in a specific order (if needed).
+    
+    Simplifying test execution (e.g., running all tests with a single command).
+
+
+~~~java
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
+
+@Suite
+@SelectClasses({ProductTest.class, ProductParameterizedTest.class})
+public class ProductTestSuite {
+    // This class is a container for the test suite.
+}
+~~~
+
+## Generating Test Reports
+
+Test reports provide a structured summary of test execution, highlighting passed, failed, and skipped tests. They help identify failures, analyze errors with stack traces, and track test stability over time. Reports improve collaboration by allowing teams to share results. They also serve as documentation for compliance, audit purposes, and performance analysis by measuring test execution times. Running mvn surefire-report:report generates a detailed HTML report, making it easier to monitor software quality and debug issues efficiently.
+
+
+## **1. Run All Tests**
+
+To execute all test cases in the project, use:  
+
+```sh
+# run all the test
+mvn test
+
+
+# To run tests and generate a test report
+mvn surefire-report:report 
+```
+
+The report file is located at /target/reports/surefire.html
 
 
 ## Best Practices
