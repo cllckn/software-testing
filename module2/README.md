@@ -346,7 +346,7 @@ public class ProductParameterizedTest {
     }
 }
 ~~~
-## Test Suite:
+## Test Suite
 
 A test suite is a collection of test cases grouped together for execution. It allows test developer to run multiple tests as a single unit. Test suites are useful for:
 
@@ -372,10 +372,6 @@ public class ProductTestSuite {
 
 Test reports provide a structured summary of test execution, highlighting passed, failed, and skipped tests. They help identify failures, analyze errors with stack traces, and track test stability over time. Reports improve collaboration by allowing teams to share results. They also serve as documentation for compliance, audit purposes, and performance analysis by measuring test execution times. Running mvn surefire-report:report generates a detailed HTML report, making it easier to monitor software quality and debug issues efficiently.
 
-
-## **1. Run All Tests**
-
-To execute all test cases in the project, use:  
 
 ```sh
 # run all the test
