@@ -131,5 +131,11 @@ While there is no standard template for the report, it must include the followin
 
    Use clear headings and subheadings to enhance readability.
 
-   
+
+### Technology Requirements
+Students are **required** to use the following technologies for their project:
+- **Java** for implementation
+- **JUnit** for testing
+- **Maven** for dependency management and test automation
+
 ### By adhering to these guidelines and policies, you will ensure that your submission is complete and meets the evaluation criteria. Good luck with your projects and oral exams!
