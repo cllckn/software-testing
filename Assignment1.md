@@ -95,7 +95,7 @@ However, this late defense of the oral exam will result in a 20% penalty on the 
 Students are required to **compress** their reports and source codes into a **single file** (or provide a **GitHub link** to their source code repository) and submit it via **email**.
 
 * Email Subject: Use the following format for the subject line of your email:
-ssd-assignment1-StudentName
+st-assignment1-StudentName
 * File Naming: Ensure that the compressed file is named appropriately, using the following format:
 StudentName-Report.zip
 
