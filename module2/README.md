@@ -395,7 +395,7 @@ Separating source code and test code is a widely followed convention in software
 
 
 ## Exercises
-[Exercises](Exercises.md)
+[Exercises](exercises/exercises.md)
 
 
 
