@@ -116,3 +116,59 @@ Extend the parameterized test to include **boundary values**, such as:
 - A discount slightly greater than the total amount.
 
 
+
+  ---
+
+# **Hands-on Exercise4: Implementing a Student Grading System with JUnit**
+
+## **Objective**
+This exercise will help you:
+- Design a **Student Grading System** with multiple classes.
+- Implement **unit tests** and **parameterized tests** in JUnit.
+- Organize tests into a **test suite**.
+- Modify source code to introduce a bug and analyze test failures.
+- Generate a test report.
+
+
+## **Task 1: Implement the Student Class**
+Construct a `Student` class with the following:
+1. A **name** attribute.
+2. A **grade** attribute (between 0 and 100).
+3. A method `getLetterGrade()` that returns:
+    - `"A"` for grades 90-100.
+    - `"B"` for grades 80-89.
+    - `"C"` for grades 70-79.
+    - `"D"` for grades 60-69.
+    - `"F"` for grades below 60.
+4. Ensure grade validation (throw an exception for invalid values).
+
+
+## **Task 2: Implement the GradingSystem Class**
+Construct a `GradingSystem` class with:
+1. A method `evaluateStudent(Student student)` that returns the student's letter grade.
+
+
+## **Task 3: Write Unit Tests**
+1. Write test cases to check:
+    - Correct letter grade assignment.
+    - Exception handling for invalid grades.
+2. Run the tests and analyze results.
+
+
+## **Task 4: Implement Parameterized Tests**
+1. Convert the letter grade test to a **parameterized test**.
+2. Use `@ParameterizedTest` with `@CsvSource` to test multiple grade values.
+
+
+## **Task 5: Design a Test Suite**
+1. Form a **test suite** to run all test classes together.
+2. Ensure all tests are executed when running the suite.
+
+
+## **Task 6: Modify Code to Introduce a Bug and Generate Test Report**
+1. **Introduce a bug** in `getLetterGrade()` (e.g., return `"B"` for all grades).
+2. Run tests and analyze failures.
+3. Fix the bug and rerun tests.
+4. Generate a test report.
+
+
