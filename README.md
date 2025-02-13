@@ -1,114 +1,127 @@
-# Software Testing And Quality Assurance
+# Module 3: Test-Driven Development (TDD)
 
-This course provides a practical introduction to software testing. Students will learn the fundamentals of testing, including unit testing with JUnit, end-to-end testing with Cypress, and API testing using IntelliJ HTTP Client. Through hands-on exercises and a final project, students will gain practical experience in writing, executing, and maintaining test cases for software applications. 
+## **What is TDD?**
 
-## Course Objectives
+Test-Driven Development (TDD) is a **core practice** in Agile software development, particularly in **Extreme Programming (XP)**. TDD ensures:
 
-By the end of this course, students will be able to:
-
-    Understand the fundamentals of software testing.
-    Learn to write and execute unit tests using JUnit.
-    Perform end-to-end testing of web applications using Cypress.
-    Test REST APIs using IntelliJ HTTP Client.
-    Gain practical experience in writing and maintaining test cases.
+✔ **Tests drive development** – Code is written based on well-defined tests.  
+✔ **Code quality improves** – Continuous refactoring leads to better structure and maintainability.  
+✔ **Bugs are reduced early** – Issues are detected before deployment.
 
 
-## Course Content
-The course will cover the following topics:
-
-### Module 1: Introduction To Software Testing  
-- What Is Software Testing  
-- Importance Of Testing In Software Development  
-- Types Of Testing: Unit, Integration, System, And Acceptance Testing  
-- Overview Of Testing Tools: JUnit, Cypress, IntelliJ HTTP Client  
-- Setting Up The Environment  
-
-### Module 2: Introduction To Unit Testing  
-- What Is Unit Testing  
-- Writing Your First Unit Test With JUnit  
-- Test Cases, Assertions, Annotations  
-- Parameterized Tests  
-- Test Suit  
-- Generating Test Report  
-- Hands-On Exercises  
-
-### Module 3: Test-Driven Development (TDD)  
-- What Is TDD  
-- Red-Green-Refactor Cycle  
-- Hands-On Exercises  
-
-### Module 4: Testing REST APIs  
-- What Is A REST API  
-- HTTP Methods: GET, POST, PUT, DELETE  
-- Status Codes And Response Formats (JSON, XML)  
-- Developing RESTful Endpoints Using NodeJS  
-- Introduction To IntelliJ HTTP Client  
-- Writing And Executing API Tests  
-- Testing Different HTTP Methods: GET, POST, PUT, DELETE  
-- Validating Response Status Codes And JSON Payloads  
-- Hands-On Exercises  
-
-### Module 5: Introduction To Web Testing  
-- What Is End-To-End Testing  
-- Overview Of Cypress  
-- Writing Your First Cypress Test  
-- Hands-On Exercises  
-
-### Module 6: Integration Testing And Test Automation Best Practices  
-- What Is Integration Testing  
-- Writing Integration Tests With JUnit  
-- Test Automation Best Practices  
-- Writing Maintainable And Reusable Test Cases  
-- Organizing Test Suites  
-- Debugging Failing Tests  
-- Hands-On Exercises  
-
-### Evaluation Method
-
-Students will be evaluated based on the following components:  
-
-| **Component**                  | **Weight** |
-|--------------------------------|-----------|
-| Assignment 1 & Oral Examination | 25%       |
-| Assignment 2 & Oral Examination | 25%       |
-| Final Project & Oral Examination | 50%       |
-
-## Assignments and Exams Schedule  
-
-| **Assignment**   | **Release Date** | **Due Date**  |
-|-----------------|-----------------|--------------|
-| Assignment 1   | TBA              | Week 6       |
-| Assignment 2   | TBA              | Week 10      |
-| Final Project  | TBA              | Week 14      |
+Test-Driven Development (TDD) is a software development approach that follows a **Red-Green-Refactor** cycle. 
+The steps are:
+1. **Red**: Write a failing test (because the feature doesn’t exist yet).
+2. **Green**: Write the minimal code to pass the test.
+3. **Refactor**: Improve the code while keeping all tests passing.
 
 
-### Course Policies
+## Step 1: Write a Failing Test (RED)
 
-- **Attendance:** Regular attendance is **mandatory**. More than **three unexcused absences** may result in a **grade penalty**.  
-- **Late Submissions & Defense:** Submission policies, penalties, and defense requirements will be **detailed in assignment documents**.  
-- **Academic Integrity:** Any form of **plagiarism or cheating** will result in **disciplinary action** as per **university policy**.  
-- **Communication:** All course-related communication will take place via the **university’s Learning Management System (LMS)** or the **instructor’s email** (`cceken@ku.edu.kz`). Students are expected to **check their university email regularly** for updates and announcements.  
+We will develop a **Billing System** using TDD approach.
+ 
+First write a **JUnit test** for the `calculateTotal()` method.
+
+**Expected methods:**
+- Multiply `price * quantity`.
+- Apply a **10% discount** if subtotal > $100.
+- Apply a **20% tax** on the discounted amount.
+
+```java
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+public class BillingSystemTest {
+
+    @Test
+    void testCalculateTotal() {
+        BillingSystem billing = new BillingSystem();
+        double total = billing.calculateTotal(50, 3); // Expected: (50*3) - 10% + 20% tax
+        assertEquals(162.0, total, 0.01);  // Expected total = 150 - 15 + 27 = 162
+    }
+}
+```
+
+Expected behavior: The test fails because BillingSystem does not exist yet. (RED Phase Completed)
+
+## Step 2: Write Just Enough Code to Pass (GREEN)
+we implement a basic version of the calculateTotal() method inside BillingSystem.java.
+
+```java
+public class BillingSystem {
+    public double calculateTotal(double price, int quantity) {
+        double subtotal = price * quantity;
+        double discount = subtotal > 100 ? subtotal * 0.1 : 0; // 10% discount if subtotal > $100
+        double tax = (subtotal - discount) * 0.2; // 20% tax
+        return subtotal - discount + tax;
+    }
+}
+```
+when we run the test, it passes! (GREEN Phase Completed)
+
+## Step 3: Refactor the Code (REFACTOR)-Optional
+we refactor the code by extracting helper methods to improve readability and maintainability.
+
+```java
+public class BillingSystem {
+    public double calculateTotal(double price, int quantity) {
+        double subtotal = price * quantity;
+        double discount = calculateDiscount(subtotal);
+        double tax = calculateTax(subtotal - discount);
+        return subtotal - discount + tax;
+    }
+
+    private double calculateDiscount(double subtotal) {
+        return subtotal > 100 ? subtotal * 0.1 : 0;
+    }
+
+    private double calculateTax(double amount) {
+        return amount * 0.2;
+    }
+}
+
+```
+The code is more modular and readable, and tests still pass!  (REFACTOR Phase Completed)
 
 
-### Tools:
-    IntelliJ IDEA Ultimate  (https://www.jetbrains.com/idea/download)
-    JUnit (IntelliJ IDEA -> Preferences -> JUnit )
-    HTTP Client JUnit (IntelliJ IDEA -> Preferences -> HTTP Client )
-    Cypress (https://www.cypress.io/)
-    Node.js (https://nodejs.org/en/download) (IntelliJ IDEA -> Preferences -> Node.js )
-    Postman (optional).
+**Apply these steps for testing exceptions** 
 
-### Resources
-    Main:
-    https://github.com/cllckn/software-testing
-    Textbooks:
-    "Foundations of Software Testing" by Dorothy Graham, Rex Black, and Erik van Veenendaal.
-    "Software Testing and Continuous Quality Improvement" by William Lewis.
-    
-    Online Resources:
-    JUnit official documentation.
-    Cypress official documentation.
-    IntelliJ IDEA HTTP Client guide.
-    Express.js official documentation.
+```java
+public class BillingSystemTest {
+
+    @Test
+    void testCalculateTotal() {
+        BillingSystem billing = new BillingSystem();
+        double total = billing.calculateTotal(50, 3); // Expected: (50*3) - 10% + 20% tax
+        assertEquals(162.0, total, 0.01);  // Expected total = 150 - 15 + 27 = 162
+    }
+
+    @Test
+    void testNegativePriceThrowsException() {
+        BillingSystem billing = new BillingSystem();
+        assertThrows(IllegalArgumentException.class, () -> billing.calculateTotal(-50, 3));
+    }
+
+    @Test
+    void testNegativeQuantityThrowsException() {
+        BillingSystem billing = new BillingSystem();
+        assertThrows(IllegalArgumentException.class, () -> billing.calculateTotal(50, -3));
+        assertEquals("Price and quantity must be positive", exception.getMessage());
+    }
+}
+```
+
+
+## **Summary**
+By following the **TDD cycle**, we ensured that:  
+✔ **Tests drive development** (we only wrote code that was needed).  
+✔ **Code quality improves** through refactoring.  
+✔ **Changes remain safe** because tests verify correctness.
+
+**TDD helps write better, cleaner, and well-tested software!**
+
+## Exercises
+[Exercises](exercises/exercises.md)
+
 
 
