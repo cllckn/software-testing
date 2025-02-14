@@ -250,16 +250,16 @@ The @Test annotation marks a method as a test case. JUnit will execute all metho
 
 **@BeforeEach and @AfterEach**
 
-@BeforeEach: Methods annotated with @Before run before each test method. Use this to set up common test data or initialize objects.
+@BeforeEach: Methods annotated with @BeforeEach run before each test method. Use this to set up common test data or initialize objects.
 
-@AfterEach: Methods annotated with @After run after each test method. Use this to clean up resources or reset states.
+@AfterEach: Methods annotated with @AfterEach run after each test method. Use this to clean up resources or reset states.
 
 
 **@BeforeAll and @AfterAll**
 
-@BeforeAll: Methods annotated with @BeforeClass run once before all test methods in the class. Use this for expensive setup operations (e.g., database connections).
+@BeforeAll: Methods annotated with @BeforeAll run once before all test methods in the class. Use this for expensive setup operations (e.g., database connections).
 
-@AfterAll: Methods annotated with @AfterClass run once after all test methods in the class. Use this for cleanup operations.
+@AfterAll: Methods annotated with @AfterAll run once after all test methods in the class. Use this for cleanup operations.
 
 
 A complete example that combines all the annotations:
