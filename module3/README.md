@@ -37,7 +37,7 @@ public class BillingSystemTest {
     void testCalculateTotal() {
         BillingSystem billing = new BillingSystem();
         double total = billing.calculateTotal(50, 3); // Expected: (50*3) - 10% + 20% tax
-        assertEquals(162.0, total, 0.01);  // Expected total = 150 - 15 + 27 = 162
+        assertEquals(162.0, total);  // Expected total = 150 - 15 + 27 = 162
     }
 }
 ```
@@ -106,7 +106,6 @@ public class BillingSystemTest {
     void testNegativeQuantityThrowsException() {
         BillingSystem billing = new BillingSystem();
         assertThrows(IllegalArgumentException.class, () -> billing.calculateTotal(50, -3));
-        assertEquals("Price and quantity must be positive", exception.getMessage());
     }
 }
 ```
