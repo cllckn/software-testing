@@ -268,50 +268,50 @@ A complete example that combines all the annotations:
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
-public class ProductTest2 {
-    private static Product product;
+class ProductAnnotationsTest {
+  private static Product product;
 
-    @BeforeAll
-    public static void setUpClass() {
-        // Initialize a Product object once before all tests
-        product = new Product(1, "Laptop", 999.99, 10);
-        System.out.println("Product object initialized (BeforeAll).");
-    }
+  @BeforeAll
+  public static void setUpClass() {
+    // Initialize a Product object once before all tests
+    product = new Product(1, "Laptop", 999.99, 10);
+    System.out.println("Product object initialized (BeforeAll).");
+  }
 
-    @AfterAll
-    public static void tearDownClass() {
-        // Clean up after all tests
-        product = null;
-        System.out.println("Product object reset (AfterAll).");
-    }
+  @AfterAll
+  public static void tearDownClass() {
+    // Clean up after all tests
+    product = null;
+    System.out.println("Product object reset (AfterAll).");
+  }
 
-    @Before
-    public void setUp() {
-        // Reset the stock to 10 before each test
-        product = new Product(1, "Laptop", 999.99, 10);
-        System.out.println("Stock reset to 10 (Before).");
-    }
+  @BeforeEach
+  public void setUp() {
+    // Reset the stock to 10 before each test
+    product = new Product(1, "Laptop", 999.99, 10);
+    System.out.println("Stock reset to 10 (BeforeEach).");
+  }
 
-    @After
-    public void tearDown() {
-        // No cleanup needed here since @Before resets the state
-        System.out.println("Test completed (After).");
-    }
+  @AfterEach
+  public void tearDown() {
+    // No cleanup needed here since @Before resets the state
+    System.out.println("Test completed (AfterEach).");
+  }
 
-    @Test
-    public void testReduceStock() {
-        // Act
-        product.reduceStock(3);
+  @Test
+  public void testReduceStock() {
+    // Act
+    product.reduceStock(3);
 
-        // Assert
-        assertEquals(7, product.getStock(), "Stock should be reduced by 3");
-    }
+    // Assert
+    assertEquals(7, product.getStock(), "Stock should be reduced by 3");
+  }
 
-    @Test
-    public void testReduceStockThrowsException() {
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> product.reduceStock(20));
-    }
+  @Test
+  public void testReduceStockThrowsException() {
+    // Act & Assert
+    assertThrows(IllegalArgumentException.class, () -> product.reduceStock(20));
+  }
 }
 ~~~
 
