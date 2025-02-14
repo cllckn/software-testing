@@ -155,7 +155,7 @@ It typically consists of:
     Assertion: A check to verify that the actual output matches the expected output.
 
 In a test case there are 3 divisions:
-    
+
     Arrange: Set up the initial conditions (initialize a Product object with 10 units in stock).
     
     Act: Perform the action to test (reduce stock by 3).
@@ -164,7 +164,7 @@ In a test case there are 3 divisions:
 
 testReduceStock() function in the code given above is a test case.
 
-### Assertions 
+### Assertions
 Used to verify that the actual output matches the expected output. The followings are JUnit assertions:
 
 | Assertion                          | Description                                  |
@@ -248,18 +248,18 @@ JUnit uses annotations to define test methods and setup/teardown methods. Here a
 **@Test**
 The @Test annotation marks a method as a test case. JUnit will execute all methods annotated with @Test.
 
-**@Before and @After**
+**@BeforeEach and @AfterEach**
 
-@Before: Methods annotated with @Before run before each test method. Use this to set up common test data or initialize objects.
+@BeforeEach: Methods annotated with @Before run before each test method. Use this to set up common test data or initialize objects.
 
-@After: Methods annotated with @After run after each test method. Use this to clean up resources or reset states.
+@AfterEach: Methods annotated with @After run after each test method. Use this to clean up resources or reset states.
 
 
-**@BeforeClass and @AfterClass**
+**@BeforeAll and @AfterAll**
 
-@BeforeClass: Methods annotated with @BeforeClass run once before all test methods in the class. Use this for expensive setup operations (e.g., database connections).
+@BeforeAll: Methods annotated with @BeforeClass run once before all test methods in the class. Use this for expensive setup operations (e.g., database connections).
 
-@AfterClass: Methods annotated with @AfterClass run once after all test methods in the class. Use this for cleanup operations.
+@AfterAll: Methods annotated with @AfterClass run once after all test methods in the class. Use this for cleanup operations.
 
 
 A complete example that combines all the annotations:
@@ -275,7 +275,7 @@ public class ProductTest2 {
     public static void setUpClass() {
         // Initialize a Product object once before all tests
         product = new Product(1, "Laptop", 999.99, 10);
-        System.out.println("Product object created (BeforeAll).");
+        System.out.println("Product object initialized (BeforeAll).");
     }
 
     @AfterAll
@@ -319,7 +319,7 @@ public class ProductTest2 {
 
 
 ##  Parameterized Tests
-Parameterized tests allow test developer to run the same test with different inputs. 
+Parameterized tests allow test developer to run the same test with different inputs.
 This is useful for testing multiple scenarios without writing redundant code.
 
 ~~~java
@@ -382,7 +382,7 @@ mvn test
 mvn surefire-report:report 
 ```
 
-The report file is located at /target/reports/surefire.html
+The report file is located at /target/reports/surefire.html.
 
 
 ## Best Practices
@@ -395,7 +395,7 @@ Separating source code and test code is a widely followed convention in software
 
 
 ## Exercises
-[Exercises](exercises/exercises.md)
+  [Exercises](exercises/exercises.md)
 
 
 
