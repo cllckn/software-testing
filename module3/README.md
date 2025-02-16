@@ -2,14 +2,49 @@
 
 ## **What is TDD?**
 
-Test-Driven Development (TDD) is a **core practice** in Agile software development, particularly in **Extreme Programming (XP)**. TDD ensures:
+Test-Driven Development (TDD) is a software development approach and a **core practice** in Agile software development, particularly in **Extreme Programming (XP)**.
+
+**Agile development methodology** is a flexible and fast way to develop software in small, frequent updates, focusing on customer feedback and continuous improvement.
+
+Agile uses both incremental & iterative approaches with customer collaboration.
+
+**Incremental:** The system is built and delivered in parts (increments), with each part adding 
+functionality to the previous one. Adds new features in steps.
+
+The system is developed in small, independent parts (increments). Each increment adds new functionality to the existing system. Every increment is potentially usable and can be delivered to users. 
+
+For example:
+
+    Version 1: Login System
+    Version 2: User Profile
+    Version 3: Payment System
+    Version 4: Order Tracking
+
+**Iterative:** The system is developed in cycles, where each cycle refines and improves the previous version based on feedback.
+It improves the same features over time.
+
+The system is built in cycles (iterations), refining and improving the same features each time. 
+Each iteration reworks and enhances the previous version based on feedback. The product gets better 
+with each cycle instead of delivering full features upfront. 
+
+For example: 
+
+    For Login System
+    ---
+    Iteration 1: Basic Login Page
+    Iteration 2: Improved UI for Login
+    Iteration 3: Added Two-Factor Authentication
+    Iteration 4: Biometric Login
+
+
+TDD ensures:
 
 ✔ **Tests drive development** – Code is written based on well-defined tests.  
 ✔ **Code quality improves** – Continuous refactoring leads to better structure and maintainability.  
 ✔ **Bugs are reduced early** – Issues are detected before deployment.
 
 
-Test-Driven Development (TDD) is a software development approach that follows a **Red-Green-Refactor** cycle. 
+TDD follows a **Red-Green-Refactor** cycle. 
 The steps are:
 1. **Red**: Write a failing test (because the feature doesn’t exist yet).
 2. **Green**: Write the minimal code to pass the test.
@@ -37,7 +72,7 @@ public class BillingSystemTest {
     void testCalculateTotal() {
         BillingSystem billing = new BillingSystem();
         double total = billing.calculateTotal(50, 3); // Expected: (50*3) - 10% + 20% tax
-        assertEquals(162.0, total);  // Expected total = 150 - 15 + 27 = 162
+        assertEquals(162.0, total, 0.01);  // Expected total = 150 - 15 + 27 = 162
     }
 }
 ```
@@ -106,6 +141,7 @@ public class BillingSystemTest {
     void testNegativeQuantityThrowsException() {
         BillingSystem billing = new BillingSystem();
         assertThrows(IllegalArgumentException.class, () -> billing.calculateTotal(50, -3));
+        assertEquals("Price and quantity must be positive", exception.getMessage());
     }
 }
 ```
@@ -121,6 +157,3 @@ By following the **TDD cycle**, we ensured that:
 
 ## Exercises
 [Exercises](exercises/exercises.md)
-
-
-
