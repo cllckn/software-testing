@@ -33,7 +33,8 @@ The course will cover the following topics:
 - Hands-On Exercises
 
 ### Module 3: Test-Driven Development (TDD)
-- What Is TDD
+- What Is Test-Driven Development (TDD)
+- Agile Software Development Methodology
 - Red-Green-Refactor Cycle
 - Hands-On Exercises
 
@@ -75,11 +76,11 @@ Students will be evaluated based on the following components:
 
 ## Assignments and Exams Schedule
 
-| **Assignment**   | **Release Date** | **Due Date**  |
-|-----------------|-----------------|--------------|
-| Assignment 1   | TBA              | Week 6       |
-| Assignment 2   | TBA              | Week 10      |
-| Final Project  | TBA              | Week 14      |
+| **Assignment**   | **Oral Exam Date**       | **Due Date**  |
+|-----------------|------------------------|--------------|
+| Assignment 1   | 28.02.2025 15:50-18:40 | Week 6       |
+| Assignment 2   | TBA                    | Week 10      |
+| Final Project  | TBA                    | Week 14      |
 
 
 ### Course Policies
