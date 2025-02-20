@@ -4,12 +4,18 @@
     JUnit (IntelliJ IDEA -> Preferences -> JUnit )
     HTTP Client JUnit (IntelliJ IDEA -> Preferences -> HTTP Client )
 
-## Node.js (https://nodejs.org/en/download) (IntelliJ IDEA -> Preferences -> Node.js )
+## Node.js (https://nodejs.org/en/download) 
 
-* Initialize a Node.js project
-  - mkdir hello-world-app
-  - cd hello-world-app
-  - npm init
+* Setting up Intellij for Node.js based development
+  - IntelliJ IDEA -> Preferences -> Plugins -> Node.js
+  - IntelliJ IDEA -> File -> Settings -> Plugins -> Node.js
+
+
+* Initialize a new Node.js project
+  - IntelliJ IDEA -> File -> New -> Project -> Empty Project (Give the project an appropriate name.)
+  - Open the terminal in IntelliJ
+  - npm init -y
+  - Make a /src folder for the source code of the project
 
 * Make an hello-world.js file and write the following code:
   - console.log('Hello world.');
