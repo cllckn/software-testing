@@ -125,34 +125,6 @@ public class GradingSystemTestSuite {
 
 
 
-import java.util.Scanner;
-
-public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        try {
-            System.out.print("Enter student name: ");
-            String name = scanner.nextLine();
-
-            System.out.print("Enter student grade (0-100): ");
-            int grade = scanner.nextInt();
-
-            Student student = new Student(name, grade);
-            GradingSystem gradingSystem = new GradingSystem();
-
-            System.out.println("Student: " + student.getName());
-            System.out.println("Grade: " + student.getGrade());
-            System.out.println("Letter Grade: " + gradingSystem.evaluateStudent(student));
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
-        } finally {
-            scanner.close();
-        }
-    }
-}
-
-
 //mvn test
 //mvn surefire-report:report
 
@@ -162,8 +134,7 @@ public class Main {
 
 ---
 
-## **Hands-On Exercise 3: Bank Account System - TDD Solution
-**
+## **Hands-On Exercise 3: Bank Account System - TDD Solution**
 
 
 ```java
