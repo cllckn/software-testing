@@ -19,25 +19,30 @@ You are required to develop a **basic calculator** that supports the following o
 You must follow the **TDD approach**, implementing tests **before** writing the actual calculator logic.
 
 
-#### **Task 1: Write Failing Test Cases (RED) **
-1. Construct a test class named **`CalculatorTest`**.
-2. Write individual test cases for:
+#### **Task 1: Write Failing Test Cases (RED)**
+1. **Project Setup:**
+   - Define **proper packages** for both the **main** and **test** folders in your project.
+   - Organize your source files and test files within these packages.
+2. **Project Setup:**
+3. Define **proper packages** for both the **main** and **test** folders in your project.
+4. Organize your source files and test files within these packages.. Construct a test class named **`CalculatorTest`**.
+5. Write individual test cases for:
     - Addition of two numbers.
     - Subtraction of two numbers.
     - Multiplication of two numbers.
     - Division of two numbers.
     - Handling division by zero (should throw an exception).
-3. Run the tests and confirm that they fail (since the calculator logic is not yet implemented).
+6. Run the tests and confirm that they fail (since the calculator logic is not yet implemented).
 
 
-#### **Task 2: Implement the Calculator Class (GREEN) **
+#### **Task 2: Implement the Calculator Class (GREEN)**
 1. Construct a class named **`Calculator`**.
 2. Implement methods to perform **addition, subtraction, multiplication, and division**.
 3. Ensure that the **division method throws an exception** if the denominator is zero.
 4. Run the tests again and confirm they pass.
 
 
-#### **Task 3: Refactor the Code (REFACTOR) **
+#### **Task 3: Refactor the Code (REFACTOR)**
 1. Improve code readability and structure (e.g., extract validation into a separate method).
 2. Ensure that all test cases still pass after refactoring.
 
@@ -78,11 +83,14 @@ You must follow the **TDD approach**, implementing tests **before** writing the 
 
 
 #### **Task 1: Write Failing Test Cases (RED)**
-1. Construct a test class named **`StudentTest`**.
-2. Write test cases to verify:
+1. **Project Setup:**
+   - Define **proper packages** for both the **main** and **test** folders in your project.
+   - Organize your source files and test files within these packages.
+2. Construct a test class named **`StudentTest`**.
+3. Write test cases to verify:
     - Letter grade assignment for valid scores.
     - Handling of invalid scores (negative or above 100 should throw an exception).
-3. Run the tests and confirm that they fail (since the grading logic is not yet implemented).
+4. Run the tests and confirm that they fail (since the grading logic is not yet implemented).
 
 #### **Task 2: Implement the Student Class (GREEN)**
 1. Construct a class named **`Student`**.
@@ -94,7 +102,6 @@ You must follow the **TDD approach**, implementing tests **before** writing the 
 1. Improve code readability and structure (e.g., extract validation into a separate method).
 2. Ensure that all test cases still pass after refactoring.
 
-
 ### **Additional Challenges (Optional)**
 These tasks are for students to implement at home:
 
@@ -103,7 +110,6 @@ These tasks are for students to implement at home:
 3. Write **parameterized tests** to verify multiple grades at once.
 
 ---
-
 
 # **Hands-On Exercise 3: Implementing a Bank Account System Using Test-Driven Development (TDD)**
 
@@ -114,7 +120,7 @@ This exercise will help you:
 - Use **JUnit** for unit testing.
 - Handle **edge cases** such as insufficient funds and negative deposits.
 
----
+
 
 ### **Scenario**
 You are required to develop a **Bank Account System** that allows users to:
@@ -129,7 +135,6 @@ The system should enforce the following **business rules**:
 
 You must follow the **TDD approach**, implementing tests **before** writing the actual banking logic.
 
----
 
 ### **Tasks**
 
@@ -160,7 +165,6 @@ You must follow the **TDD approach**, implementing tests **before** writing the 
 4. Run the tests again and confirm they pass.
 
 
-
 #### **Task 3: Refactor the Code (REFACTOR)**
 1. Improve code readability and structure (e.g., extract validation into a separate method).
 2. Ensure that all test cases still pass after refactoring.
@@ -176,11 +180,12 @@ You must follow the **TDD approach**, implementing tests **before** writing the 
    - Generate a test report using Maven's **Surefire Plugin**:
      ```sh
      mvn surefire-report:report
-     ``
+     ```
 
 ### **Additional Challenges (Optional)**
 These tasks are for students to implement at home:
 
 1. Extend the system to **support multiple accounts** with unique account numbers.
 2. Implement a **transaction history** feature that logs all deposits and withdrawals.
+
 
