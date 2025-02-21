@@ -30,7 +30,7 @@ class BankAccountTest {
 
     @Test
     void testWithdraw() {
-        accbankAccountount.withdraw(300);
+        bankAccount.withdraw(300);
         assertEquals(700.0, bankAccount.getBalance());
     }
 
@@ -85,8 +85,8 @@ public class BankAccount {
         return balance;
     }
 
-    public String getOwner() {
-        return owner;
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 }
 
