@@ -8,7 +8,7 @@ By the end of this course, students will be able to:
 
     Understand the fundamentals of software testing.
     Learn to write and execute unit tests using JUnit.
-    Perform end-to-end testing of web applications using Cypress.
+    Testing Web Applications with Testing Frameworks
     Test REST APIs using IntelliJ HTTP Client.
     Gain practical experience in writing and maintaining test cases.
 
@@ -43,10 +43,9 @@ The course will cover the following topics:
 - HTTP Methods: GET, POST, PUT, DELETE
 - Status Codes And Response Formats (JSON, XML)
 - Developing RESTful Endpoints Using NodeJS
-- Introduction To IntelliJ HTTP Client
-- Writing And Executing API Tests
-- Testing Different HTTP Methods: GET, POST, PUT, DELETE
-- Validating Response Status Codes And JSON Payloads
+- Manual Testing of REST APIs using cURL and IntelliJ HTTP Client
+- Automated Testing with IntelliJ HTTP Client
+- Testing Node.js Applications with Testing Frameworks
 - Hands-On Exercises
 
 ### Module 5: Introduction To Web Testing
@@ -57,11 +56,17 @@ The course will cover the following topics:
 
 ### Module 6: Integration Testing And Test Automation Best Practices
 - What Is Integration Testing
-- Writing Integration Tests With JUnit
+- Writing Integration Tests
 - Test Automation Best Practices
-- Writing Maintainable And Reusable Test Cases
-- Organizing Test Suites
-- Debugging Failing Tests
+- Hands-On Exercises
+
+### Module 7: Stress, Load, and Security Tests
+- Understanding Stress Testing
+- Tools for Stress Testing
+- Understanding Load Testing
+- Tools for Load Testing
+- Understanding Security Testing
+- Tools for Security Testing
 - Hands-On Exercises
 
 ### Evaluation Method
@@ -76,11 +81,11 @@ Students will be evaluated based on the following components:
 
 ## Assignments and Exams Schedule
 
-| **Assignment**   | **Oral Exam Date**       | **Due Date**  |
-|-----------------|------------------------|--------------|
-| Assignment 1   | 28.02.2025 14:50-17.00 | Week 6       |
-| Assignment 2   | TBA                    | Week 11      |
-| Final Project  | TBA                    | During Final Exams      |
+| **Assignment**   | **Oral Exam Date**     | **Due Date**       |
+|-----------------|------------------------|--------------------|
+| Assignment 1   | 28.02.2025 14:50-17.00 | Week 6             |
+| Assignment 2   | TBA                    | Week 11            |
+| Final Project  | TBA                    | During Final Exams |
 
 
 ### Course Policies
