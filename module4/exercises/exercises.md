@@ -1,61 +1,90 @@
-## Hands-on Exercise1: In-Memory REST API Development in Node.js
+# **Hands-on Exercise 1: Developing Bank Account REST API Using Node.js**
 
-##  Objective
-In this exercise, students will develop a **RESTful API** in **Node.js** using **Express.js** and an 
-**in-memory database** for managing customer data.
+## **Objective**
+In this exercise, students will build a **RESTful API** for managing bank accounts using **Node.js**, **Express.js**, and an **in-memory database**. 
+The API will support basic bank operations.
 
-## Tasks
 
-### **Setup a Basic Express Server**
+
+## **Tasks**
+
+### **1. Setup a Basic Express Server**
 - Initialize a new **Node.js project**.
 - Install **Express.js**.
-- Set up a basic Express server.
+- Set up an Express server.
 
-### **Define an In-Memory Database**
-- Instead of using a database, store customer data in a **JSON array**. Add random customers into the array for testing. 
-- Each customer should have:
-    - `id` (integer)
-    - `name` (string)
-    - `email` (string)
-    - `phone` (string)
-    - `city` (string)
 
-### **Implement API Endpoints**
+
+### **2. Define an In-Memory Database**
+- Store bank account data in a **JSON array**.
+- Each account should have:
+  - `accountNumber` (integer)
+  - `name` (string)
+  - `balance` (float)
+  - `currency` (string, e.g., "USD", "EUR")
+  - `createdAt` (date string)
+
+
+
+### **3. Implement API Endpoints**
 Develop the following RESTful routes:
 
-#### **GET /api/customers**
-- Return the list of all customers.
+#### **GET /api/accounts**
+- Return the list of all bank accounts.
 
-#### **GET /api/customers/:id**
-- Retrieve a specific customer by ID.
-- If the ID is not found, return a **404 error**.
+#### **GET /api/accounts/:accountNumber**
+- Retrieve a specific account by `accountNumber`.
+- If not found, return a **404 error**.
 
-#### **POST /api/customers**
-- Accept a **JSON request body** with customer details.
-- Add the new customer to the in-memory array.
-- Respond with the added customer.
+#### **POST /api/accounts**
+- Accept a **JSON request body** with account details.
+- Add the new account to the in-memory array.
+- Respond with the added account.
 
-#### **PUT /api/customers/:id**
-- Update an existing customer by ID.
-- Only modify the provided fields.
-- If the ID is not found, return a **404 error**.
+#### **PUT /api/accounts/:accountNumber**
+- Update an existing account by `accountNumber`.
+- Modify only the provided fields.
+- If not found, return a **404 error**.
 
-#### **DELETE /api/customers/:id**
-- Remove a customer by ID.
+#### **DELETE /api/accounts/:accountNumber**
+- Remove an account by `accountNumber`.
 - Respond with a success message.
 
-### **Test API Using cURL and  http client**
-- Use **cURL commands** and **http client** to test each endpoint.
-- Verify that customer data updates correctly.
+#### **POST /api/accounts/:accountNumber/deposit**
+- Accept a **JSON request body** with an amount.
+- Increase the account balance.
+- If not found, return a **404 error**.
+- Add validation to accept only **positive numbers**.
+
+#### **POST /api/accounts/:accountNumber/withdraw**
+- Accept a **JSON request body** with an amount.
+- Decrease the account balance, ensuring no overdrafts.
+- If not found or insufficient funds, return an appropriate error.
+- Add validation to accept only **positive numbers**.
+
+
+
+## **4. Writing REST API Tests**
+- Use **http client** to test all API endpoints.
+- Validate that all operations behave as expected.
+
+
 
 ## **Completion Criteria**
-- The API should be functional with **GET, POST, PUT, and DELETE** routes.
-- The in-memory database should correctly store and modify customer data.
-- API should handle errors properly.
+- The API should be functional with **GET, POST, PUT, DELETE** routes.
+- Deposit and withdrawal operations should correctly modify balances.
+- Tests should pass successfully.
 
 
-### **Additional Challenges (Optional)**
+
+## **Additional Challenges (Optional)**
 These tasks are for students to implement at home:
 
-- Add validation for **email format** and **phone number** before adding a customer.
-- Implement a **search feature** (`GET /api/customers?city=Astana`) to filter customers by city.
+- Implement a **transaction history feature** (`GET /api/accounts/:accountNumber/transactions`).
+- Add a **search feature** (`GET /api/accounts?currency=USD`) to filter accounts by currency.
+
+---
+
+
+
+
