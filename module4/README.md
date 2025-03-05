@@ -512,7 +512,8 @@ app.get("/api/customers", (req, res) => {
     res.json({ message: "List of customers" });
 });
 ```
-An **Express Router** helps organize routes by grouping them into separate files. This makes the code modular, manageable, and scalable.
+An **Express Router** helps organize routes by grouping them into separate files. 
+This makes the code modular, manageable, and scalable.
 
 Benefits of Using a Router
 * Code organization – Keeps server.js clean and structured.
@@ -597,7 +598,7 @@ module.exports = router;
 * Integrate the customer REST API from [Hands-on Exercise 6](https://github.com/cllckn/decision-support-systems/blob/main/module3/exercises/exercise6/server.js)
   into [this app](https://github.com/cllckn/decision-support-systems/tree/main/module3/part5), and form separate router files for customer and product routes.
 * Once completed, test all API endpoints (both products and customers) using IntelliJ HTTP client to verify their functionality.
-* Try using Postman for testing APIs, as it provides an intuitive interface for making HTTP requests and analyzing responses.
+* [At Home] Try using Postman for testing APIs, as it provides an intuitive interface for making HTTP requests and analyzing responses.
 
 
 
@@ -626,6 +627,12 @@ pm2 restart id/name
 pm2 stop id/name
 
 pm2 delete id/name
+
+pm2 startup  #This command will generate a script that you can copy and paste into your terminal to enable PM2 to start on boot.
+ 
+pm2 save # Freeze a process list on reboot via
+
+pm2 unstartup systemd  # Remove init script
 ```
 
 ### Define env variable for rest api to switch between testing environments
@@ -1104,4 +1111,13 @@ add  ("coveragePathIgnorePatterns": ["/node_modules/", "/config/"]) into the pac
 * After adding each test case, check the generated coverage report.
 
 ---
+
+
+
+
+
+
+
+
+
 
