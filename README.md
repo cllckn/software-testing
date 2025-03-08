@@ -75,9 +75,9 @@ Students will be evaluated based on the following components:
 
 | **Component**                  | **Weight** |
 |--------------------------------|-----------|
-| Assignment 1 & Oral Examination | 25%       |
-| Assignment 2 & Oral Examination | 25%       |
-| Final Project & Oral Examination | 50%       |
+| Assignment 1 & Oral Examination |        |
+| Assignment 2 & Oral Examination |        |
+| Final Project & Oral Examination |        |
 
 ## Assignments and Exams Schedule
 
