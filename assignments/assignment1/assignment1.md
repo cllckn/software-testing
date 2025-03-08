@@ -83,11 +83,11 @@ Oral Exam Performance: Your performance during the oral exam, which will take pl
 
 ## Oral Exam Requirement
 
-The oral exam is **mandatory** as part of the evaluation process. Students will be assessed based on their understanding of the material presented in their **reports** and **source codes**.
+The oral exam is **mandatory** as part of the evaluation process. Students will be assessed based on their understanding of the material presented in their **reports** and **source code**.
 
 ### **During the Oral Exam:**
 - Reports must be **open** and accessible.
-- Source codes must be **ready to show** in the IDE.
+- Source code must be **ready to show** in the IDE.
 - Tests must be **ready to run** for demonstration.
 
 ## Group Work
@@ -95,8 +95,8 @@ Students may form groups of up to two members.
 
 All group members will receive a common grade for the assignment.
 
-Instructors may ask questions to any group member during the oral exam, so it is essential that every member understands all aspects of the project. 
-Therefore, each group member must be well-versed in every detail related to the project.
+Instructors may question any group member during the oral exam, so it is essential that each member has a thorough understanding of all aspects of the project.
+
 
 ## Report Structure
 While there is no standard template for the report, it must include the following essential components:
@@ -123,7 +123,7 @@ Use clear headings and subheadings to enhance readability.
 
 ## Email Submission
 
-Students are required to **compress** their reports and source codes into a **single file** (or provide a **GitHub link** to their source code repository) and submit it via **email**.
+Students are required to **compress** their reports and source code into a **single file** (or provide a **GitHub link** to their source code repository) and submit it via **email**.
 
 * Email Subject: Use the following format for the subject line of your email:
   - st-assignment1-StudentName
@@ -139,7 +139,7 @@ Students are **required** to use the following technologies for their project:
 - **Maven** for dependency management and test automation
 
 ## Late Submission and Oral Exam Policy
-Students must submit their **reports and source codes** before the **oral exam** (during class in **Week 6**), as the oral exam time is crucial for evaluation.
+Students must submit their **reports and source code** before the **oral exam** (during class in **Week 6**), as the oral exam time is crucial for evaluation.
 If a student or group is unable to attend the scheduled oral exam, they will be allowed to defend their project one week later during course hours.
 However, this late defense of the oral exam will result in a 20% penalty on the total grade.
 
