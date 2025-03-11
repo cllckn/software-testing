@@ -45,19 +45,20 @@ The course will cover the following topics:
 - Developing RESTful Endpoints Using NodeJS
 - Manual Testing of REST APIs using cURL and IntelliJ HTTP Client
 - Automated Testing with IntelliJ HTTP Client
-- Testing Node.js Applications with Testing Frameworks
 - Hands-On Exercises
 
-### Module 5: Introduction To Web Testing
-- What Is End-To-End Testing
+### Module 5: Integration Testing
+- Understanding Integration Testing
+- Testing Web Applications with Testing Frameworks
+- Case Study: Integration Testing of REST APIs with Database Support
+- The Role of Mocking in Testing
+- Hands-On Exercises
+
+### Module 6: Introduction To End-To-End(E2E) Testing
+- What Is End-To-End(E2E) Testing
 - Overview Of Cypress
 - Writing Your First Cypress Test
-- Hands-On Exercises
-
-### Module 6: Integration Testing And Test Automation Best Practices
-- What Is Integration Testing
-- Writing Integration Tests
-- Test Automation Best Practices
+- Case Study: E2E Testing of the Sample Web Application
 - Hands-On Exercises
 
 ### Module 7: Stress, Load, and Security Tests
@@ -68,7 +69,7 @@ The course will cover the following topics:
 - Understanding Security Testing
 - Tools for Security Testing
 - Hands-On Exercises
-
+  
 ### Evaluation Method
 
 Students will be evaluated based on the following components:
