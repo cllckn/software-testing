@@ -10,7 +10,6 @@
       - IntelliJ IDEA -> Preferences -> Plugins -> Node.js
       - IntelliJ IDEA -> File -> Settings -> Plugins -> Node.js
     
-    
     * Initialize a new Node.js project
       - IntelliJ IDEA -> File -> New -> Project -> Empty Project (Give the project an appropriate name.)
       - Open the terminal in IntelliJ
