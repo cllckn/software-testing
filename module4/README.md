@@ -602,8 +602,6 @@ module.exports = router;
 
 
 
-
-
 ### Deploy app to a server
 
     Intellij -> Tools -> Deployment -> Configuration 
@@ -628,12 +626,42 @@ pm2 stop id/name
 
 pm2 delete id/name
 
+pm2 save # Freeze a process list on reboot via
+
 pm2 startup  #This command will generate a script that you can copy and paste into your terminal to enable PM2 to start on boot.
  
-pm2 save # Freeze a process list on reboot via
 
 pm2 unstartup systemd  # Remove init script
 ```
+
+* Starting the same node app as two separate instances with different ports using PM2.
+    * /part2/pm2/server.js
+
+```javascript
+const express = require("express");
+const app = express();
+
+const PORT = process.env.PORT || 3000; // Use environment variable or default to 3000
+
+app.get("/", (req, res) => {
+    res.send(`Server running on port ${PORT}`);
+});
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+
+```
+
+```shell
+PORT=5000 pm2 start server.js --name "my-server5" -f
+PORT=4000 pm2 start server.js --name "my-server4" -f
+PORT=3000 pm2 start server.js --name "my-server3" -f
+
+
+pm2 status
+```
+
 
 ### Define env variable for rest api to switch between testing environments
 
@@ -645,14 +673,22 @@ pm2 unstartup systemd  # Remove init script
     "hosturi": "http://localhost:3000"
   },
   "test-server": {
-    "hosturi": "http://191.101.2.193:3000"
+    "hosturi": "http://localhost:4000"
   }
 }
 ```
+* /test/module4/part2/rest-api-v1.http
 
+```shell
+# curl -X GET http://localhost:3000/api/products
+GET http://localhost:3000
+```
 
+* /test/module4/part2/rest-api-v2.http
 
-
+```shell
+GET {{hosturi}}/
+```
 
 
 ---
@@ -665,6 +701,20 @@ pm2 unstartup systemd  # Remove init script
 
 
 ## Part 3: Automated Testing with IntelliJ HTTP Client
+
+* client.test() -> This function is used to define a test case
+
+```javascript
+client.test(testName, function() {
+    // Test logic and assertions go here
+});
+
+```
+* client.assert() -> This function is used to perform assertions
+```javascript
+client.assert(condition, failureMessage);
+```
+
 
 ```plain
 ### Get all products
@@ -879,242 +929,6 @@ Error Handling:
 ## **Hands-on Exercise 4**
 
 ---
-
-
-
-
-
-
-## Part 4: Testing Node.js Applications with Testing Frameworks
-
-### **Jest and Supertest Overview**
-
-### **1. Jest**
-[Jest](https://jestjs.io/) is a JavaScript testing framework developed by Facebook. It is widely used for testing **Node.js, 
-React, and other JavaScript applications**.
-
-####  **Key Features**
-- **Fast and isolated tests** – Each test runs independently.
-- **Built-in assertions** – No need for additional assertion libraries.
-- **Mocking capabilities** – Can mock functions, modules, and timers.
-- **Code coverage** – Generates reports to track untested code.
-
-
-
-### **2. Supertest**
-[Supertest](https://www.npmjs.com/package/supertest) is a library for testing HTTP servers. 
-It works **on top of Jest** (or Mocha, Chai, etc.) and is used to test REST APIs.
-
-#### 🔹 **Key Features**
-- Sends HTTP requests to your Express app **without actually starting the server**.
-- Supports **GET, POST, PUT, DELETE, PATCH** requests.
-- Works seamlessly with Jest.
-- Allows testing response **status codes, headers, and JSON data**.
-
-### Setting up the environment
-
-* Installation
-```shell
-npm install --save-dev jest supertest
-```
-* Update package.json to include a test script
-```json
-{
-  "scripts": {
-    "test": "jest"
-  }
-}
-```
-
-* Run the tests
-```shell
-npm test
-```
-
-
-### **Example**
-
-* /server.js
-
-```javascript
-const express = require("express");
-const app = express();
-
-// Middleware to parse JSON request bodies
-app.use(express.json());
-
-// Simple GET endpoint for the root route
-app.get("/", (req, res) => {
-    res.json({ message: "Hello, world!" });
-});
-
-// POST endpoint to greet a user by name
-app.post("/greet", (req, res) => {
-    const { name } = req.body; // Extract 'name' from the request body
-    if (!name) {
-        // If 'name' is missing, return a 400 error with a message
-        return res.status(400).json({ error: "Name is required" });
-    }
-    // If 'name' is provided, return a greeting
-    res.json({ message: `Hello, ${name}!` });
-});
-
-// Export the app for testing
-module.exports = app;
-```
-
-* /server.test.js
-
-```javascript
-// Import supertest for making HTTP requests and the Express app
-const request = require("supertest");
-const app = require("./server");
-
-// Describe a test suite for the GET / endpoint
-describe("GET /", () => {
-    // Test case: Check if the root endpoint returns the correct response
-    it("should return a welcome message", async () => {
-        // Make a GET request to the root endpoint
-        const response = await request(app).get("/");
-
-        // Assert that the status code is 200 (OK)
-        expect(response.statusCode).toBe(200);
-
-        // Assert that the response body matches the expected JSON
-        expect(response.body).toEqual({ message: "Hello, world!" });
-    });
-});
-
-// Describe a test suite for the POST /greet endpoint
-describe("POST /greet", () => {
-    // Test case: Check if the endpoint greets the user with their name
-    it("should greet the user with their name", async () => {
-        // Make a POST request to the /greet endpoint with a JSON body
-        const response = await request(app)
-            .post("/greet")
-            .send({ name: "John" }); // Send 'name' in the request body
-
-        // Assert that the status code is 200 (OK)
-        expect(response.statusCode).toBe(200);
-
-        // Assert that the response body matches the expected greeting
-        expect(response.body).toEqual({ message: "Hello, John!" });
-    });
-
-    // Test case: Check if the endpoint returns an error when 'name' is missing
-    it("should return an error if name is missing", async () => {
-        // Make a POST request to the /greet endpoint without a 'name'
-        const response = await request(app)
-            .post("/greet")
-            .send({}); // Send an empty object
-
-        // Assert that the status code is 400 (Bad Request)
-        expect(response.statusCode).toBe(400);
-
-        // Assert that the response body contains the expected error message
-        expect(response.body).toEqual({ error: "Name is required" });
-    });
-});
-```
-
-#### Key Points Explained in Comments
-describe:
-
-    Groups related test cases together. For example, all tests for the GET / endpoint are grouped under one describe block.
-
-it:
-
-    Defines an individual test case. Each it block tests a specific functionality.
-
-request(app):
-
-    Initialize a test instance of your Express app. This allows you to simulate HTTP requests.
-
-expect:
-
-    Used to assert the expected outcome of a test. For example:
-
-        expect(response.statusCode).toBe(200) checks if the status code is 200.
-
-        expect(response.body).toEqual({ message: "Hello, world!" }) checks if the response body matches the expected JSON.
-
-send:
-
-    Used to send a JSON payload in POST requests.
-
-Error Handling:
-
-    The second test case for POST /greet checks how the app handles invalid input (missing name).
-
-
-
-### Test Coverage
-
-To generate a coverage report, you need to configure Jest to collect coverage information.
-Add the following lines into the package.json.
-
-```json
-{
-  "scripts": {
-    "test": "jest",
-    "test:coverage": "jest --coverage"
-  },
-  "jest": {
-    "collectCoverage": true,
-    "coverageReporters": ["text", "html"],
-    "coveragePathIgnorePatterns": ["/node_modules/", "/config/"]
-  }
-}
-```
-run:
-```shell
-npm run test:coverage
-```
-
-Text report is generated in the terminal and in the coverage/index.html file.
-
-#### The Coverage Report
-
-% Stmts (Statements):
-
-    The percentage of executable statements that were executed during the tests.
-
-% Branch:
-
-    The percentage of branches (e.g., if statements) that were executed.
-
-% Funcs (Functions):
-
-    The percentage of functions that were called during the tests.
-
-% Lines:
-
-    The percentage of lines of code that were executed.
-
-Uncovered Line #s:
-
-    Lists the line numbers of code that were not executed during the tests.
-
-* to exclude certain files (e.g., configuration files) from the coverage report, 
-add  ("coveragePathIgnorePatterns": ["/node_modules/", "/config/"]) into the package.json
-
-
-
-
-
-
-
----
-## **Hands-on Exercise 5**
-
-* Write tests for the REST API implemented in the Exercise 4, using Jest and Supertest Frameworks. 
-* After adding each test case, check the generated coverage report.
-
----
-
-
-
-
 
 
 
