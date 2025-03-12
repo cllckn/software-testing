@@ -88,3 +88,48 @@ These tasks are for students to implement at home:
 
 
 
+
+
+
+# **Hands-on Exercise 3: Extending Bank Account REST API in Exercise 1**
+
+
+## **Tasks**
+
+
+## **1. Convert REST API to a Web App**
+- Develop web interface to test all the endpoints, using JQuery.
+- Add logging module for the server, using morgan and winston libraries.
+
+
+## **4. Running the API as a Service with PM2**
+- Install **PM2** globally.
+- Run the API as **two separate services**:
+  - One on **port 3000**.
+  - Another on **port 4000**.
+- Ensure both services restart automatically on failure.
+
+
+## **5. Writing REST API Tests**
+- Use **http client** to test all API endpoints.
+- Validate that all operations behave as expected.
+- Define environment variables for:
+  - URLs (`PORT=3000` and `PORT=4000`).
+
+
+## **Completion Criteria**
+- The API should be functional with **GET, POST, PUT, DELETE** routes.
+- Deposit and withdrawal operations should correctly modify balances.
+- API should be running as **two services** on **3000 and 4000** using **PM2**.
+- Environment variables should be correctly configured and used.
+- Tests should pass successfully.
+
+
+
+## **Additional Challenges (Optional)**
+These tasks are for students to implement at home:
+
+- Implement a **transaction history feature** (`GET /api/accounts/:accountNumber/transactions`).
+- Add a **search feature** (`GET /api/accounts?currency=USD`) to filter accounts by currency.
+
+---
