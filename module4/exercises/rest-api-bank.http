@@ -1,0 +1,46 @@
+### Get all accounts
+GET http://localhost:3000/api/accounts
+Accept: application/json
+
+### Get a specific account by account number
+GET http://localhost:3000/api/accounts/1001
+Accept: application/json
+
+### Add a new account
+POST http://localhost:3000/api/accounts
+Content-Type: application/json
+
+{
+  "accountNumber": 1001,
+  "name": "John Doe",
+  "balance": 1500.75,
+  "currency": "USD"
+}
+
+### Update an account
+PUT http://localhost:3000/api/accounts/1001
+Content-Type: application/json
+
+{
+  "name": "John Doe Updated",
+  "balance": 2000
+}
+
+### Delete an account
+DELETE http://localhost:3000/api/accounts/1001
+
+### Deposit money into an account
+POST http://localhost:3000/api/accounts/1001/deposit
+Content-Type: application/json
+
+{
+  "amount": 500
+}
+
+### Withdraw money from an account
+POST http://localhost:3000/api/accounts/1001/withdraw
+Content-Type: application/json
+
+{
+  "amount": 200
+}
