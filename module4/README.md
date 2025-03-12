@@ -654,10 +654,13 @@ app.listen(PORT, () => {
 ```
 
 ```shell
+# for linux/mac
 PORT=5000 pm2 start server.js --name "my-server5" -f
 PORT=4000 pm2 start server.js --name "my-server4" -f
-PORT=3000 pm2 start server.js --name "my-server3" -f
 
+# for windows
+$env:PORT=5000; pm2 start server.js --name "my-server5" -f
+$env:PORT=4000; pm2 start server.js --name "my-server4" -f
 
 pm2 status
 ```
