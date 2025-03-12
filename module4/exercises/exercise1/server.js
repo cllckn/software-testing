@@ -4,7 +4,7 @@ const winston = require('winston');
 
 
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000; // Use environment variable or default to 3000
 
 // Middleware to parse JSON request bodies
 app.use(express.json());
@@ -85,4 +85,4 @@ app.post("/api/accounts/:accountNumber/withdraw", (req, res) => {
 });
 
 // Start the server
-app.listen(port, () => console.log(`Server running on http://localhost:${port}`));
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
