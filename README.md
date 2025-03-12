@@ -43,12 +43,13 @@ The course will cover the following topics:
 - HTTP Methods: GET, POST, PUT, DELETE
 - Status Codes And Response Formats (JSON, XML)
 - Developing RESTful Endpoints Using NodeJS
+- Building, Testing, and Deploying RESTful Web Applications
 - Manual Testing of REST APIs using cURL and IntelliJ HTTP Client
-- Automated Testing with IntelliJ HTTP Client
 - Hands-On Exercises
 
 ### Module 5: Integration Testing
 - Understanding Integration Testing
+- Integration Testing with IntelliJ HTTP Client
 - Testing Web Applications with Testing Frameworks
 - Case Study: Integration Testing of REST APIs with Database Support
 - The Role of Mocking in Testing
@@ -69,23 +70,23 @@ The course will cover the following topics:
 - Understanding Security Testing
 - Tools for Security Testing
 - Hands-On Exercises
-  
+
 ### Evaluation Method
 
 Students will be evaluated based on the following components:
 
 | **Component**                  | **Weight** |
 |--------------------------------|-----------|
-| Assignment 1 & Oral Examination |        |
+| Assignment 1 & Oral Examination |       |
 | Assignment 2 & Oral Examination |        |
-| Final Project & Oral Examination |        |
+| Final Project & Oral Examination |       |
 
 ## Assignments and Exams Schedule
 
 | **Assignment**   | **Oral Exam Date**     | **Due Date**       |
 |-----------------|------------------------|--------------------|
 | Assignment 1   | 28.02.2025 14:50-17.00 | Week 6             |
-| Assignment 2   | TBA                    | Week 11            |
+| Assignment 2   | TBA                    | Week 12            |
 | Final Project  | TBA                    | During Final Exams |
 
 
