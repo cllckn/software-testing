@@ -399,7 +399,7 @@ app.post("/greet", (req, res) => {
 
 // Start server
 const PORT = process.env.PORT || 3000; // Use environment variable or default to 3000
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`)); // the server on port 3000
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); // the server on port 3000
 
 
 // Export the app for testing
