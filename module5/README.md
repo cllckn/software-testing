@@ -385,25 +385,28 @@ Jest automatically detects test files with these suffixes:
 ```javascript
 const express = require("express");
 const app = express();
+const PORT = process.env.PORT || 3000; // Use environment variable or default to 3000
 
 // Middleware to parse JSON request bodies
 app.use(express.json());
 
 // Simple GET endpoint for the root route
 app.get("/", (req, res) => {
-    res.json({ message: "Hello, world!" });
+  res.json({ message: "Hello, world!" });
 });
 
 // POST endpoint to greet a user by name
 app.post("/greet", (req, res) => {
-    const { name } = req.body; // Extract 'name' from the request body
-    if (!name) {
-        // If 'name' is missing, return a 400 error with a message
-        return res.status(400).json({ error: "Name is required" });
-    }
-    // If 'name' is provided, return a greeting
-    res.json({ message: `Hello, ${name}!` });
+  const { name } = req.body; // Extract 'name' from the request body
+  if (!name) {
+    // If 'name' is missing, return a 400 error with a message
+    return res.status(400).json({ error: "Name is required" });
+  }
+  // If 'name' is provided, return a greeting
+  res.json({ message: `Hello, ${name}!` });
 });
+
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
 
 // Export the app for testing
 module.exports = app;
@@ -1226,3 +1229,4 @@ describe("Product API Integration Tests", () => {
 Extend Exercise 3 to include PostgreSQL mocking in tests.
 
 ---
+
