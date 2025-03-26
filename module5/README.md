@@ -1,4 +1,4 @@
-# Modul 5: Integration Testing
+# Module 5: Integration Testing
 
 ## Part 1: Understanding Integration Testing
 
@@ -36,7 +36,9 @@ client.test(testName, function() {
 client.assert(condition, failureMessage);
 ```
 
-* test for the rest api in /module4/part2/rest-api/server.js
+#### Write tests for the following Rest API.
+
+* /part1/rest-api/server.js
 
 ```javascript
 const express = require("express");
@@ -98,7 +100,7 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); // the se
 
 
 
-* test/st/module5/part1/http-client.env.json
+* test/st/module5/part1/rest-api/http-client.env.json
 
 ```json
 {
@@ -108,7 +110,7 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); // the se
 }
 ```
 
-* test/st/module5/part1/test-for-products.http
+* test/st/module5/part1/rest-api/rest-api-test.http
 
 ```plain
 ### Get all products
@@ -326,8 +328,8 @@ Error Handling:
 #### **Jest and Supertest Overview**
 
 #### **1. Jest**
-[Jest](https://jestjs.io/) is a JavaScript testing framework developed by Facebook. It is widely used for testing **Node.js,
-React, and other JavaScript applications**.
+[Jest](https://jestjs.io/) is a JavaScript testing framework developed by Facebook. 
+It is widely used for testing **Node.js, React, and other JavaScript applications**.
 
 #####  **Key Features**
 - **Fast and isolated tests** – Each test runs independently.
@@ -369,6 +371,12 @@ npm install --save-dev jest supertest
 npm test
 ```
 
+#### Naming Conventions for Test Files
+Use .test.js or .spec.js suffixes.
+
+Jest automatically detects test files with these suffixes:
+    server.test.js
+    product.spec.js
 
 #### **Example**
 
@@ -397,11 +405,6 @@ app.post("/greet", (req, res) => {
     res.json({ message: `Hello, ${name}!` });
 });
 
-// Start server
-const PORT = process.env.PORT || 3000; // Use environment variable or default to 3000
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); // the server on port 3000
-
-
 // Export the app for testing
 module.exports = app;
 ```
@@ -411,7 +414,7 @@ module.exports = app;
 ```javascript
 // Import supertest for making HTTP requests and the Express app
 const request = require("supertest");
-const app = require("../../../../../src/st/module5/part1/first-jest-test/server");
+const app = require("../../../../../src/st/module5/part2/first-jest-test/server");
 
 // Describe a test suite for the GET / endpoint
 describe("GET request for /", () => {
@@ -493,6 +496,34 @@ Error Handling:
 
 #### Test Coverage
 
+Test coverage is a metric that measures how much of your source code is executed when your automated tests are run. 
+It's typically expressed as a percentage. Different types of coverage measurements exist, including:
+
+* Statement Coverage – Percentage of code statements executed.
+
+* Branch Coverage – Percentage of decision branches (e.g., if-else, switch) tested.
+
+* Function Coverage – Percentage of functions/methods called in tests.
+
+* Line Coverage – Percentage of lines of code executed.
+
+##### Why is Code Coverage Important?
+
+* Ensures Code Reliability – Higher code coverage indicates that more parts of the application are tested, reducing the risk of undetected bugs.
+* Identifies Uncovered Code – It highlights parts of the code that have not been tested, helping developers focus on untested areas.
+* Improves Test Quality – Encourages writing meaningful tests that cover all logical paths in the application.
+* Enhances Maintainability – Well-tested code is easier to refactor and maintain, as unintended changes can be detected early.
+* Prevents Regression Issues – With good coverage, future updates are less likely to introduce bugs in untested parts of the application.
+
+
+Achieving 100% coverage can be expensive in terms of time, effort, and resources. 
+Instead, focusing on critical functionalities is often more practical.
+* 
+* Prioritize Critical Code – Focus on business logic, edge cases, error handling, and high-risk areas.
+* Avoid Redundant Tests – Testing trivial code (e.g., getters/setters) adds little value.
+
+
+
 To generate a coverage report, you need to configure Jest to collect coverage information.
 Add the following lines into the package.json.
 
@@ -509,6 +540,7 @@ Add the following lines into the package.json.
   }
 }
 ```
+
 run:
 ```shell
 npm run test:coverage
@@ -543,6 +575,18 @@ Uncovered Line #s:
 
 
 
+
+#### **Example**
+
+* modify the previous example /part1/first-jest-test/server.js to generate a coverage report.
+  * generate the code coverage report
+  * add a new endpoint (/hello)
+  * regenerate the code coverage report
+  * add test case for this endpoint
+  * regenerate the code coverage report
+
+
+
 ---
 ## **Hands-on Exercise 2**
 
@@ -559,14 +603,15 @@ Uncovered Line #s:
 
 
 
-
 ## Part 2: Case Study: Integration Testing of REST APIs with Database Support
 
-Integration testing for [this API](./part2/server.js) would involve:
+Integration testing for `server.js` (./part2/server.js, see below) involves the following:
 
 - Testing the interaction between the API and the database.
 - Testing the API endpoints to ensure they return the correct responses.
 - Simulating real-world scenarios where a client application interacts with the API.
+
+Unlike **unit tests**, which isolate individual functions, integration tests check how various modules integrate and function as a whole.
 
 * /part2/server.js
 ```javascript
@@ -576,23 +621,14 @@ const { Pool } = require("pg"); // PostgreSQL client
 
 const app = express();
 
-// Initialize a new PostgreSQL connection pool
-
+// Initialize a PostgreSQL connection pool
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'dss',
-  password: 'LecturePassword',
+  user: "postgres",
+  host: "localhost",
+  database: process.env.NODE_ENV === "test" ? "dsstestdb" : "dss", // Use test DB in testing
+  password: "LecturePassword",
   port: 5432,
 });
-
-/*const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: process.env.NODE_ENV === 'test' ? 'dss_test' : 'dss', // Use test DB for testing
-    password: 'LecturePassword',
-    port: 5432,
-});*/
 
 // Middleware to parse JSON request bodies
 app.use(express.json());
@@ -600,28 +636,22 @@ app.use(express.json());
 // ------------------------ GET all products ------------------------
 app.get("/api/products", async (req, res) => {
   try {
-    // Fetch all products from the database
     const result = await pool.query("SELECT * FROM products ORDER BY id ASC");
-
-    // Respond with JSON data
     res.json(result.rows);
   } catch (err) {
-    res.status(500).json({ error: "Database error" }); // Handle errors
+    res.status(500).json({ error: "Database error" });
   }
 });
 
 // ------------------------ GET a single product by ID ------------------------
 app.get("/api/products/:id", async (req, res) => {
   try {
-    const { id } = req.params; // Extract product ID from URL
-
-    // Query database for the given product ID
+    const { id } = req.params;
     const result = await pool.query("SELECT * FROM products WHERE id = $1", [id]);
 
     if (result.rows.length === 0)
       return res.status(404).json({ error: "Product not found" });
 
-    // Respond with the found product
     res.json(result.rows[0]);
   } catch (err) {
     res.status(500).json({ error: "Database error" });
@@ -631,19 +661,14 @@ app.get("/api/products/:id", async (req, res) => {
 // ------------------------ POST - Add a new product ------------------------
 app.post("/api/products", async (req, res) => {
   try {
-    const { name, price } = req.body; // Extract product details from request body
+    const { name, price } = req.body;
+    if (!name || !price) return res.status(400).json({ error: "Invalid input" });
 
-    // Validate input (ensure name and price are provided)
-    if (!name || !price)
-      return res.status(400).json({ error: "Invalid input" });
-
-    // Insert new product into the database
-    const result = await pool.query(         //executes the query asynchronously using the PostgreSQL connection pool.
-      "INSERT INTO products (name, price) VALUES ($1, $2) RETURNING *", //$1, $2 are placeholders for parameterized queries, preventing SQL injection. // RETURNING * makes PostgreSQL return the newly inserted row.
-      [name, price] //name, price] is an array of values that replaces $1 and $2 in the query.
+    const result = await pool.query(
+      "INSERT INTO products (name, price) VALUES ($1, $2) RETURNING *",
+      [name, price]
     );
 
-    // Respond with the newly added product
     res.status(201).json(result.rows[0]);
   } catch (err) {
     res.status(500).json({ error: "Database error" });
@@ -656,16 +681,14 @@ app.put("/api/products/:id", async (req, res) => {
     const { id } = req.params;
     const { name, price } = req.body;
 
-    // Update the product in the database if it exists
     const result = await pool.query(
       "UPDATE products SET name = COALESCE($1, name), price = COALESCE($2, price) WHERE id = $3 RETURNING *",
-      [name, price, id]   //COALESCE($1, name) ensures that if $1 (the provided value for name) is NULL or not given, the existing name value in the database remains unchanged.
+      [name, price, id]
     );
 
     if (result.rows.length === 0)
       return res.status(404).json({ error: "Product not found" });
 
-    // Respond with the updated product
     res.json(result.rows[0]);
   } catch (err) {
     res.status(500).json({ error: "Database error" });
@@ -676,30 +699,27 @@ app.put("/api/products/:id", async (req, res) => {
 app.delete("/api/products/:id", async (req, res) => {
   try {
     const { id } = req.params;
-
-    // Delete the product from the database
     const result = await pool.query("DELETE FROM products WHERE id = $1 RETURNING *", [id]);
 
     if (result.rows.length === 0)
       return res.status(404).json({ error: "Product not found" });
 
-    // Respond with a success message
     res.json({ message: "Product deleted" });
   } catch (err) {
     res.status(500).json({ error: "Database error" });
   }
 });
 
-// ------------------------ Start server ------------------------
-const PORT = 3000;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+// ------------------------ Start server (only when not in test mode) ------------------------
+const PORT = process.env.PORT || 3000;
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+}
 
-// Export the app for testing
-module.exports = app;
+// Export the app and pool for testing
+module.exports = { app, pool };
+
 ```
-
-
-Unlike **unit tests**, which isolate individual functions, integration tests check how various modules integrate and function as a whole.
 
 ### **2. Integration Testing Approach**
 To test the provided REST API, we will:
@@ -713,11 +733,11 @@ To test the provided REST API, we will:
 We will use:
 - **Jest**: Test framework.
 - **SuperTest**: Makes HTTP requests to test API endpoints.
-- **PostgreSQL Test Database**: Ensures tests do not modify production data.
+- **PostgreSQL Test Database (dsstestdb)**: Ensures tests do not modify production data.
 
 #### **Test File Structure**
 - `part2/server.js` → Main Express server with PostgreSQL connection.
-- `part2/tests/api.testv1.js` → Integration tests for API endpoints.
+- `/test/module5/part2/server.test.js` → Integration tests for API endpoints.
 
 #### **4. Testing API Endpoints**
 The tests will verify:
@@ -739,27 +759,16 @@ Run the following command to install the required packages:
     
     npm install --save-dev jest supertest pg
 
-* /test/module5/part2/api.test.js
+* /test/module5/part2/server.test.js
 
 ```javascript
-const request = require("supertest"); // Import SuperTest for making HTTP requests
-const app = require("../../../../src/st/module5/part2/server"); // Import the Express app
-const { Pool } = require("pg"); // PostgreSQL connection
+const request = require("supertest");
+const { app, pool } = require("../../../../src/st/module5/part3/server"); // ✅ Import pool separately
 
-// Create a separate test database connection
-const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "dss",  // Use a test database
-  //database: "test_db",  // Use a test database
-  password: "LecturePassword",
-  port: 5432,
+// Clear test database before running tests
+beforeAll(async () => {
+  await pool.query("DELETE FROM products"); // Clean up test data
 });
-
-// Before running tests, clear the products table
-/*beforeAll(async () => {
-    await pool.query("DELETE FROM products");
-});*/
 
 // Close DB connection after tests
 afterAll(async () => {
@@ -820,6 +829,7 @@ describe("Product API Integration Tests", () => {
     });*/
 });
 
+
 ```
 
 * Execute the tests using:
@@ -829,7 +839,7 @@ describe("Product API Integration Tests", () => {
 
 ## **5. Extending the Scenario: Service-Based Testing**
 To apply real-world integration testing:
-1. **Create a Separate Service**
+1. **Initialize a new project including a separate service**
     - A simple **frontend application** (or another microservice) consumes the REST API.
     - This service retrieves products and allows modifications.
 
@@ -851,9 +861,13 @@ app.get("/products", async (req, res) => {
   }
 });
 
-const PORT = 4000;
-app.listen(PORT, () => console.log(`Client service running on http://localhost:${PORT}`));
+// ------------------------ Start server (only when not in test mode) ------------------------
+const PORT = process.env.PORT || 4000;
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+}
 
+// Export the app for testing
 module.exports = app;
 
 ```
@@ -862,11 +876,11 @@ module.exports = app;
     - Instead of direct API tests, the frontend (or another service) interacts with the REST API.
     - Integration tests will validate that the **client correctly consumes API responses**.
 
-* /part2/test/client.service.test.js
+* /test/module5/part2/client.service.test.js
 
 ```javascript
 const request = require("supertest");
-const app = require("../../../../src/st/module5/part2/client-service"); // Import the Express app
+const app = require("../../../../src/st/module5/part3/client-service"); // Import the Express app
 
 describe("Client Service Integration Tests", () => {
   // Test fetching products from the main API
@@ -882,26 +896,33 @@ describe("Client Service Integration Tests", () => {
 
 
 
----
 ## **Hands-on Exercise 3**
 
+* Add PostgreSQL support for the application developed in Module 5 Exercise 2.
 
+* Develop a new web application that sends requests to this application.
+
+* Write related tests.
 
 ---
+
+
+
 
 
 ## Part 3: The Role of Mocking in Testing
 
 
 ### **What is Mocking?**
-Mocking is the process of creating fake implementations of modules, functions, or dependencies to test components in isolation. It helps to:
+Mocking is the process of simulating fake implementations of modules, 
+functions, or dependencies to test components in isolation.
 - **Avoid dependency on external systems** (e.g., databases, APIs).
 - **Increase test speed and reliability** by replacing slow operations.
 - **Control test scenarios** by returning predefined responses.
 
 ### **Why Mock a Database?**
 When testing a Node.js REST API that interacts with a database:
-- A real database connection may introduce **flakiness** due to network issues.
+- A real database connection may introduce **instability** due to network issues.
 - The database may **not always have the expected test data**.
 - Setting up and tearing down a test database can be **time-consuming**.
 
@@ -913,79 +934,295 @@ By mocking the database:
 
 
 ### **Jest Mock Example for PostgreSQL Pool**
-#### **File: `__mocks__/pg.js`**
-This file mocks the PostgreSQL `pg` module to return predefined query results.
 
+* /part3/web-app-server.js
 
 ```javascript
-const { Pool } = jest.createMockFromModule("pg");
+// Import necessary modules
+const express = require("express");
+const { Pool } = require("pg"); // PostgreSQL client
 
-const mockQuery = jest.fn(); 
+const app = express();
 
-Pool.prototype.query = mockQuery; 
-Pool.prototype.connect = jest.fn(() => ({
-    query: mockQuery,
-    release: jest.fn(),
-}));
+// Initialize a PostgreSQL connection pool
+const pool = new Pool({
+  user: "postgres",
+  host: "localhost",
+  database: process.env.NODE_ENV === "test" ? "dsstestdb" : "dss", // Use test DB in testing
+  password: "LecturePassword",
+  port: 5432,
+});
 
-module.exports = { Pool };
+// Middleware to parse JSON request bodies
+app.use(express.json());
+
+// ------------------------ GET all products ------------------------
+app.get("/api/products", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM products ORDER BY id ASC");
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: "Database error" });
+  }
+});
+
+// ------------------------ GET a single product by ID ------------------------
+app.get("/api/products/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const productId = parseInt(id); // Convert id to an integer (base 10)
+    const result = await pool.query("SELECT * FROM products WHERE id = $1", [productId]);
+
+    if (result.rows.length === 0)
+      return res.status(404).json({ error: "Product not found" });
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: "Database error" });
+  }
+});
+
+// ------------------------ POST - Add a new product ------------------------
+app.post("/api/products", async (req, res) => {
+  try {
+    const { name, price } = req.body;
+    if (!name || !price) return res.status(400).json({ error: "Invalid input" });
+
+    const result = await pool.query(
+      "INSERT INTO products (name, price) VALUES ($1, $2) RETURNING *",
+      [name, price]
+    );
+
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: "Database error" });
+  }
+});
+
+// ------------------------ PUT - Update a product ------------------------
+app.put("/api/products/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const productId = parseInt(id); // Convert id to an integer (base 10)
+    const { name, price } = req.body;
+
+    const result = await pool.query(
+      "UPDATE products SET name = COALESCE($1, name), price = COALESCE($2, price) WHERE id = $3 RETURNING *",
+      [name, price, productId]
+    );
+
+    if (result.rows.length === 0)
+      return res.status(404).json({ error: "Product not found" });
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: "Database error" });
+  }
+});
+
+// ------------------------ DELETE - Remove a product ------------------------
+app.delete("/api/products/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const productId = parseInt(id); // Convert id to an integer (base 10)
+    const result = await pool.query("DELETE FROM products WHERE id = $1 RETURNING *", [productId]);
+
+    if (result.rows.length === 0)
+      return res.status(404).json({ error: "Product not found" });
+
+    res.json({ message: "Product deleted" });
+  } catch (err) {
+    res.status(500).json({ error: "Database error" });
+  }
+});
+
+
+// ------------------------ GET validated price for a product ------------------------
+app.get("/api/products/validated-price/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const productId = parseInt(id, 10); // Convert id to an integer (base 10)
+
+    if (isNaN(productId)) {
+      return res.status(400).json({ error: "Invalid product ID" });
+    }
+
+    // Fetch product price
+    const result = await pool.query("SELECT price FROM products WHERE id = $1", [productId]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    let { price } = result.rows[0]; // Extract the price
+
+    // Apply discount rules
+    if (price >= 500 && price <= 1000) {
+      price *= 0.90; // 10% discount
+    } else if (price > 1000) {
+      price *= 0.80; // 20% discount
+    }
+
+    // Apply 20% tax
+    const validatedPrice = price * 1.20;
+
+    res.json({ validatedPrice: validatedPrice.toFixed(2) }); // Return final validated price
+  } catch (err) {
+    res.status(500).json({ error: "Database error" });
+  }
+});
+
+
+// ------------------------ Start server (only when not in test mode) ------------------------
+const PORT = process.env.PORT || 3000;
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+}
+
+// Export the app and pool for testing
+module.exports = { app, pool };
 
 ```
 
 
-#### **File: `server.test.js`**
-- Mocks the database interaction.
-- Uses `supertest` to test API endpoints.
-- Verifies if responses match expectations.
+* /test/module5/part3/server.test.js
+  * Break the price validation logic to see a fail in test.
 
 ```javascript
 const request = require("supertest");
-const app = require("../server");
+const { app } = require("../../../../src/st/module5/part3/server");
+
+// 🟢 Mock `pg` module
+jest.mock("pg", () => { // Replaces the actual pg module
+  // Create a mock object with `query` and `end` methods
+  const mClient = {
+    query: jest.fn(), // Mock query execution- mClient.query is a fake function that simulates database queries.
+
+    end: jest.fn(),   // Mock closing the connection
+  };
+  return { Pool: jest.fn(() => mClient) }; // Mock `Pool` constructor. Every time new Pool() is called, it returns mClient.
+});
+
+// Import the mocked `Pool` class
 const { Pool } = require("pg");
+const mockPoolInstance = new Pool(); // Every time new Pool() is called, mClient is returned.
 
-jest.mock("pg");
+describe("Product API Integration Tests", () => {
 
-const mockQuery = Pool.prototype.query;
+  beforeEach(() => {
+    jest.clearAllMocks(); // Reset all mock calls before each test. Ensures that old mock calls do not interfere with new ones.
+  });
 
-describe("Product API", () => {
-    beforeEach(() => {
-        jest.clearAllMocks(); // Reset mocks before each test
+  afterAll(async () => {
+    await mockPoolInstance.end(); // Ensure mock pool is closed
+  });
+
+  let productId=1;
+
+  // ------------------------ GET all products ------------------------
+  // 🟢 Test: Retrieve all products
+  it("should retrieve all products", async () => {
+    mockPoolInstance.query.mockResolvedValueOnce({
+      rows: [{ id: 1, name: "Laptop", price: 999.99 }],
     });
 
-    test("GET /api/products should return a list of products", async () => {
-        mockQuery.mockResolvedValueOnce({ rows: [{ id: 1, name: "Laptop", price: 999 }] });
+    const response = await request(app).get("/api/products");
 
-        const response = await request(app).get("/api/products");
+    expect(response.statusCode).toBe(200);
+    expect(response.body.length).toBeGreaterThan(0);
+    expect(mockPoolInstance.query).toHaveBeenCalledWith(
+      "SELECT * FROM products ORDER BY id ASC"
+    );
+  });
 
-        expect(response.statusCode).toBe(200);
-        expect(response.body).toEqual([{ id: 1, name: "Laptop", price: 999 }]);
+  // ------------------------ GET a single product by ID ------------------------
+  // 🟢 Test: Retrieve a product by ID
+  it("should retrieve a product by ID", async () => {
+    const mockProduct = { id: 1, name: "Laptop", price: 999.99 };
+
+    mockPoolInstance.query.mockResolvedValueOnce({ rows: [mockProduct] });
+
+    const response = await request(app).get(`/api/products/${productId}`);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual(mockProduct);
+    expect(mockPoolInstance.query).toHaveBeenCalledWith(
+      "SELECT * FROM products WHERE id = $1",
+      [productId]
+    );
+  });
+
+
+// ------------------------Test :  POST -Add a new product ------------------------
+  it("should create a new product", async () => {
+    const mockProduct = { id: 1, name: "Laptop", price: 999.99 };
+
+    // Simulate the database returning a newly inserted product
+    mockPoolInstance.query.mockResolvedValueOnce({ rows: [mockProduct] });
+
+    const response = await request(app)
+      .post("/api/products")
+      .send({ name: "Laptop", price: 999.99 });
+
+    // Assertions
+    expect(response.statusCode).toBe(201);
+    expect(response.body).toEqual(mockProduct);
+
+    // Check if the mock query was called correctly
+    // Ensures the SQL syntax is correct
+    // Validates that the correct parameters are used
+    // Helps catch unexpected behavior in the database interaction
+    expect(mockPoolInstance.query).toHaveBeenCalledWith(
+      "INSERT INTO products (name, price) VALUES ($1, $2) RETURNING *",
+      ["Laptop", 999.99]
+    );
+
+    productId = response.body.id;
+  });
+
+
+  // 🟢 Test: Delete a product
+  it("should delete a product", async () => {
+    mockPoolInstance.query.mockResolvedValueOnce({
+      rows: [{ id: productId, name: "Laptop", price: 999.99 }],
     });
 
-    test("POST /api/products should add a new product", async () => {
-        mockQuery.mockResolvedValueOnce({ rows: [{ id: 2, name: "Phone", price: 599 }] });
+    const response = await request(app).delete(`/api/products/${productId}`);
 
-        const response = await request(app)
-            .post("/api/products")
-            .send({ name: "Phone", price: 599 });
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual({ message: "Product deleted" });
+    expect(mockPoolInstance.query).toHaveBeenCalledWith(
+      "DELETE FROM products WHERE id = $1 RETURNING *",
+      [productId]
+    );
+  });
 
-        expect(response.statusCode).toBe(201);
-        expect(response.body).toEqual({ id: 2, name: "Phone", price: 599 });
-    });
 
-    test("DELETE /api/products/:id should remove a product", async () => {
-        mockQuery.mockResolvedValueOnce({ rows: [{ id: 1, name: "Laptop", price: 999 }] });
+  // ------------------------ GET validated price ------------------------
+  it("should return the validated price for a product", async () => {
+    const mockProduct = { id: 1, name: "Laptop", price: 1200 };
 
-        const response = await request(app).delete("/api/products/1");
+    // Mock database query to return the full product object
+    mockPoolInstance.query.mockResolvedValueOnce({ rows: [mockProduct] });
 
-        expect(response.statusCode).toBe(200);
-        expect(response.body).toEqual({ message: "Product deleted" });
-    });
+    const response = await request(app).get(`/api/products/validated-price/${productId}`);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual({ validatedPrice: "1152.00" }); // (1200 - 20%) + 20%
+    expect(mockPoolInstance.query).toHaveBeenCalledWith(
+      "SELECT price FROM products WHERE id = $1",
+      [productId]
+    );
+  });
+
+
 });
 
 ```
 
-### **Key Takeaways**
-- Mocking helps test API logic **without a real database**.
-- Improves **test reliability and execution speed**.
-- Enables testing **error scenarios** that are hard to reproduce in real environments.
 
+## **Hands-on Exercise 4**
+
+Extend Exercise 3 to include PostgreSQL mocking in tests.
+
+---
