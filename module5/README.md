@@ -375,7 +375,7 @@ npm test
 Use .test.js or .spec.js suffixes.
 
 Jest automatically detects test files with these suffixes:
-    server.test.js
+    server.test.solution.js
     product.spec.js
 
 #### **Example**
@@ -412,7 +412,7 @@ app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`)
 module.exports = app;
 ```
 
-* /test/module5/part1/first-jest-test/server.test.js
+* /test/module5/part1/first-jest-test/server.test.solution.js
 
 ```javascript
 // Import supertest for making HTTP requests and the Express app
@@ -499,7 +499,11 @@ Error Handling:
 
 #### Test Coverage
 
-Test coverage is a metric that measures how much of your source code is executed when your automated tests are run. 
+Test coverage is a metric that measures how much of your source code is executed when your automated tests are run.
+
+Maintaining a good level of code coverage is important as it helps identify untested parts of the code, reduces the risk of bugs, and improves overall software reliability. 
+However, achieving 100% coverage can be expensive in terms of time, effort, and resources. Instead, focusing on critical functionalities is often more practical.
+
 It's typically expressed as a percentage. Different types of coverage measurements exist, including:
 
 * Statement Coverage – Percentage of code statements executed.
@@ -521,7 +525,7 @@ It's typically expressed as a percentage. Different types of coverage measuremen
 
 Achieving 100% coverage can be expensive in terms of time, effort, and resources. 
 Instead, focusing on critical functionalities is often more practical.
-* 
+
 * Prioritize Critical Code – Focus on business logic, edge cases, error handling, and high-risk areas.
 * Avoid Redundant Tests – Testing trivial code (e.g., getters/setters) adds little value.
 
@@ -740,7 +744,7 @@ We will use:
 
 #### **Test File Structure**
 - `part2/server.js` → Main Express server with PostgreSQL connection.
-- `/test/module5/part2/server.test.js` → Integration tests for API endpoints.
+- `/test/module5/part2/server.test.solution.js` → Integration tests for API endpoints.
 
 #### **4. Testing API Endpoints**
 The tests will verify:
@@ -762,7 +766,7 @@ Run the following command to install the required packages:
     
     npm install --save-dev jest supertest pg
 
-* /test/module5/part2/server.test.js
+* /test/module5/part2/server.test.solution.js
 
 ```javascript
 const request = require("supertest");
