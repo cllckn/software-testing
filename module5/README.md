@@ -620,6 +620,19 @@ Integration testing for `server.js` (./part2/server.js, see below) involves the 
 
 Unlike **unit tests**, which isolate individual functions, integration tests check how various modules integrate and function as a whole.
 
+* Define two new databases named `dss` and `dsstestdb`
+* Construct new tables named `products` in these databases:
+```sql
+create table public.products
+(
+    id    serial primary key,
+    name  text           not null,
+    price numeric(10, 2) not null
+);
+
+```
+
+
 * /part2/server.js
 ```javascript
 // Import necessary modules
@@ -744,7 +757,7 @@ We will use:
 
 #### **Test File Structure**
 - `part2/server.js` → Main Express server with PostgreSQL connection.
-- `/test/module5/part2/server.test.solution.js` → Integration tests for API endpoints.
+- `/test/module5/part2/server.test.js` → Integration tests for API endpoints.
 
 #### **4. Testing API Endpoints**
 The tests will verify:
@@ -766,7 +779,7 @@ Run the following command to install the required packages:
     
     npm install --save-dev jest supertest pg
 
-* /test/module5/part2/server.test.solution.js
+* /test/module5/part2/server.test.js
 
 ```javascript
 const request = require("supertest");
