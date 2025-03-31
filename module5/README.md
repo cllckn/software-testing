@@ -5,14 +5,14 @@
 Integration testing verifies the interactions between different modules or services within an application.
 It focuses on the problems that arise from the integration of modules.
 
-### Why Is Integration Testing Important?
+#### Why Is Integration Testing Important?
 * Validates the interaction between different parts of the system (e.g., API, database, client).
 
 * Detects issues that arise when components are combined.
 
 * Ensures that the system behaves correctly in real-world scenarios.
 
-### Key Characteristics of Integration Testing
+#### Key Characteristics of Integration Testing
 * Focus on Interactions: Tests how different components interact with each other.
 
 * Real-World Scenarios: Simulates actual usage of the system.
@@ -21,7 +21,7 @@ It focuses on the problems that arise from the integration of modules.
 
 
 
-### Integration Testing with IntelliJ HTTP Client
+### 1.1.Integration Testing with IntelliJ HTTP Client
 
 * client.test() -> This function is used to define a test case
 
@@ -297,7 +297,7 @@ response.body.message:
 
     Used to check the message returned by the server, such as confirmation of deletion.
 
-### Why These Assertions Are Important
+#### Why These Assertions Are Important
 
 Status Codes:
 
@@ -323,9 +323,8 @@ Error Handling:
 
 
 
-### Testing Node.js Applications with Testing Frameworks
+### 1.2.Testing Node.js Applications with Testing Frameworks
 
-#### **Jest and Supertest Overview**
 
 #### **1. Jest**
 [Jest](https://jestjs.io/) is a JavaScript testing framework developed by Facebook. 
@@ -497,7 +496,7 @@ Error Handling:
     The second test case for POST /greet checks how the app handles invalid input (missing name).
 
 
-#### Test Coverage
+### 1.3.Test Coverage
 
 Test coverage is a metric that measures how much of your source code is executed when your automated tests are run.
 
@@ -608,8 +607,6 @@ Uncovered Line #s:
 
 
 
-
-
 ## Part 2: Case Study: Integration Testing of REST APIs with Database Support
 
 Integration testing for `server.js` (./part2/server.js, see below) involves the following:
@@ -629,6 +626,11 @@ create table public.products
     name  text           not null,
     price numeric(10, 2) not null
 );
+
+
+insert into products (name, price)
+values ('SSD',600),
+       ('RAM',400);
 
 ```
 
@@ -1246,4 +1248,3 @@ describe("Product API Integration Tests", () => {
 Extend Exercise 3 to include PostgreSQL mocking in tests.
 
 ---
-
