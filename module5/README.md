@@ -1,5 +1,47 @@
 # Module 5: Integration Testing
 
+<!-- TOC -->
+* [Module 5: Integration Testing](#module-5-integration-testing)
+  * [Part 1: Understanding Integration Testing](#part-1-understanding-integration-testing)
+      * [Why Is Integration Testing Important?](#why-is-integration-testing-important)
+      * [Key Characteristics of Integration Testing](#key-characteristics-of-integration-testing)
+    * [1.1.Integration Testing with IntelliJ HTTP Client](#11integration-testing-with-intellij-http-client)
+      * [Write tests for the following Rest API.](#write-tests-for-the-following-rest-api)
+      * [Key Explanations](#key-explanations)
+      * [Why These Assertions Are Important](#why-these-assertions-are-important)
+  * [**Hands-on Exercise 1**](#hands-on-exercise-1)
+    * [1.2.Testing Node.js Applications with Testing Frameworks](#12testing-nodejs-applications-with-testing-frameworks)
+      * [**1. Jest**](#1-jest)
+        * [**Key Features**](#key-features)
+      * [**2. Supertest**](#2-supertest)
+        * [🔹 **Key Features**](#-key-features)
+      * [Setting up the environment](#setting-up-the-environment)
+      * [Naming Conventions for Test Files](#naming-conventions-for-test-files)
+      * [**Example**](#example)
+        * [Key Points Explained in Comments](#key-points-explained-in-comments)
+    * [1.3.Test Coverage](#13test-coverage)
+        * [Why is Code Coverage Important?](#why-is-code-coverage-important)
+        * [The Coverage Report](#the-coverage-report)
+      * [**Example**](#example-1)
+  * [**Hands-on Exercise 2**](#hands-on-exercise-2)
+  * [Part 2: Case Study: Integration Testing of REST APIs with Database Support](#part-2-case-study-integration-testing-of-rest-apis-with-database-support)
+    * [1. Construct Database Structures](#1-construct-database-structures)
+    * [2. Develop the Application](#2-develop-the-application)
+    * [3. Write and Execute Integration Tests](#3-write-and-execute-integration-tests)
+      * [**Required Dependencies**](#required-dependencies)
+      * [**Test File Structure**](#test-file-structure)
+      * [**API Endpoints to Test**](#api-endpoints-to-test)
+      * [Install Dependencies](#install-dependencies)
+      * [Implement Integration Tests](#implement-integration-tests)
+    * [4. Extending the Scenario: Service-Based Testing](#4-extending-the-scenario-service-based-testing)
+  * [**Hands-on Exercise 3**](#hands-on-exercise-3)
+  * [Part 3: The Role of Mocking in Testing](#part-3-the-role-of-mocking-in-testing)
+    * [**What is Mocking?**](#what-is-mocking)
+    * [**Why Mock a Database?**](#why-mock-a-database)
+    * [**Jest Mock Example for PostgreSQL Pool**](#jest-mock-example-for-postgresql-pool)
+  * [**Hands-on Exercise 4**](#hands-on-exercise-4)
+<!-- TOC -->
+
 ## Part 1: Understanding Integration Testing
 
 Integration testing verifies the interactions between different modules or services within an application.
@@ -615,7 +657,7 @@ Integration testing for `server.js` (./part2/server.js, see below) involves the 
 - Testing the API endpoints to ensure they return the correct responses.
 - Simulating real-world scenarios where a client application interacts with the API.
 
-Unlike **unit tests**, which isolate individual functions, integration tests check how various modules integrate and function as a whole.
+### 1. Construct Database Structures
 
 * Define two new databases named `dss` and `dsstestdb`
 * Construct new tables named `products` in these databases:
@@ -634,6 +676,7 @@ values ('SSD',600),
 
 ```
 
+### 2. Develop the Application
 
 * /part2/server.js
 ```javascript
@@ -733,6 +776,8 @@ app.delete("/api/products/:id", async (req, res) => {
 });
 
 // ------------------------ Start server (only when not in test mode) ------------------------
+// If NODE_ENV is set to "test", the server does not start separately.Instead, Supertest 
+// handles requests internally, preventing conflicts and unnecessary resource consumption.
 const PORT = process.env.PORT || 3000;
 if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
@@ -741,18 +786,18 @@ if (process.env.NODE_ENV !== "test") {
 // Export the app and pool for testing
 module.exports = { app, pool };
 
+
 ```
 
-### **2. Integration Testing Approach**
-To test the provided REST API, we will:
+### 3. Write and Execute Integration Tests
+To test the provided REST API:
 1. **Start the Express server** with a test database connection.
 2. **Use SuperTest** to make HTTP requests to API endpoints.
 3. **Check database changes** after performing operations.
 4. **Validate HTTP responses** and error handling.
 
-### **3. Test Setup**
 #### **Required Dependencies**
-We will use:
+
 - **Jest**: Test framework.
 - **SuperTest**: Makes HTTP requests to test API endpoints.
 - **PostgreSQL Test Database (dsstestdb)**: Ensures tests do not modify production data.
@@ -761,7 +806,7 @@ We will use:
 - `part2/server.js` → Main Express server with PostgreSQL connection.
 - `/test/module5/part2/server.test.js` → Integration tests for API endpoints.
 
-#### **4. Testing API Endpoints**
+#### **API Endpoints to Test**
 The tests will verify:
 - **GET /api/products** → Fetch all products.
 - **GET /api/products/:id** → Fetch a single product.
@@ -781,13 +826,16 @@ Run the following command to install the required packages:
     
     npm install --save-dev jest supertest pg
 
+#### Implement Integration Tests
 * /test/module5/part2/server.test.js
+
 
 ```javascript
 const request = require("supertest");
-const { app, pool } = require("../../../../src/st/module5/part3/server"); // ✅ Import pool separately
+const { app, pool } = require("../../../../src/st/module5/part2/server"); // Import pool separately
 
-// Clear test database before running tests
+// Clear test database before running tests. Runs once per test file.
+// beforeEach(async () => { ... }) runs before each individual test case.
 beforeAll(async () => {
   await pool.query("DELETE FROM products"); // Clean up test data
 });
@@ -803,12 +851,12 @@ describe("Product API Integration Tests", () => {
   // Test POST /api/products - Create a new product
   it("should create a new product", async () => {
     const response = await request(app).post("/api/products")
-      .send({ name: "Laptop", price: 999.99 });
+            .send({ name: "Laptop", price: 999.99 });
 
     expect(response.statusCode).toBe(201);
     expect(response.body).toHaveProperty("id");
     expect(response.body.name).toBe("Laptop");
-    //expect(response.body.price).toBe(999.99);
+    expect(Number(response.body.price)).toBe(999.99);
 
     productId = response.body.id;
   });
@@ -832,36 +880,36 @@ describe("Product API Integration Tests", () => {
   });
 
   // Test PUT /api/products/:id - Update a product
-  /*  it("should update a product", async () => {
-        const response = await request(app)
+  it("should update a product", async () => {
+    const response = await request(app)
             .put(`/api/products/${productId}`)
-            .send({ name: "Gaming Laptop", price: 1299.99 });
+            .send({ name: "Gaming Laptop", price: 4000 });
 
-        expect(response.statusCode).toBe(200);
-        expect(response.body.name).toBe("Gaming Laptop");
-        expect(response.body.price).toBe(1299.99);
-    });
+    expect(response.statusCode).toBe(200);
+    expect(response.body.name).toBe("Gaming Laptop");
+    expect(Number(response.body.price)).toBe(4000);
+  });
 
-    // Test DELETE /api/products/:id - Remove a product
-    it("should delete a product", async () => {
-        const response = await request(app).delete(`/api/products/${productId}`);
+  // Test DELETE /api/products/:id - Remove a product
+  it("should delete a product", async () => {
+    const response = await request(app).delete(`/api/products/${productId}`);
 
-        expect(response.statusCode).toBe(200);
-        expect(response.body).toEqual({ message: "Product deleted" });
-    });*/
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual({ message: "Product deleted" });
+  });
 });
-
 
 ```
 
 * Execute the tests using:
-        
-        npx jest 
+    
+        npm run test:coverage
 
 
-## **5. Extending the Scenario: Service-Based Testing**
+
+### 4. Extending the Scenario: Service-Based Testing
 To apply real-world integration testing:
-1. **Initialize a new project including a separate service**
+1. Initialize a new project including a separate service
     - A simple **frontend application** (or another microservice) consumes the REST API.
     - This service retrieves products and allows modifications.
 
@@ -884,6 +932,8 @@ app.get("/products", async (req, res) => {
 });
 
 // ------------------------ Start server (only when not in test mode) ------------------------
+// If NODE_ENV is set to "test", the server does not start separately.Instead, Supertest
+// handles requests internally, preventing conflicts and unnecessary resource consumption.
 const PORT = process.env.PORT || 4000;
 if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
@@ -902,15 +952,15 @@ module.exports = app;
 
 ```javascript
 const request = require("supertest");
-const app = require("../../../../src/st/module5/part3/client-service"); // Import the Express app
+const app = require("../../../../src/st/module5/part2/client-service"); // Import the Express app
 
 describe("Client Service Integration Tests", () => {
   // Test fetching products from the main API
   it("should fetch products from the API", async () => {
     const response = await request(app).get("/products");
-
+    //console.log(JSON.stringify(response));
     expect(response.statusCode).toBe(200);
-    //expect(Array.isArray(response.body)).toBe(true);
+    expect(Array.isArray(response.body)).toBe(true);
   });
 });
 
@@ -1248,3 +1298,4 @@ describe("Product API Integration Tests", () => {
 Extend Exercise 3 to include PostgreSQL mocking in tests.
 
 ---
+
