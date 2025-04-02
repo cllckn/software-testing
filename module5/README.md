@@ -650,6 +650,9 @@ Uncovered Line #s:
 
 ## Part 2: Case Study: Integration Testing of REST APIs with Database Support
 
+**Using a test database for testing helps protect the main database from unintended modifications and accidental data corruption.**
+
+
 Integration testing for `server.js` (./part2/server.js, see below) involves the following:
 
 - Testing the interaction between the API and the database.
