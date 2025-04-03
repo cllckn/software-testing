@@ -4,38 +4,19 @@
 * [Module 5: Integration Testing](#module-5-integration-testing)
   * [Part 1: Understanding Integration Testing](#part-1-understanding-integration-testing)
     * [1.1.Integration Testing with IntelliJ HTTP Client](#11integration-testing-with-intellij-http-client)
-      * [Write tests for the following Rest API.](#write-tests-for-the-following-rest-api)
-      * [Key Explanations](#key-explanations)
-      * [Why These Assertions Are Important](#why-these-assertions-are-important)
   * [**Hands-on Exercise 1**](#hands-on-exercise-1)
     * [1.2.Testing Node.js Applications with Testing Frameworks](#12testing-nodejs-applications-with-testing-frameworks)
       * [**1. Jest**](#1-jest)
-        * [**Key Features**](#key-features)
       * [**2. Supertest**](#2-supertest)
-        * [🔹 **Key Features**](#-key-features)
-      * [Setting up the environment](#setting-up-the-environment)
-      * [Naming Conventions for Test Files](#naming-conventions-for-test-files)
-      * [**Example**](#example)
-        * [Key Points Explained in Comments](#key-points-explained-in-comments)
-    * [1.3.Test Coverage](#13test-coverage)
-        * [Why is Code Coverage Important?](#why-is-code-coverage-important)
-        * [The Coverage Report](#the-coverage-report)
-      * [**Example**](#example-1)
+      * [3.Test Coverage](#3test-coverage)
   * [**Hands-on Exercise 2**](#hands-on-exercise-2)
   * [Part 2: Case Study: Integration Testing of REST APIs with Database Support](#part-2-case-study-integration-testing-of-rest-apis-with-database-support)
     * [1. Construct Database Structures](#1-construct-database-structures)
     * [2. Develop the Application](#2-develop-the-application)
     * [3. Write and Execute Integration Tests](#3-write-and-execute-integration-tests)
-      * [**Required Dependencies**](#required-dependencies)
-      * [**Test File Structure**](#test-file-structure)
-      * [**API Endpoints to Test**](#api-endpoints-to-test)
-      * [Install Dependencies](#install-dependencies)
-      * [Implement Integration Tests](#implement-integration-tests)
     * [4. Extending the Scenario: Service-Based Testing](#4-extending-the-scenario-service-based-testing)
   * [**Hands-on Exercise 3**](#hands-on-exercise-3)
   * [Part 3: The Role of Mocking in Testing](#part-3-the-role-of-mocking-in-testing)
-    * [**What is Mocking?**](#what-is-mocking)
-    * [**Why Mock a Database?**](#why-mock-a-database)
     * [**Jest Mock Example for PostgreSQL Pool**](#jest-mock-example-for-postgresql-pool)
   * [**Hands-on Exercise 4**](#hands-on-exercise-4)
 <!-- TOC -->
@@ -77,7 +58,7 @@ client.test(testName, function() {
 client.assert(condition, failureMessage);
 ```
 
-#### Write tests for the following Rest API.
+**Write tests for the following Rest API:**
 
 * /part1/rest-api/server.js
 
@@ -297,7 +278,8 @@ DELETE {{hosturi}}/api/products/3
 
 ```
 
-#### Key Explanations
+**Key Explanations**
+
 client.test:
 
     Defines a test case. The first argument is the test name, and the second argument is a function containing assertions.
@@ -338,7 +320,7 @@ response.body.message:
 
     Used to check the message returned by the server, such as confirmation of deletion.
 
-#### Why These Assertions Are Important
+**Why These Assertions Are Important**
 
 Status Codes:
 
@@ -371,7 +353,7 @@ Error Handling:
 [Jest](https://jestjs.io/) is a JavaScript testing framework developed by Facebook. 
 It is widely used for testing **Node.js, React, and other JavaScript applications**.
 
-#####  **Key Features**
+**Key Features**
 - **Fast and isolated tests** – Each test runs independently.
 - **Built-in assertions** – No need for additional assertion libraries.
 - **Mocking capabilities** – Can mock functions, modules, and timers.
@@ -383,13 +365,13 @@ It is widely used for testing **Node.js, React, and other JavaScript application
 [Supertest](https://www.npmjs.com/package/supertest) is a library for testing HTTP servers.
 It works **on top of Jest** (or Mocha, Chai, etc.) and is used to test REST APIs.
 
-##### 🔹 **Key Features**
+**Key Features**
 - Sends HTTP requests to your Express app **without actually starting the server**.
 - Supports **GET, POST, PUT, DELETE, PATCH** requests.
 - Works seamlessly with Jest.
 - Allows testing response **status codes, headers, and JSON data**.
 
-#### Setting up the environment
+**Setting up the environment**
 
 * Installation
 ```shell
@@ -411,14 +393,15 @@ npm install --save-dev jest supertest
 npm test
 ```
 
-#### Naming Conventions for Test Files
+**Naming Conventions for Test Files**
+
 Use .test.js or .spec.js suffixes.
 
 Jest automatically detects test files with these suffixes:
     server.test.solution.js
     product.spec.js
 
-#### **Example**
+**Example**
 
 * /part1/first-jest-test/server.js
 
@@ -507,7 +490,7 @@ describe("POST request for /greet", () => {
 });
 ```
 
-##### Key Points Explained in Comments
+**Key Points Explained in Comments**
 describe:
 
     Groups related test cases together. For example, all tests for the GET / endpoint are grouped under one describe block.
@@ -537,7 +520,7 @@ Error Handling:
     The second test case for POST /greet checks how the app handles invalid input (missing name).
 
 
-### 1.3.Test Coverage
+#### 3.Test Coverage
 
 Test coverage is a metric that measures how much of your source code is executed when your automated tests are run.
 
@@ -554,7 +537,7 @@ It's typically expressed as a percentage. Different types of coverage measuremen
 
 * Line Coverage – Percentage of lines of code executed.
 
-##### Why is Code Coverage Important?
+**Why is Code Coverage Important?**
 
 * Ensures Code Reliability – Higher code coverage indicates that more parts of the application are tested, reducing the risk of undetected bugs.
 * Identifies Uncovered Code – It highlights parts of the code that have not been tested, helping developers focus on untested areas.
@@ -595,7 +578,7 @@ npm run test:coverage
 
 Text report is generated in the terminal and in the coverage/index.html file.
 
-##### The Coverage Report
+**The Coverage Report**
 
 % Stmts (Statements):
 
@@ -623,7 +606,7 @@ Uncovered Line #s:
 
 
 
-#### **Example**
+**Example**
 
 * modify the previous example /part1/first-jest-test/server.js to generate a coverage report.
   * generate the code coverage report
@@ -642,8 +625,6 @@ Uncovered Line #s:
 * After adding each test case, check the generated coverage report.
 
 ---
-
-
 
 
 
@@ -798,17 +779,17 @@ To test the provided REST API:
 3. **Check database changes** after performing operations.
 4. **Validate HTTP responses** and error handling.
 
-#### **Required Dependencies**
+**Required Dependencies**
 
 - **Jest**: Test framework.
 - **SuperTest**: Makes HTTP requests to test API endpoints.
 - **PostgreSQL Test Database (dsstestdb)**: Ensures tests do not modify production data.
 
-#### **Test File Structure**
+**Test File Structure**
 - `part2/server.js` → Main Express server with PostgreSQL connection.
 - `/test/module5/part2/server.test.js` → Integration tests for API endpoints.
 
-#### **API Endpoints to Test**
+**API Endpoints to Test**
 The tests will verify:
 - **GET /api/products** → Fetch all products.
 - **GET /api/products/:id** → Fetch a single product.
@@ -823,12 +804,13 @@ Each test should:
 * Clean up the database after each test to ensure isolation.
 
 
-#### Install Dependencies
+**Install Dependencies**
 Run the following command to install the required packages:
     
     npm install --save-dev jest supertest pg
 
-#### Implement Integration Tests
+**Implement Integration Tests**
+
 * /test/module5/part2/server.test.js
 
 
@@ -987,31 +969,30 @@ describe("Client Service Integration Tests", () => {
 ## Part 3: The Role of Mocking in Testing
 
 
-### **What is Mocking?**
+**What is Mocking?**
+
 Mocking is the process of simulating fake implementations of modules, 
 functions, or dependencies to test components in isolation.
 - **Avoid dependency on external systems** (e.g., databases, APIs).
 - **Increase test speed and reliability** by replacing slow operations.
 - **Control test scenarios** by returning predefined responses.
 
-### **Why Mock a Database?**
-When testing a Node.js REST API that interacts with a database:
+**Why Mock a Database?**
+
+When testing a Node.js module that interacts with a database:
 - A real database connection may introduce **instability** due to network issues.
 - The database may **not always have the expected test data**.
 - Setting up and tearing down a test database can be **time-consuming**.
 
-By mocking the database:
-- The API logic is tested **independently of the database**.
-- **Consistent** responses can be returned for predictable test results.
-- **Error handling** can be verified without manipulating a real database.
-
+**By mocking the database, business logic is tested independently of the database.**
 
 
 ### **Jest Mock Example for PostgreSQL Pool**
 
-* /part3/web-app-server.js
+* /part3/server.js
 
 ```javascript
+
 // Import necessary modules
 const express = require("express");
 const { Pool } = require("pg"); // PostgreSQL client
@@ -1063,8 +1044,8 @@ app.post("/api/products", async (req, res) => {
     if (!name || !price) return res.status(400).json({ error: "Invalid input" });
 
     const result = await pool.query(
-      "INSERT INTO products (name, price) VALUES ($1, $2) RETURNING *",
-      [name, price]
+            "INSERT INTO products (name, price) VALUES ($1, $2) RETURNING *",
+            [name, price]
     );
 
     res.status(201).json(result.rows[0]);
@@ -1081,8 +1062,8 @@ app.put("/api/products/:id", async (req, res) => {
     const { name, price } = req.body;
 
     const result = await pool.query(
-      "UPDATE products SET name = COALESCE($1, name), price = COALESCE($2, price) WHERE id = $3 RETURNING *",
-      [name, price, productId]
+            "UPDATE products SET name = COALESCE($1, name), price = COALESCE($2, price) WHERE id = $3 RETURNING *",
+            [name, price, productId]
     );
 
     if (result.rows.length === 0)
@@ -1154,7 +1135,7 @@ if (process.env.NODE_ENV !== "test") {
 }
 
 // Export the app and pool for testing
-module.exports = { app, pool };
+module.exports = { app };
 
 ```
 
@@ -1184,7 +1165,7 @@ const mockPoolInstance = new Pool(); // Every time new Pool() is called, mClient
 describe("Product API Integration Tests", () => {
 
   beforeEach(() => {
-    jest.clearAllMocks(); // Reset all mock calls before each test. Ensures that old mock calls do not interfere with new ones.
+    jest.clearAllMocks(); // Resets all mock calls before each test. Ensures that old mock calls do not interfere with new ones.
   });
 
   afterAll(async () => {
@@ -1197,6 +1178,8 @@ describe("Product API Integration Tests", () => {
   // 🟢 Test: Retrieve all products
   it("should retrieve all products", async () => {
     mockPoolInstance.query.mockResolvedValueOnce({
+      // mockPoolInstance.query: simulates the query method  of a database connection (mockPoolInstance) (runs fake query)
+      // mockResolvedValueOnce: identifies (determines) the returning value of the fake query
       rows: [{ id: 1, name: "Laptop", price: 999.99 }],
     });
 
@@ -1204,8 +1187,13 @@ describe("Product API Integration Tests", () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.body.length).toBeGreaterThan(0);
+
+    // Check if the mock query was called correctly
+    // Ensures the SQL syntax is correct
+    // Validates that the correct parameters are used
+    // Helps catch unexpected behavior in the database interaction
     expect(mockPoolInstance.query).toHaveBeenCalledWith(
-      "SELECT * FROM products ORDER BY id ASC"
+            "SELECT * FROM products ORDER BY id ASC"
     );
   });
 
@@ -1221,8 +1209,8 @@ describe("Product API Integration Tests", () => {
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual(mockProduct);
     expect(mockPoolInstance.query).toHaveBeenCalledWith(
-      "SELECT * FROM products WHERE id = $1",
-      [productId]
+            "SELECT * FROM products WHERE id = $1",
+            [productId]
     );
   });
 
@@ -1235,8 +1223,8 @@ describe("Product API Integration Tests", () => {
     mockPoolInstance.query.mockResolvedValueOnce({ rows: [mockProduct] });
 
     const response = await request(app)
-      .post("/api/products")
-      .send({ name: "Laptop", price: 999.99 });
+            .post("/api/products")
+            .send({ name: "Laptop", price: 999.99 });
 
     // Assertions
     expect(response.statusCode).toBe(201);
@@ -1247,8 +1235,8 @@ describe("Product API Integration Tests", () => {
     // Validates that the correct parameters are used
     // Helps catch unexpected behavior in the database interaction
     expect(mockPoolInstance.query).toHaveBeenCalledWith(
-      "INSERT INTO products (name, price) VALUES ($1, $2) RETURNING *",
-      ["Laptop", 999.99]
+            "INSERT INTO products (name, price) VALUES ($1, $2) RETURNING *",
+            ["Laptop", 999.99]
     );
 
     productId = response.body.id;
@@ -1266,8 +1254,8 @@ describe("Product API Integration Tests", () => {
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual({ message: "Product deleted" });
     expect(mockPoolInstance.query).toHaveBeenCalledWith(
-      "DELETE FROM products WHERE id = $1 RETURNING *",
-      [productId]
+            "DELETE FROM products WHERE id = $1 RETURNING *",
+            [productId]
     );
   });
 
@@ -1284,8 +1272,8 @@ describe("Product API Integration Tests", () => {
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual({ validatedPrice: "1152.00" }); // (1200 - 20%) + 20%
     expect(mockPoolInstance.query).toHaveBeenCalledWith(
-      "SELECT price FROM products WHERE id = $1",
-      [productId]
+            "SELECT price FROM products WHERE id = $1",
+            [productId]
     );
   });
 
@@ -1294,7 +1282,11 @@ describe("Product API Integration Tests", () => {
 
 ```
 
+* Break the price validation logic to see a fail in test.
 
+
+
+---
 ## **Hands-on Exercise 4**
 
 Extend Exercise 3 to include PostgreSQL mocking in tests.
