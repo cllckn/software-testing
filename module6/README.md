@@ -67,16 +67,10 @@ npx cypress open
 
 ### E2E Testing of a Sample Web Application
 
-```shell
-#write your tests here
-cd /Users/wsan/WorkSpace/Academic/Courses/Exercises/nodejs-projects/test/st/module6
-npx cypress run # runs all the tests
-```
+Download the application using [this link](https://github.com/cllckn/decision-support-systems/tree/main/module4/part3) and run it.
 
-### break the program
-* login.html -> change title
-* login.html -> <button id="loginBt"... 
-* POST /login -> const role = decoded.rol;
+Download [cypress test suits](./cypress-test-suits) to the cypress testing folder (i.e. /cypress/e2e/)
+
 
 
 
