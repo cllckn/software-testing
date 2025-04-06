@@ -1,4 +1,4 @@
-# Module 6:Introduction To End-To-End(E2E) Testing
+# Module 6: Introduction To End-To-End(E2E) Testing
 
 
 ## **What Is End-To-End (E2E) Testing?**
@@ -59,19 +59,26 @@ npm install cypress --save-dev
 ```
 
 **Opening Cypress**
-
+* Go to project's root folder
 ```sh
 npx cypress open
 ```
+* configure cypress (E2E, location, create spec, config file, etc.)
+* go to /cypress/e2e/
+* write tests in *.spec.cy.js files
 
+
+**To run all the tests at once**
+* Go to project's root folder
+    ```shell
+    npx cypress run
+    ```
 
 ### E2E Testing of a Sample Web Application
 
-Download the application using [this link](https://github.com/cllckn/decision-support-systems/tree/main/module4/part3) and run it.
+[Download the application](https://github.com/cllckn/decision-support-systems/tree/main/module4/part3) and run it.
 
 Download [cypress test suits](./cypress-test-suits) to the cypress testing folder (i.e. /cypress/e2e/)
-
-
 
 
 ---
