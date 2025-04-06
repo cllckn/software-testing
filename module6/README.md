@@ -1,5 +1,13 @@
 # Module 6: Introduction To End-To-End(E2E) Testing
 
+<!-- TOC -->
+* [Module 6: Introduction To End-To-End(E2E) Testing](#module-6-introduction-to-end-to-ende2e-testing)
+  * [**What Is End-To-End (E2E) Testing?**](#what-is-end-to-end-e2e-testing)
+  * [**Overview of Cypress**](#overview-of-cypress)
+  * [**Writing Cypress Tests**](#writing-cypress-tests)
+    * [E2E Testing of a Sample Web Application](#e2e-testing-of-a-sample-web-application)
+  * [**Hands-on Exercise 1**](#hands-on-exercise-1)
+<!-- TOC -->
 
 ## **What Is End-To-End (E2E) Testing?**
 
