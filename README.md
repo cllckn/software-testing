@@ -55,20 +55,19 @@ The course will cover the following topics:
 - The Role of Mocking in Testing
 - Hands-On Exercises
 
-### Module 6: Introduction To End-To-End(E2E) Testing
+### Module 6: Introduction To End-To-End Testing
 - What Is End-To-End(E2E) Testing
 - Overview Of Cypress
 - Writing Your First Cypress Test
 - Case Study: E2E Testing of the Sample Web Application
 - Hands-On Exercises
 
-### Module 7: Stress, Load, and Security Tests
-- Understanding Stress Testing
-- Tools for Stress Testing
-- Understanding Load Testing
-- Tools for Load Testing
-- Understanding Security Testing
-- Tools for Security Testing
+### Module 7: Load and Stress Testing
+- Fundamentals of Load and Stress Testing
+- Writing First Test
+- Generating Test Report
+- Comparative Analysis of Test Results
+- Monitoring Resource Utilisation During Tests
 - Hands-On Exercises
 
 ### Evaluation Method
