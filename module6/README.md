@@ -1,7 +1,7 @@
-# Module 6: Introduction To End-To-End(E2E) Testing
+# Module 6: Introduction To End-To-End Testing
 
 <!-- TOC -->
-* [Module 6: Introduction To End-To-End(E2E) Testing](#module-6-introduction-to-end-to-ende2e-testing)
+* [Module 6: Introduction To End-To-End Testing](#module-6-introduction-to-end-to-end-testing)
   * [**What Is End-To-End (E2E) Testing?**](#what-is-end-to-end-e2e-testing)
   * [**Overview of Cypress**](#overview-of-cypress)
   * [**Writing Cypress Tests**](#writing-cypress-tests)
@@ -74,10 +74,19 @@ npx cypress open
 * configure cypress (E2E, location, create spec, config file, etc.)
 * go to /cypress/e2e/
 * write tests in *.spec.cy.js files
+* run tests
+
+
+**Reopening Cypress**
+* Go to cypress's root folder - the directory where `cypress.config.js` is located.
+```sh
+npx cypress open
+```
+* run tests
 
 
 **To run all the tests at once**
-* Go to project's root folder
+* Go to cypress's root folder - the directory where `cypress.config.js` is located.
     ```shell
     npx cypress run
     ```
