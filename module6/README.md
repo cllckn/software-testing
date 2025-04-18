@@ -5,7 +5,7 @@
   * [**What Is End-To-End (E2E) Testing?**](#what-is-end-to-end-e2e-testing)
   * [**Overview of Cypress**](#overview-of-cypress)
   * [**Writing Cypress Tests**](#writing-cypress-tests)
-    * [E2E Testing of a Sample Web Application](#e2e-testing-of-a-sample-web-application)
+    * [Case Study: E2E Testing of a Sample Web Application](#case-study-e2e-testing-of-a-sample-web-application)
   * [**Hands-on Exercise 1**](#hands-on-exercise-1)
 <!-- TOC -->
 
@@ -71,7 +71,7 @@ npm install cypress --save-dev
 ```sh
 npx cypress open
 ```
-* configure cypress (E2E, location, create spec, config file, etc.)
+* configure cypress (E2E testing, Configuration files -> continue, Start E2E testing in X(Chrome), create new spec -> create spec , Okay...)
 * go to /cypress/e2e/
 * write tests in *.spec.cy.js files
 * run tests
@@ -91,7 +91,7 @@ npx cypress open
     npx cypress run
     ```
 
-### E2E Testing of a Sample Web Application
+### Case Study: E2E Testing of a Sample Web Application
 
 [Download the application](https://github.com/cllckn/decision-support-systems/tree/main/module4/exercises/exercise2) and run it.
 
