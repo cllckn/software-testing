@@ -93,7 +93,7 @@ npx cypress open
 
 ### Case Study: E2E Testing of a Sample Web Application
 
-[Download the application](https://github.com/cllckn/decision-support-systems/tree/main/module4/exercises/exercise2) and run it.
+[Download and install the application](https://github.com/cllckn/decision-support-systems/tree/main/module4/part3/version2) and run it.
 
 Download [cypress test suits](./cypress-test-suits) to the cypress testing folder (i.e. /cypress/e2e/)
 
