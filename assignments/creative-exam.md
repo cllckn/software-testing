@@ -44,10 +44,6 @@ As part of the evaluation, each student is required to prepare and present the f
 
   The **report** should provide a clear and concise explanation of your study and must include the following sections:
 
-  * Objective
+  * Objective: Clearly state the purpose and goals of your project. What problem are you addressing, and what do you aim to achieve?
 
-  Clearly state the purpose and goals of your project. What problem are you addressing, and what do you aim to achieve?
-
-  * Methodology
-
-  Describe the methods, tools, and technologies used in the development of your project.
+  * Methodology: Describe the methods, tools, and technologies used in the development of your project.
