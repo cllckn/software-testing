@@ -180,8 +180,8 @@ artillery run load-test-v1.yml --record --key a9_yomj66tcygft1lryqig2ge...
 ```
     Run URL: https://app.artillery.io/oxf4vxtdmcfsd/load-tests/t5wpy_cxpgm4tw6xwfhrb38bgna3mzgzhaa_5mb6
 
-* Generate the load test report 1
-    - register to the Artillery Cloud (https://app.artillery.io)
+* Generate the load test report 2
+    - Make a copy of `load-test-v1.yml` and name it `load-test-v2.yml`. Update the arrivalRate parameter accordingly.
 ```shell
 artillery run load-test-v2.yml --record --key a9_yomj66tcygft1lryqig2ge...
 ```
