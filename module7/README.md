@@ -235,6 +235,21 @@ scenarios:
 
 
 ```
+* it requires the following js file (general-functions.js) for generating unique usernames- in the load test scripts above 
+adjust this line properly: processor: '../../../src/utilities/general-functions.js'
+
+```javascript
+let counter = 0; //  Keep a counter to ensure uniqueness across requests
+
+module.exports = {
+  generateUniqueUsername: (context, events, done) => {
+    counter++;
+    const uniqueUsername = `user${Date.now()}-${counter}`; // Very likely to be unique
+    context.vars['username'] = uniqueUsername; // Store in Artillery's context
+    return done(); //  Important:  Tell Artillery to move to the next step
+  },
+};
+```
 
 ```shell
 artillery run load-test-v3.yml 
