@@ -398,7 +398,7 @@ npm test
 Use .test.js or .spec.js suffixes.
 
 Jest automatically detects test files with these suffixes:
-    server.test.solution.js
+    server.test.js
     product.spec.js
 
 **Example**
@@ -435,7 +435,7 @@ app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`)
 module.exports = app;
 ```
 
-* /test/module5/part1/first-jest-test/server.test.solution.js
+* /test/module5/part1/first-jest-test/server.test.js
 
 ```javascript
 // Import supertest for making HTTP requests and the Express app
