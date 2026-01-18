@@ -18,7 +18,7 @@ By the end of this course, students will be able to:
 - Conduct **end-to-end testing** to validate complete system workflows.
 - Test **APIs** and verify data exchange between systems.
 - Understand and perform **load and stress testing** to evaluate system performance under different conditions.
-- Generate and analyze **test reports** and monitor **resource utilization** during testing.
+- Generate and analyze **test reports**.
 - Gain practical experience in **writing, executing, and maintaining test cases**.
 
 ---
