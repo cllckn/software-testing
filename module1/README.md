@@ -521,6 +521,13 @@ public class ProductTest {
       // Compare the real output with the expected result
       assertEquals(7, product.getStock(), "Stock should be reduced by 3");
     }
+
+  @Test
+  public void testReduceStockThrowsException() {
+    Product product = new Product(1, "Laptop", 1000.0, 5);
+    assertThrows(IllegalArgumentException.class, () -> product.reduceStock(6), "Should throw an exception when stock falls below 0");
+  }
+    
 }
 ~~~
 
