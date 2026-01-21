@@ -331,7 +331,7 @@ Non-functional testing evaluates system attributes such as performance, security
 
 To practice throughout this course, install and configure the following tools:
 
-### 1. IntelliJ IDEA Ultimate  (https://www.jetbrains.com/idea/download) (for Java Development, Unit Tests, TDD, BDD)
+### 1. IntelliJ IDEA Ultimate  (for Java-Based Program Development, Unit Tests, TDD, BDD)
 - Popular IDE for Java based development.
 - For accessing a free IDE, you can visit (https://www.jetbrains.com/shop/eform/students)
 - Download Link: [IntelliJ](https://www.jetbrains.com/idea/download)
@@ -382,42 +382,61 @@ Hello World
 * To write a simple unit test, add the following JUnit libraries into the pom.xml file located in the root folder of 
 the project.
 ~~~xml
+  <?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>cc.st</groupId>
+  <artifactId>java-software-testing-projects</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <properties>
+    <maven.compiler.source>19</maven.compiler.source>
+    <maven.compiler.target>19</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
   <dependencies>
-         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.10.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.10.0</version>
-            <scope>test</scope>
-        </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.10.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.10.0</version>
+      <scope>test</scope>
+    </dependency>
 
-        <!-- For Parameterized Tests (@ParameterizedTest, @CsvSource) -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <version>5.10.0</version>
-            <scope>test</scope>
-        </dependency>
+    <!-- For Parameterized Tests (@ParameterizedTest, @CsvSource) -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <version>5.10.0</version>
+      <scope>test</scope>
+    </dependency>
 
-        <!-- JUnit Platform Suite (for @Suite and @SelectClasses) -->
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-suite-api</artifactId>
-            <version>1.10.0</version> <!-- Use the latest version -->
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-suite-engine</artifactId>
-            <version>1.10.0</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <!-- JUnit Platform Suite (for @Suite and @SelectClasses) -->
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-suite-api</artifactId>
+      <version>1.10.0</version> <!-- Use the latest version -->
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-suite-engine</artifactId>
+      <version>1.10.0</version>
+      <scope>test</scope>
+    </dependency>
+    
+
+  </dependencies>
+
+</project>
 ~~~
 * Add the following Product and ProductMain classes in the project.
 ~~~java
@@ -488,20 +507,36 @@ import org.junit.jupiter.api.Test;
 public class ProductTest {
 
     // Test case
+    // Single scenario that tests a specific behavior or functionality of a unit
     @Test
     public void testReduceStock() {
-        // Arrange
-        Product product = new Product(1, "Laptop", 999.99, 10);
-
-        // Act
-        product.reduceStock(3);
-
-        // Assert
-        assertEquals(7, product.getStock(), "Stock reduction failed");
+  
+      //Arrange: Set up the initial conditions (initialize a Product object with 10 units in stock).
+      Product product = new Product(1, "Laptop", 999.99, 10);
+  
+      //Act: Perform the action to test (reduce stock by 3).
+      product.reduceStock(3);
+  
+      //Assert: Verify the result (stock should now be 7).
+      // Compare the real output with the expected result
+      assertEquals(7, product.getStock(), "Stock should be reduced by 3");
     }
 }
-
 ~~~
+
+
+* Run tests using maven
+
+```sh
+# run all the tests
+mvn test
+
+
+# To run tests and generate a test report
+mvn surefire-report:report 
+```
+
+
 
 
 ### 2. Node.js (for Web Development)
@@ -561,11 +596,8 @@ GET localhost:3000/
 ### 4. PostgreSQL (for DB Operations)
 - PostgreSQL is an open-source and powerful relational database management system.
 - Complies with SQL standards and supports Linux, macOS, and Windows.
-- Download Link: [Download PostgreSQL](https://www.postgresql.org/download/)
-- PostgreSQL (https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) any version that can
+- Download Link: [Download PostgreSQL](https://www.postgresql.org/download/) any version that can
   be installed without issues.
-
-
 
 ---
 
