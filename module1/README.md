@@ -26,7 +26,7 @@
       * [Security Testing](#security-testing)
       * [Usability Testing](#usability-testing)
   * [Setting Up the Development Environment](#setting-up-the-development-environment)
-    * [1. IntelliJ IDEA Ultimate  (https://www.jetbrains.com/idea/download) (for Java Development, Unit Tests, TDD, BDD)](#1-intellij-idea-ultimate-httpswwwjetbrainscomideadownload-for-java-development-unit-tests-tdd-bdd)
+    * [1. IntelliJ IDEA Ultimate  (for Java-Based Program Development, Unit Tests, TDD, BDD)](#1-intellij-idea-ultimate-for-java-based-program-development-unit-tests-tdd-bdd)
     * [2. Node.js (for Web Development)](#2-nodejs-for-web-development)
     * [3. HTTP Client (for testing web services)](#3-http-client-for-testing-web-services)
     * [4. PostgreSQL (for DB Operations)](#4-postgresql-for-db-operations)
@@ -522,11 +522,11 @@ public class ProductTest {
       assertEquals(7, product.getStock(), "Stock should be reduced by 3");
     }
 
-  @Test
-  public void testReduceStockThrowsException() {
-    Product product = new Product(1, "Laptop", 1000.0, 5);
-    assertThrows(IllegalArgumentException.class, () -> product.reduceStock(6), "Should throw an exception when stock falls below 0");
-  }
+    @Test
+    public void testReduceStockThrowsException() {
+      Product product = new Product(1, "Laptop", 1000.0, 5);
+      assertThrows(IllegalArgumentException.class, () -> product.reduceStock(6), "Should throw an exception when stock falls below 0");
+    }
     
 }
 ~~~
