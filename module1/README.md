@@ -455,55 +455,62 @@ the project.
 ~~~
 * Add the following Product and ProductMain classes in the project.
 ~~~java
+//package cc.ku.st.module2;
+
 public class Product {
-    private int id;
-    private String name;
-    private double price;
-    private int stock;
+  private int id;
+  private String name;
+  private double price;
+  private int stockQuantity;
 
-    public Product(int id, String name, double price, int stock) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.stock = stock;
-    }
+  public Product(int id, String name, double price, int stockQuantity) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.stockQuantity = stockQuantity;
+  }
 
-    public void reduceStock(int amount) {
-        if (amount > stock) {
-            throw new IllegalArgumentException("Cannot reduce stock below 0");
-        }
-        stock -= amount;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public int getStock() {
-        return stock;
-    }
-    public void setPrice(double price) {
-        this.price = price;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public double getPrice() {
-        return price;
-    }
+  public double getPrice() {
+    return price;
+  }
 
-     public int getId() {
-        return id;
-    }
+  public int getStockQuantity() {
+    return stockQuantity;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setPrice(double price) {
+    this.price = price;
+  }
 
-    @Override
-    public String toString() {
-        return "st.module1.Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", stock=" + stock +
-                '}';
+  public void reduceStock(int quantity) {
+    if (quantity <= 0) {
+      throw new IllegalArgumentException("Reduction amount must be positive");
     }
+    if (quantity > stockQuantity) {
+      throw new IllegalArgumentException("Cannot reduce stockQuantity below 0");
+    }
+    stockQuantity -= quantity;
+  }
+
+  @Override
+  public String toString() {
+    return "Product{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", price=" + price +
+            ", stock quantity=" + stockQuantity +
+            '}';
+  }
 }
+
 ~~~
 ~~~java
 public class ProductMain {
@@ -521,29 +528,22 @@ import org.junit.jupiter.api.Test;
 
 public class ProductTest {
 
-    // Test case
-    // Single scenario that tests a specific behavior or functionality of a unit
-    @Test
-    public void testReduceStock() {
-  
-      //Arrange: Set up the initial conditions (initialize a Product object with 10 units in stock).
-      Product product = new Product(1, "Laptop", 999.99, 10);
-  
-      //Act: Perform the action to test (reduce stock by 3).
-      product.reduceStock(3);
-  
-      //Assert: Verify the result (stock should now be 7).
-      // Compare the real output with the expected result
-      assertEquals(7, product.getStock(), "The stock count was not correctly updated after reduction");
-    }
+  // Test case
+  // Single scenario that tests a specific behavior or functionality of a unit
+  @Test
+  public void testReduceStock() {
 
-    @Test
-    public void testReduceStockThrowsException() {
-      Product product = new Product(1, "Laptop", 1000.0, 5);
-      assertThrows(IllegalArgumentException.class, () -> product.reduceStock(6), 
-              "Expected an IllegalArgumentException when reducing more stock than available, but none was thrown.");
-    }
-    
+    //Arrange: Set up the initial conditions (initialize a Product object with 10 units in stock).
+    Product product = new Product(1, "Laptop", 999.99, 10);
+
+    //Act: Perform the action to test (reduce stock by 3).
+    product.reduceStock(3);
+
+    //Assert: Verify the result (stock should now be 7).
+    // Compare the real output with the expected result
+    assertEquals(7, product.getStockQuantity(), "The stock count was not correctly updated after reduction.");
+  }
+
 }
 ~~~
 
