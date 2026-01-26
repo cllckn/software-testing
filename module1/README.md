@@ -38,8 +38,9 @@
 
 ## 1. What Is Software Testing?
 
-Software testing is the process of evaluating a software application or system to identify defects, ensure it meets 
-specified requirements, and verify that it behaves as expected. It involves executing the software under controlled 
+
+Software testing is the process of evaluating a software system to identify defects and verify that it meets specified 
+quality requirements, thereby ensuring that it works as intended.  It involves executing the software under controlled 
 conditions to:
 
 - **Find defects(bugs) or errors:** Identify issues in the code or functionality.
@@ -51,6 +52,30 @@ Software testing is a critical activity within the **Software Development Life C
 
 >***Testing is not only about finding bugs; it is also a key quality assurance activity that ensures the software is 
 reliable, secure, and user-friendly.***
+
+
+>The industry standard comes from the ISTQB (International Software Testing Qualifications Board) and the IEEE
+> (Institute of Electrical and Electronics Engineers).
+> 
+> Formal ISTQB Definition:
+> Software testing is the process consisting of all lifecycle activities, both static and dynamic, concerned with 
+> planning, preparation, and evaluation of software products and related work products to determine that they 
+> satisfy specified requirements, to demonstrate that they are fit for purpose, and to detect defects.
+>
+> The IEEE Definition (IEEE 610):
+> he process of operating a system or component under specified conditions, observing or recording the results, 
+> and making an evaluation of some aspect of the system or component.
+
+> Quality Assurance (QA) and the Role of Software Testing
+> 
+>Quality Assurance (QA) is the process of evaluating software development activities to ensure they follow defined 
+> standards, procedures, and best practices, with the goal of preventing defects and ensuring consistent product quality.
+>
+>Software testing contributes to QA by providing objective evidence about the quality of the software product. Through 
+>systematic verification and validation, testing detects defects, confirms compliance with requirements, and measures 
+>whether quality goals are being met.
+
+
 
 ---
 
@@ -117,9 +142,10 @@ in the bug tracking system as a pricing bug.
 - **Bug:** The issue is discovered and reported during testing.
 - **Failure:** Users experience incorrect pricing in real usage.
 
+![](../resources/failure-anatomy.png)
 
-- **Error → Defect → Failure (when executed)**
-- A **bug** is a reported defect.
+- **Error → Defect → Bug → Failure**
+
 
 ---
 
@@ -129,8 +155,8 @@ in the bug tracking system as a pricing bug.
 - Ensures the software is built correctly according to specifications and design documents.
 - Focuses on the **process of development** and correctness of implementation.
 - Typically performed through:
+    - Checking requirements and design documents
     - Code reviews
-    - Unit testing
     - Static code analysis
 - **Process-oriented**.
 
@@ -149,7 +175,8 @@ in the bug tracking system as a pricing bug.
 - Ensures the software meets **user needs and business requirements**.
 - Focuses on outcomes and real-world usage.
 - Typically performed through:
-    - Functional testing
+    - Unit testing
+    - integration testing
     - System testing
     - User Acceptance Testing (UAT)
 - **Product-oriented**.
@@ -177,22 +204,10 @@ modern software systems, especially web-based applications.
 
 
 
-```text
-The exponential cost of fixing a defect over the Software Development Life Cycle (SDLC).
+**The exponential cost of fixing a defect over the Software Development Life Cycle (SDLC).**
 
+![](../resources/cost-of-fixing-defect.png)
 
-^ Cost                                                      
-|                                            *
-|                                         *
-|                                      *
-|                                 *                    
-|                           *
-|                    * 
-|            *
-| *   
-+-------------------------------------------------->
-Requirements  Design  Coding   Testing   Maintenance
-```
 
 This graph shows that detecting a defect early—such as during development—is inexpensive to fix, while discovering it 
 in production can cost a company tens or even hundreds of times more, considering both financial impact and reputational damage.
@@ -519,13 +534,14 @@ public class ProductTest {
   
       //Assert: Verify the result (stock should now be 7).
       // Compare the real output with the expected result
-      assertEquals(7, product.getStock(), "Stock should be reduced by 3");
+      assertEquals(7, product.getStock(), "The stock count was not correctly updated after reduction");
     }
 
     @Test
     public void testReduceStockThrowsException() {
       Product product = new Product(1, "Laptop", 1000.0, 5);
-      assertThrows(IllegalArgumentException.class, () -> product.reduceStock(6), "Should throw an exception when stock falls below 0");
+      assertThrows(IllegalArgumentException.class, () -> product.reduceStock(6), 
+              "Expected an IllegalArgumentException when reducing more stock than available, but none was thrown.");
     }
     
 }
