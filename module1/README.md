@@ -196,8 +196,8 @@ in the bug tracking system as a pricing bug.
 The SDLC is a structured process used to develop high-quality software in a systematic and efficient way. It breaks 
 software development into distinct phases, each with specific goals and deliverables.
 
-Although it is traditionally shown as a phase after development, testing is applied across all stages when developing 
-modern software systems, especially web-based applications.
+Although it is traditionally shown as a phase after development, testing is applied commonly across all stages when developing 
+modern software systems.
 
 
 ![](../resources/sdlc.png)
@@ -397,7 +397,7 @@ Hello World
 * To write a simple unit test, add the following JUnit libraries into the pom.xml file located in the root folder of 
 the project.
 ~~~xml
-  <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
