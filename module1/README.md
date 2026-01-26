@@ -87,18 +87,24 @@ To better understand software testing, it is important to clarify the following 
 
 ### Error
 
-- **Definition:** An error is a mistake made by a developer during the coding or design phase. It may occur due to 
-incorrect logic, misunderstanding requirements, or unintentional human oversight (such as missing a detail or edge case).
+- **Definition:** An error is a human mistake introduced during the requirements, design, or coding phase. It may result
+from misunderstanding requirements, incorrect logic, or unintentional oversight by any stakeholder involved in the 
+development process (e.g., business analysts, designers, or developers).
 
 - **Examples:**
-  - Forgetting to validate or filter user input.
-  - Using an incorrect comparison operator (e.g., `>` instead of `<`) in a conditional statement, which is a common and 
-  error-prone scenario.
-  - Skipping or overlooking a specified requirement during implementation.
+  
+
+  - Using an incorrect comparison operator in a condition (e.g., > instead of >=), causing edge cases to be handled 
+incorrectly. 
+  - Implementing a feature without fully considering the requirements, such as omitting validation for an edge case. 
+  - Misinterpreting a business rule (e.g., applying a discount only when the amount is greater than 100 instead of 
+  greater than or equal to 100). 
+  - Skipping or overlooking a specified requirement during implementation, such as missing a detail or an edge case.
+  - Ignoring boundary values (e.g., handling 90 differently from 89.99 in grading logic).
+
 
 - **Example:**
-  A developer misunderstands a requirement and implements a discount rule incorrectly, assuming a 5% discount instead 
-of the specified 10%.
+  A developer misunderstands the requirement and believes the discount should be 5% instead of the specified 10%.
 
 ---
 
@@ -108,14 +114,13 @@ of the specified 10%.
 manifestation of an error in the system and may or may not result in a failure.
 
 - **Example:**  
-  The source code contains incorrect logic that applies a 5% discount rather than the required 10%. This incorrect 
-implementation is a defect in the system.
+  The discount calculation in the code applies a 5% reduction instead of 10%.
 
 ---
 
 ### Bug
 
-- **Definition:** A bug is a commonly used term for a defect that has been identified during testing or reported by users.
+- **Definition:** A bug is a commonly used term for a defect that has been identified during testing.
 
 - **Example:**  
   During system testing, a tester notices that customers receive lower discounts than expected and reports the issue 
@@ -125,15 +130,14 @@ in the bug tracking system as a pricing bug.
 
 ### Failure
 
-- **Definition:** A failure occurs when the software does not behave as expected during execution. It is the observable outcome of a defect.
+- **Definition:** A failure occurs when the software does not behave as expected during execution. 
+It is the observable outcome of a defect.
 
 - **Example:**  
-  When the application is used in production, customers are charged higher prices than expected, leading to incorrect invoices and customer complaints. This visible incorrect behavior represents a system failure.
+When the application is used in production (or during acceptance testing), customers are charged higher prices than 
+expected, leading to incorrect invoices and customer complaints. This visible incorrect behavior represents a system failure.
 
 ---
-
->In many industry contexts, the terms 'defect' and 'bug' are used synonymously to refer to any flaw in the 
-> software. The distinction provided here is useful for understanding the lifecycle of an issue.
 
 ### Summary of Relationship Between Error, Defect, Bug, and Failure
 
@@ -142,10 +146,12 @@ in the bug tracking system as a pricing bug.
 - **Bug:** The issue is discovered and reported during testing.
 - **Failure:** Users experience incorrect pricing in real usage.
 
+
 ![](../resources/failure-anatomy.png)
 
 - **Error → Defect → Bug → Failure**
 
+>An error is the cause, a defect is the result in the software artifact, and a failure is the result in system behavior.
 
 ---
 
