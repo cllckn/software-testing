@@ -215,13 +215,13 @@ in production can cost a company tens or even hundreds of times more, considerin
 
 Software testing plays a vital role in modern software development for the following reasons:
 
-- **Prevents defects:** Identifies issues early, reducing cost and effort.
+- **Prevents defects:** Identifies issues early, reducing cost, effort, and time to fix.
 - **Ensures quality:** Delivers reliable software that meets expectations.
 - **Builds confidence:** Provides assurance that the software is ready for deployment.
-- **Saves time and money:** Fixing defects early is significantly less expensive than post-release fixes.
 - **Improves user satisfaction:** Reduces failures and enhances user experience.
 - **Ensures compliance:** Ensures adherence to industry standards and regulatory requirements.
-- **Manages change effectively:** In CI/CD environments, testing ensures that new features and fixes do not break existing functionality.
+- **Manages change effectively:** In CI/CD environments, testing ensures that new features and fixes do not break 
+existing functionality.
 
 
 >Testing is not optional; it is essential for delivering high-quality software systems, especially in software 
