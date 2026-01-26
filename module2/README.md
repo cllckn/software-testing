@@ -42,49 +42,70 @@ Writing a simple unit test for the Java Product class given below.
 
 * Initialize a new Java project in IntelliJ with Maven (package manager) support.
 * Add the following JUnit libraries into the pom.xml file located in the root folder of the project.
-    ~~~xml
+~~~xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>cc.st</groupId>
+  <artifactId>java-software-testing-projects</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <properties>
+    <maven.compiler.source>19</maven.compiler.source>
+    <maven.compiler.target>19</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
   <dependencies>
-         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.10.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.10.0</version>
-            <scope>test</scope>
-        </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.10.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.10.0</version>
+      <scope>test</scope>
+    </dependency>
 
-        <!-- For Parameterized Tests (@ParameterizedTest, @CsvSource) -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <version>5.10.0</version>
-            <scope>test</scope>
-        </dependency>
+    <!-- For Parameterized Tests (@ParameterizedTest, @CsvSource) -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <version>5.10.0</version>
+      <scope>test</scope>
+    </dependency>
 
-        <!-- JUnit Platform Suite (for @Suite and @SelectClasses) -->
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-suite-api</artifactId>
-            <version>1.10.0</version> <!-- Use the latest version -->
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-suite-engine</artifactId>
-            <version>1.10.0</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-  ~~~
+    <!-- JUnit Platform Suite (for @Suite and @SelectClasses) -->
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-suite-api</artifactId>
+      <version>1.10.0</version> <!-- Use the latest version -->
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-suite-engine</artifactId>
+      <version>1.10.0</version>
+      <scope>test</scope>
+    </dependency>
+    
+  </dependencies>
+
+</project>
+~~~
 * Add the following Product and ProductMain classes in the project.
 
 **Code Example**
 > ./Product.java
 ~~~java
+
+package cc.ku.module2.exercise1;
+
 
 //package cc.ku.st.module2;
 
@@ -121,16 +142,16 @@ public class Product {
     this.price = price;
   }
 
-  public void reduceStock(int amount) {
-    if (amount <= 0) {
+  public void reduceStock(int quantity) {
+    if (quantity <= 0) {
       throw new IllegalArgumentException("Reduction amount must be positive");
     }
-    if (amount > stockQuantity) {
+    if (quantity > stockQuantity) {
       throw new IllegalArgumentException("Cannot reduce stockQuantity below 0");
     }
-    stockQuantity -= amount;
+    stockQuantity -= quantity;
   }
-  
+
   @Override
   public String toString() {
     return "Product{" +
@@ -141,6 +162,7 @@ public class Product {
             '}';
   }
 }
+
 
 ~~~
 
