@@ -5,12 +5,20 @@
 * [Module 2: Introduction to Unit Testing](#module-2-introduction-to-unit-testing)
   * [What is Unit Testing?](#what-is-unit-testing)
     * [Why Unit Testing?](#why-unit-testing)
-  * [Writing Your First Unit Test with JUnit](#writing-your-first-unit-test-with-junit)
-  * [Test Cases, Assertions, Annotations](#test-cases-assertions-annotations)
+  * [Writing Your First Unit Test](#writing-your-first-unit-test)
+  * [JUnit Naming Conventions (Behavior-Oriented)](#junit-naming-conventions-behavior-oriented)
+    * [Test Class Naming](#test-class-naming)
+    * [Test Method Naming Pattern](#test-method-naming-pattern)
+    * [Example Test Method Names](#example-test-method-names)
+  * [Test Cases, Assertions, and Annotations](#test-cases-assertions-and-annotations)
     * [Test Case](#test-case)
     * [Assertions](#assertions)
     * [JUnit Annotations](#junit-annotations)
+    * [JUnit Annotations](#junit-annotations-1)
   * [Parameterized Tests](#parameterized-tests)
+    * [Parameterized Test for Grade Calculation](#parameterized-test-for-grade-calculation)
+    * [Edge Cases and Boundary Values](#edge-cases-and-boundary-values)
+    * [Input-Output Pairs for Grade Calculation Testing](#input-output-pairs-for-grade-calculation-testing)
   * [Test Suite](#test-suite)
   * [Testing With Maven](#testing-with-maven-)
     * [Introduction to Maven](#introduction-to-maven)
@@ -20,25 +28,37 @@
 
 ---
 
-
 ## What is Unit Testing?
-Unit testing is the process of testing individual components (or "units") of a software application in isolation. 
-A unit is typically a single method, function, or class. The goal is to verify that each unit behaves as expected 
-under various conditions.
+
+Unit testing is the process of **testing individual components (or “units”) of a software application in isolation**.  
+A unit is typically a **single method, function, or class**. The main goal is to **verify that each unit behaves as expected under various conditions**.
 
 ---
 
 ### Why Unit Testing?
 
-* Ensures that individual components work correctly.
-* Helps catch bugs early in the development process.
-* Makes code easier to maintain and refactor.
-* Acts as documentation for how the code is supposed to behave.
+* Ensures that individual components **function correctly**.
+* Helps **catch defects early** in the development process.
+* Makes code **easier to maintain and refactor**.
+* Serves as **documentation** for the expected behavior of the code.
 
 ---
 
-## Writing Your First Unit Test with JUnit
-Writing a simple unit test for the Java Product class given below.
+## Writing Your First Unit Test
+
+Unit tests can be written using **any testing framework** appropriate for the programming language.
+
+For example, in Java, **JUnit** is commonly used. A unit test verifies that a class or method works as intended by 
+providing **input and checking the expected output**.
+
+**Key Points When Writing Unit Tests:**
+
+* Test **one functionality at a time**.
+* Include both **normal and boundary inputs**.
+* Handle **expected exceptions** where applicable.
+* Keep tests **independent and repeatable**– each test should run on its own and produce the same results every time.
+
+> Tip: Unit tests should be fast, automated, and run frequently during development to catch defects early.
 
 * Initialize a new Java project in IntelliJ with Maven (package manager) support.
 * Add the following JUnit libraries into the pom.xml file located in the root folder of the project.
@@ -103,10 +123,6 @@ Writing a simple unit test for the Java Product class given below.
 **Code Example**
 > ./Product.java
 ~~~java
-
-package cc.ku.module2.exercise1;
-
-
 //package cc.ku.st.module2;
 
 public class Product {
@@ -190,7 +206,7 @@ public class ProductTest {
     // Test case
     // Single scenario that tests a specific behavior or functionality of a unit
     @Test
-    public void testReduceStock() {
+    public void reduceStock_validQuantity_updatesStockCorrectly() {
       
         //Arrange: Set up the initial conditions (initialize a Product object with 10 units in stock).
         Product product = new Product(1, "Laptop", 999.99, 10);
@@ -200,9 +216,19 @@ public class ProductTest {
 
         //Assert: Verify the result (stock should now be 7).
         // Compare the real output with the expected result
-        assertEquals(7, product.getStockQuantity(), "The stock count was not correctly updated after reduction.");
+        assertEquals(7, product.getStockQuantity(),
+              () -> "Stock quantity should be 7 after reducing 3 units from an initial 10.");    
     }
+
+  @Test
+  public void reduceStock_insufficientQuantity_throwsException() {
+    //Arrange
+    Product product = new Product(1, "Laptop", 1000.0, 5);
     
+    //Act & Assert
+    assertThrows(IllegalArgumentException.class, () -> product.reduceStock(6), ()-> "Should throw an exception when stock falls below 0");
+  }
+  
 }
 
 ~~~
@@ -218,31 +244,95 @@ public class ProductTest {
 ---
 
 
+## JUnit Naming Conventions (Behavior-Oriented)
+
+Behavior-oriented naming focuses on **what the system does under a specific condition and what outcome is expected**.
+
+**Purpose of Behavior-Oriented Naming**
+
+- Improves readability for developers, testers, and reviewers
+- Produces self-explanatory test reports
+- Helps map tests directly to requirements and business rules
+- Encourages thinking in **behavior**, not implementation
+
+---
+
+### Test Class Naming
+
+| Convention | Example | When to Use |
+|----------|--------|------------|
+| `ClassNameTest` | `ProductTest` | Standard and most common |
+| `ClassNameTests` | `ProductTests` | When grouping many related tests |
+| `ClassNameBehaviorTest` | `ProductBehaviorTest` | When emphasizing business behavior |
+| `ClassNameUnitTest` | `ProductUnitTest` | When distinguishing from integration tests |
+
+**Best Practice:**  
+Use the name of the class under test + `Test`.
+
+---
+
+### Test Method Naming Pattern
+
+**Standard Pattern**
+
+>methodName_condition_expectedResult
 
 
-## Test Cases, Assertions, Annotations
+---
+
+### Example Test Method Names
+
+| Scenario | Behavior-Oriented Test Name |
+|-------|-----------------------------|
+| Valid stock increase | `increaseStock_validAmount_increasesStockQuantity` |
+| Negative stock increase | `increaseStock_negativeAmount_throwsException` |
+| Reduce stock within limit | `reduceStock_availableQuantity_reducesStockCorrectly` |
+| Reduce stock beyond limit | `reduceStock_insufficientQuantity_throwsException` |
+| Zero stock reduction | `reduceStock_zeroAmount_keepsStockUnchanged` |
+| Valid grade conversion | `getLetterGrade_scoreAbove90_returnsA` |
+| Boundary grade case | `getLetterGrade_scoreExactly90_returnsA` |
+| Invalid grade input | `constructor_invalidGrade_throwsException` |
+
+
+> A test name should describe **what happens**, **under what condition**, and **what the expected outcome is** — 
+> without reading the test body.
+
+
+
+## Test Cases, Assertions, and Annotations
+
 ### Test Case
 
-A test case is a single scenario that tests a specific behavior or functionality of a unit (e.g., a method or class).
+A **test case** is a single scenario that checks a specific behavior or functionality of a unit (e.g., a method or class).
 
-In a test case there are 3 divisions:
+A test case typically has **three parts**:
 
-* Arrange: Set up the initial conditions (initialize a Product object with 10 units in stock).
-* Act: Perform the action to test (reduce stock by 3).
-* Assert: Verify the result (stock should now be 7).
+* **Arrange:** Set up initial conditions.  
+  *Example:* Initialize a `Product` object with 10 units in stock.
+* **Act:** Perform the action to test.  
+  *Example:* Reduce the stock by 3 units.
+* **Assert:** Verify the outcome matches expectations.  
+  *Example:* Stock should now be 7.
 
-testReduceStock() function in the code given above is a test case.
+> Example: The `testReduceStock()` function shown earlier is a test case.
+
+---
 
 ### Assertions
-Used to verify that the actual output matches the expected output. The followings are JUnit assertions:
 
-| Assertion                                       | Description                                                                                                                                                    |
-|-------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `assertEquals(expected, actual, message)`       | Checks if two values are equal; if not, test fails and displays message.                                                                                                           |
-| `assertTrue(condition,message)`                 | Checks if the condition is true; if not, test fails and displays message.                                                                                                                            |
-| `assertFalse(condition, message)`               | Checks if the condition is false; if not, test fails and displays message.                                                                                                                           |
-| `assertThrows(Exception.class, () -> method())` | Ensures a specific exception is thrown; if not, test fails and displays message.                                                                                                                             |
+**Assertions** are used to **verify that actual output matches the expected output**.
+
+Some common assertions in Java (JUnit) include:
+
+| Assertion                                       | Description                                                                                                                                                                                                    |
+|-------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `assertEquals(expected, actual, message)`       | Checks if two values are equal; if not, test fails and displays message.                                                                                                                                       |
+| `assertTrue(condition,message)`                 | Checks if the condition is true; if not, test fails and displays message.                                                                                                                                      |
+| `assertFalse(condition, message)`               | Checks if the condition is false; if not, test fails and displays message.                                                                                                                                     |
+| `assertThrows(Exception.class, () -> method())` | Ensures a specific exception is thrown; if not, test fails and displays message.                                                                                                                               |
 | `assertAll("message", () -> {...})`             | Groups multiple assertions together; if any assertion fails, test fails and displays all errors under the message. It can group multiple assertions, making it easier to test related conditions in one block. |
+| `assertNull(object)`             | checks that an object is null.                                                                                                                                                                                 |
+| `assertNotNull(object)`             | checks that an object is not null  .                                                                                                                                                                           |
 
 
 
@@ -258,7 +348,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ProductAssertionsTest {
 
   @Test
-  public void testReduceStock() {
+  public void reduceStock_validQuantity_updatesStockCorrectly() {
     Product product = new Product(1, "Laptop", 1000.0, 10);
     product.reduceStock(5);
     // Message updated to show intent vs result
@@ -266,16 +356,17 @@ public class ProductAssertionsTest {
   }
 
   @Test
-  public void testSetPrice() {
+  public void setPrice_validAmount_updatesPriceCorrectly() {
     Product product = new Product(1, "Laptop", 1000.0, 10);
     product.setPrice(1200.0);
-    // Using delta for floating point precision is perfect here
+    
+    // Using delta (0.001) for floating point precision
     assertEquals(1200.0, product.getPrice(), 0.001, "The product price failed to update to the specified value.");
   }
 
 
   @Test
-  public void testStockIsNeverNegative() {
+  public void reduceStock_validQuantity_updatesStockCorrectly1() {
     Product product = new Product(1, "Laptop", 1000.0, 10);
 
     product.reduceStock(5);
@@ -285,7 +376,7 @@ public class ProductAssertionsTest {
   }
 
   @Test
-  public void testStockIsNeverNegative1() {
+  public void reduceStock_validQuantity_updatesStockCorrectly2() {
     Product product = new Product(1, "Laptop", 1000.0, 10);
 
     product.reduceStock(5);
@@ -295,7 +386,7 @@ public class ProductAssertionsTest {
   }
 
   @Test
-  public void testReduceStockThrowsException() {
+  public void reduceStock_insufficientQuantity_throwsException() {
     Product product = new Product(1, "Laptop", 1000.0, 5);
     // assertThrows message appears if NO exception is thrown
     assertThrows(IllegalArgumentException.class,
@@ -304,7 +395,7 @@ public class ProductAssertionsTest {
   }
 
   @Test
-  public void testMultipleAssertions() {
+  public void product_initialization_propertiesAreCorrect() {
     Product product = new Product(1, "Laptop", 1000.0, 10);
     // assertAll group message serves as a header for all failures within the block
     assertAll("Product object state properties verification",
@@ -317,7 +408,7 @@ public class ProductAssertionsTest {
 
 
   @Test
-  public void testProductStateAfterDiscountAndSale() {
+  public void product_afterDiscountAndSale_stateIsUpdatedCorrectly() {
     // 1. Setup: Starting with 20 Laptops at $1000 each
     Product product = new Product(1, "Laptop", 1000.0, 20);
 
@@ -350,104 +441,141 @@ public class ProductAssertionsTest {
 
 JUnit uses annotations to define test methods and setup/teardown methods. Here are the most common annotations:
 
-| Annotation   | Description                                      |
-|-------------|--------------------------------------------------|
-| `@Test`      | Marks a method as a test case.                  |
-| `@BeforeEach` | Runs before each test (e.g., setting up objects). |
-| `@AfterEach`  | Runs after each test (e.g., cleanup).          |
-| `@BeforeAll`  | Runs once before all tests (e.g., database setup). |
-| `@AfterAll`   | Runs once after all tests (e.g., closing resources). |
+| Annotation   | Description                                                                          |
+|-------------|--------------------------------------------------------------------------------------|
+| `@Test`      | Marks a method as a test case.                                                       |
+| `@BeforeEach` | Runs before each test method (used to set up test data).                             |
+| `@AfterEach`  | Runs after each test method (used to clean up resources).                            |
+| `@BeforeAll`  | Runs once before all test methods in the class-static method (e.g., database setup). |
+| `@AfterAll`   | Runs once after all test methods in the class-static method (e.g., closing resources).            |
+### JUnit Annotations
 
-**@Test**
-The @Test annotation marks a method as a test case. JUnit will execute all methods annotated with @Test.
+**@Test**  
+Marks a method as a test case. JUnit will execute all methods annotated with `@Test`.
 
 **@BeforeEach and @AfterEach**
-
-@BeforeEach: Methods annotated with @Before run before each test method. Use this to set up common test data or initialize objects.
-
-@AfterEach: Methods annotated with @After run after each test method. Use this to clean up resources or reset states.
-
+* `@BeforeEach` – Runs **before each test method**. Use it to set up common test data or initialize objects.
+* `@AfterEach` – Runs **after each test method**. Use it to clean up resources or reset states.
 
 **@BeforeAll and @AfterAll**
+* `@BeforeAll` – Runs **once before all test methods** in the class. Ideal for expensive setup operations, such as opening a database connection.
+* `@AfterAll` – Runs **once after all test methods** in the class. Ideal for cleanup operations, such as closing database connections.
 
-@BeforeAll: Methods annotated with @BeforeClass run once before all test methods in the class. Use this for expensive setup operations (e.g., database connections).
-
-@AfterAll: Methods annotated with @AfterClass run once after all test methods in the class. Use this for cleanup operations.
-
+**@Disabled**  
+Temporarily disables a test method so it is **skipped during execution**.
 
 A complete example that combines all the annotations:
 
 ~~~java
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
-
+/**
+ * Example: Using JUnit annotations to test a Product class.
+ * Demonstrates @BeforeAll, @AfterAll, @BeforeEach, @AfterEach, @Test, and realistic test scenarios.
+ */
 class ProductAnnotationsTest {
+
+  // Shared resource for all tests (simulating expensive setup, e.g., DB connection)
   private static Product product;
 
+  /**
+   * @BeforeAll: Runs once before all tests.
+   * Use it to perform expensive setup tasks that are common to all tests.
+   * Example: Initialize a Product object that simulates loading from a database.
+   */
   @BeforeAll
   public static void setUpClass() {
-    // Initialize a Product object once before all tests
     product = new Product(1, "Laptop", 999.99, 10);
-    System.out.println("Product object initialized (BeforeAll).");
+    System.out.println("Product object initialized (BeforeAll) - simulating DB load.");
   }
 
+  /**
+   * @AfterAll: Runs once after all tests.
+   * Use it to clean up resources created in @BeforeAll, e.g., close database connections.
+   */
   @AfterAll
   public static void tearDownClass() {
-    // Clean up after all tests
     product = null;
-    System.out.println("Product object reset (AfterAll).");
+    System.out.println("Product object reset (AfterAll) - simulating DB cleanup.");
   }
 
+  /**
+   * @BeforeEach: Runs before each test method.
+   * Reset the product state to ensure **tests are independent and repeatable**.
+   */
   @BeforeEach
   public void setUp() {
-    // Reset the stock to 10 before each test
+    // Reset stock and price before each test
     product = new Product(1, "Laptop", 999.99, 10);
-    System.out.println("Stock reset to 10 (BeforeEach).");
+    System.out.println("Stock and price reset (BeforeEach).");
   }
 
+  /**
+   * @AfterEach: Runs after each test method.
+   * Use it for test-level cleanup if necessary.
+   */
   @AfterEach
   public void tearDown() {
-    // No cleanup needed here since @Before resets the state
+    // Example: Could reset mocks or temporary files
     System.out.println("Test completed (AfterEach).");
   }
 
+  /**
+   * Test Case: Reduce stock by a valid amount
+   * Scenario: A customer buys 3 laptops; stock should decrease correctly.
+   */
   @Test
-  public void testReduceStock() {
-    // Act
+  public void reduceStock_validQuantity_updatesStockCorrectly() {
+    // Act: simulate selling 3 laptops
     product.reduceStock(3);
 
-    // Assert
-    assertEquals(7, product.getStock(), "Stock should be reduced by 3");
+    // Assert: stock is reduced correctly
+    assertEquals(7, product.getStock(), "Stock should be reduced by 3 after a valid sale.");
   }
 
+  /**
+   * Test Case: Attempt to reduce stock below 0
+   * Scenario: A customer tries to buy 20 laptops, but only 10 are in stock.
+   * The system should throw an exception to prevent invalid stock state.
+   */
   @Test
-  public void testReduceStockThrowsException() {
-    // Act & Assert
-    assertThrows(IllegalArgumentException.class, () -> product.reduceStock(20));
+  public void reduceStock_insufficientQuantity_throwsException() {
+    // Act & Assert: should throw IllegalArgumentException
+    assertThrows(IllegalArgumentException.class,
+            () -> product.reduceStock(20),
+            "Reducing stock below zero should throw an exception.");
   }
+  
 }
 ~~~
 
 
 
+## Parameterized Tests
 
-##  Parameterized Tests
-Parameterized tests allow test developer to run the same test with different inputs.
-This is useful for testing multiple scenarios without writing redundant code.
+**Parameterized tests** allow a test developer to **run the same test logic with multiple sets of input data**.  
+This helps to:
+
+* Test **multiple scenarios** efficiently.
+* Avoid writing **redundant test cases**.
+* Ensure consistent behavior across different input values.
+
+
 
 ~~~java
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+//ProductTest, ProductStockRulesTest, ProductBehaviorTest... these names are more convenient in practice.
 public class ProductParameterizedTest {
 
     @ParameterizedTest //Marks the method as a parameterized test.
     @CsvSource({        // Provides a list of comma-separated values as input parameters.
-        "10, 3, 7",  // Initial stock: 10, reduce by 3, expected stock: 7
-        "5, 5, 0",   // Initial stock: 5, reduce by 5, expected stock: 0
-        "8, 0, 8"    // Initial stock: 8, reduce by 0, expected stock: 8
+        "10, 3, 7",  // Initial stock: 10, reduce by 3, expected stock: 7 // Normal value
+        "5, 5, 0",   // Initial stock: 5, reduce by 5, expected stock: 0 // Boundary value
+        "8, 0, 8"    // Initial stock: 8, reduce by 0, expected stock: 8  // Edge case
     })
-    public void testReduceStock(int initialStock, int reduceAmount, int expectedStock) {
+    public void reduceStock_validQuantities_updatesStockCorrectly(int initialStock, int reduceAmount, int expectedStock) {
         // Arrange
         Product product = new Product(1, "Laptop", 999.99, initialStock);
 
@@ -459,15 +587,179 @@ public class ProductParameterizedTest {
     }
 }
 ~~~
+
+
+
+
+### Parameterized Test for Grade Calculation
+
+**Scenario:** We want to test a `calculateGrade()` method that converts numeric averages into letter grades:
+
+| Average Score | Expected Grade |
+|---------------|----------------|
+| 95            | A              |
+| 85            | B              |
+| 75            | C              |
+| 65            | D              |
+| 55            | F              |
+
+Instead of writing **separate test methods for each score**, a **parameterized test** runs the same test logic for all these inputs.
+
+---
+
+### Edge Cases and Boundary Values
+
+**Edge cases** are inputs that are at the **extremes or unusual situations**, e.g., the **highest or lowest possible scores**:
+
+* Minimum possible score: 0 → Should return grade F
+* Maximum possible score: 100 → Should return grade A
+* Boundary values around grade thresholds:
+  - 89 → B, 90 → A
+  - 79 → C, 80 → B
+  - 69 → D, 70 → C
+  - 59 → F, 60 → D
+
+**Best Practices:**
+
+* Always include **boundary values** to verify correct grade transitions.
+* Include **typical values** to ensure normal cases work.
+* Include **extreme values** to test system limits.
+* Keep tests **independent and repeatable**.
+
+> Using parameterized tests for these cases ensures **thorough coverage** without duplicating code.
+> **Combining normal, boundary, and edge cases ensures full functional coverage.**
+> **Full functional coverage** means testing **all meaningful input scenarios** a system may encounter—typical inputs, 
+extreme limits, and values at the edges of ranges—so that both normal behavior and potential failure points are verified.
+
+### Input-Output Pairs for Grade Calculation Testing
+
+| Test Case | Average Score (Input) | Expected Grade (Output) | Type of Test Case |
+|-----------|----------------------|------------------------|-----------------|
+| 1         | 95                   | A                      | Normal          |
+| 2         | 90                   | A                      | Boundary        |
+| 3         | 89                   | B                      | Boundary        |
+| 4         | 85                   | B                      | Normal          |
+| 5         | 80                   | B                      | Boundary        |
+| 6         | 79                   | C                      | Boundary        |
+| 7         | 75                   | C                      | Normal          |
+| 8         | 70                   | C                      | Boundary        |
+| 9         | 69                   | D                      | Boundary        |
+| 10        | 65                   | D                      | Normal          |
+| 11        | 60                   | D                      | Boundary        |
+| 12        | 59                   | F                      | Boundary        |
+| 13        | 55                   | F                      | Normal          |
+| 14        | 0                    | F                      | Edge Case       |
+| 15        | 100                  | A                      | Edge Case       |
+
+
+```java
+
+package cc.ku.st.module2.exercises.exercise4;
+
+class Student {
+    private String name;
+    private int grade;
+
+    public Student(String name, int grade) {
+        if (grade < 0 || grade > 100) {
+            throw new IllegalArgumentException("Grade must be between 0 and 100");
+        }
+        this.name = name;
+        this.grade = grade;
+    }
+
+    public String getLetterGrade() {
+        if (grade >= 90) return "A";
+        if (grade >= 80) return "B";
+        if (grade >= 70) return "C";
+        if (grade >= 60) return "D";
+        return "F";
+    }
+}
+```
+
+
+
+```java
+
+package cc.ku.st.module2;
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+/**
+ * Parameterized tests for Student.getLetterGrade() method.
+ * Covers normal values, boundary values, and edge cases to ensure full functional coverage.
+ */
+class StudentParameterizedTest {
+
+    /**
+     * Test the getLetterGrade() method using multiple input scores.
+     * The CsvSource provides: <grade>,<expectedLetterGrade>
+     */
+    @ParameterizedTest(name = "Grade {0} should return {1}")
+    @CsvSource({
+        // Normal values
+        "95, A",
+        "85, B",
+        "75, C",
+        "65, D",
+        "55, F",
+        // Boundary values
+        "90, A",
+        "89, B",
+        "80, B",
+        "79, C",
+        "70, C",
+        "69, D",
+        "60, D",
+        "59, F",
+        // Edge cases
+        "0, F",
+        "100, A"
+    })
+    void getLetterGrade_validValues_returnsLetterGrades(int grade, String expectedLetterGrade) {
+        // Arrange: instantiate student with given grade
+        Student student = new Student("Test Student", grade);
+
+        // Act: calculate letter grade
+        String actualGrade = student.getLetterGrade();
+
+        // Assert: verify the output
+        assertEquals(expectedLetterGrade, actualGrade,
+                "Grade " + grade + " should be mapped to letter " + expectedLetterGrade);
+    }
+
+    /**
+     * Test invalid grades (edge cases outside 0-100) to ensure exception is thrown.
+     */
+    @ParameterizedTest(name = "Invalid grade {0} should throw exception")
+    @CsvSource({
+        "-1",
+        "-10",
+        "101",
+        "150"
+    })
+    void constructor_invalidGrade_throwsException(int invalidGrade) {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Student("Test Student", invalidGrade),
+                "Grades outside 0-100 should throw IllegalArgumentException");
+    }
+}
+```
+
+
+
+
 ## Test Suite
 
-A test suite is a collection of test cases grouped together for execution. It allows test developer to run multiple tests as a single unit. Test suites are useful for:
+A test suite is a collection of test cases grouped together for execution. It allows test developer to run multiple 
+tests as a single unit. Test suites are useful for:
 
-    Organizing related tests (e.g., all tests for a specific class or module).
-    
-    Running tests in a specific order (if needed).
-    
-    Simplifying test execution (e.g., running all tests with a single command).
+* Organizing related tests (e.g., all tests for a specific class or module).
+* Running tests in a specific order (if needed).
+* Simplifying test execution (e.g., running all tests with a single command).
 
 
 ~~~java
