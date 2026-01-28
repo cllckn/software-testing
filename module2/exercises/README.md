@@ -1,13 +1,13 @@
 # Exercises
 ## Hands-on Exercise1: Extending the Product Class and Writing Unit Tests
 ### Objective
-In this exercise, you will extend the **[existing Product class](../../module2/README.md#writing-your-first-unit-test)** to add a new method that increases the stock. 
-You will also write unit tests in the **[existing ProductTest class](../../module2/README.md#writing-your-first-unit-test)** to validate the functionality of this method, ensuring that it works correctly under 
+In this exercise, you will extend the **[existing Product class](../../module2/README.md#writing-your-first-unit-test-with-junit)** to add a new method that increases the stock. 
+You will also write unit tests in the **[existing ProductTest class](../../module2/README.md#writing-your-first-unit-test-with-junit)** to validate the functionality of this method, ensuring that it works correctly under 
 different conditions.
 
 ### Task 1: Extend the Product Class
 
-1. Implement a new method  increaseStock(int quantity) in the [existing Product class](../../module2/README.md#writing-your-first-unit-test) that:
+1. Implement a new method  increaseStock(int quantity) in the [existing Product class](../../module2/README.md#writing-your-first-unit-test-with-junit) that:
 2. Increases the stock of the product by a given quantity.
 3. If the increased stock quantity exceeds 100, an exception should be thrown.
 4. If the quantity is zero or negative, an exception should be thrown.
