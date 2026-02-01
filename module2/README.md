@@ -51,6 +51,11 @@ Unit tests can be written using **any testing framework** appropriate for the pr
 For example, in Java, **JUnit** is commonly used. A unit test verifies that a class or method works as intended by
 providing **input and checking the expected output**.
 
+
+**The Anatomy of a Unit Test**
+
+<img src="../resources/images/anatomy-of-unit-test.png" width="800">
+
 **Key Points When Writing Unit Tests:**
 
 * Test **one functionality at a time**.
@@ -476,6 +481,8 @@ JUnit uses annotations to define test methods and setup/teardown methods. Here a
 | `@AfterAll`   | Runs once after all test methods in the class-static method (e.g., closing resources).|
 | `@Disabled`   | Temporarily disables a test method so it is **skipped during execution**. |
 
+**JUnit Annotations and Testing Lifecycle**
+<img src="../resources/images/junit-annotations-lifecycle.png" width="600">
 
 * `@Test` – Marks a method as a test case. JUnit will execute all methods annotated with `@Test`.
 * `@BeforeEach` – Runs **before each test method**. Use it to set up common test data or initialize objects.
@@ -834,6 +841,8 @@ In software testing and quality assurance, Maven plays a critical role by:
 ---
 
 **Maven Project Structure (Standard Layout)**
+
+<img src="../resources/images/maven-project-structure.png" width="600">
 
 Maven enforces a well-known directory structure:
 
