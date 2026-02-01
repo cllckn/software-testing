@@ -147,7 +147,7 @@ expected, leading to incorrect invoices and customer complaints. This visible in
 - **Failure:** Users experience incorrect pricing in real usage.
 
 
-![](../resources/failure-anatomy.png)
+![](../resources/images/failure-anatomy.png)
 
 - **Error → Defect → Bug → Failure**
 
@@ -206,13 +206,13 @@ Although it is traditionally shown as a phase after development, testing is appl
 modern software systems.
 
 
-![](../resources/sdlc.png)
+![](../resources/images/sdlc-dark.png)
 
 
 
 **The exponential cost of fixing a defect over the Software Development Life Cycle (SDLC).**
 
-![](../resources/cost-of-fixing-defect.png)
+![](../resources/images/cost-of-fixing-defect.png)
 
 
 This graph shows that detecting a defect early—such as during development—is inexpensive to fix, while discovering it 
