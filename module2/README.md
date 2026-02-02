@@ -344,15 +344,15 @@ A test case typically has **three parts**:
 
 Some common assertions in Java (JUnit) include:
 
-| Assertion                                       | Description                                                                                                                                                                                                    |
-|-------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `assertEquals(expected, actual, message)`       | Checks if two values are equal; if not, test fails and displays message.                                                                                                                                       |
-| `assertTrue(condition,message)`                 | Checks if the condition is true; if not, test fails and displays message.                                                                                                                                      |
-| `assertFalse(condition, message)`               | Checks if the condition is false; if not, test fails and displays message.                                                                                                                                     |
-| `assertThrows(Exception.class, () -> method())` | Ensures a specific exception is thrown; if not, test fails and displays message.                                                                                                                               |
-| `assertAll("message", () -> {...})`             | Groups multiple assertions together; if any assertion fails, test fails and displays all errors under the message. It can group multiple assertions, making it easier to test related conditions in one block. |
-| `assertNull(object)`                            | checks that an object is null.                                                                                                                                                                                 |
-| `assertNotNull(object)`                         | checks that an object is not null  .                                                                                                                                                                           |
+| Assertion                                                     | Description                                                                                                                                                                                                    |
+|---------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `assertEquals(expected, actual, message)`                     | Checks if two values are equal; if not, test fails and displays message.                                                                                                                                       |
+| `assertTrue(condition,message)`                               | Checks if the condition is true; if not, test fails and displays message.                                                                                                                                      |
+| `assertFalse(condition, message)`                             | Checks if the condition is false; if not, test fails and displays message.                                                                                                                                     |
+| `assertThrows(Exception.class, () -> method(),() -> message)` | Ensures a specific exception is thrown; if not, test fails and displays message.                                                                                                                               |
+| `assertAll("message", () -> {...})`                           | Groups multiple assertions together; if any assertion fails, test fails and displays all errors under the message. It can group multiple assertions, making it easier to test related conditions in one block. |
+| `assertNull(object)`                                          | checks that an object is null.                                                                                                                                                                                 |
+| `assertNotNull(object)`                                       | checks that an object is not null  .                                                                                                                                                                           |
 
 **Code Example:A complete example that combines all the assertions**
 > test/~/ProductAssertionsTest.java
@@ -468,6 +468,13 @@ public class ProductAssertionsTest {
 }
 ~~~
 
+
+>Floating-point arithmetic (float/double) is approximate due to binary representation and rounding errors.
+>Using a delta in assertions defines an acceptable tolerance range (error margin), preventing false test failures caused 
+> by tiny rounding errors.
+> 
+>An assertion passes if:| expected − actual | ≤ delta
+
 ### JUnit Annotations
 
 JUnit uses annotations to define test methods and setup/teardown methods. Here are the most common annotations:
@@ -482,6 +489,7 @@ JUnit uses annotations to define test methods and setup/teardown methods. Here a
 | `@Disabled`   | Temporarily disables a test method so it is **skipped during execution**. |
 
 **JUnit Annotations and Testing Lifecycle**
+
 <img src="../resources/images/junit-annotations-lifecycle.png" width="600">
 
 * `@Test` – Marks a method as a test case. JUnit will execute all methods annotated with `@Test`.
@@ -593,39 +601,18 @@ This helps to:
 * Avoid writing **redundant test cases**.
 * Ensure consistent behavior across different input values.
 
-**Code Example:A complete example that combines all the annotations**
-> test/~/ProductParameterizedTest.java
-
-~~~java
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-
-//ProductTest, ProductStockRulesTest, ProductBehaviorTest... these names are more convenient in practice.
-class ProductParameterizedTest {
-
-    @ParameterizedTest //Marks the method as a parameterized test.
-    @CsvSource({        // Provides a list of comma-separated values as input parameters.
-            "10, 3, 7",  // Initial stock: 10, reduce by 3, expected stock: 7
-            "5, 5, 0",   // Initial stock: 5, reduce by 5, expected stock: 0
-            "8, 7, 1"    // Initial stock: 8, reduce by 7, expected stock: 1
-    })
-    public void reduceStock_validQuantity_updatesStockCorrectly(int initialStock, int reduceQuantity, int expectedStock) {
-        // Arrange
-        Product product = new Product(1, "Laptop", 999.99, initialStock);
-
-        // Act
-        product.reduceStock(reduceQuantity);
-
-        // Assert
-        assertEquals(expectedStock, product.getStockQuantity(),
-                () -> "Stock quantity should be " + expectedStock + " after reducing " + reduceQuantity + " units from an initial " + initialStock);
-    }
-}
-~~~
 
 ### Parameterized Test for Grade Calculation
 
 **Scenario:** We want to test a `calculateGrade()` method that converts numeric averages into letter grades as follows:
+
+```java
+    if (grade >= 90) return "A";
+    if (grade >= 80) return "B";
+    if (grade >= 70) return "C";
+    if (grade >= 60) return "D";
+    if (grade < 60) return "F";
+```
 
 | Average Score | Expected Grade |
 |---------------|----------------|
@@ -660,8 +647,7 @@ scores**:
 * Include **extreme values** to test system limits.
 * Keep tests **independent and repeatable**.
 
-> Using parameterized tests for these cases ensures **thorough coverage** without duplicating code.
-> **Combining normal, boundary, and edge cases ensures full functional coverage.**
+> **Combining normal, boundary, and edge cases ensures full functional coverage** without duplicating code.
 > **Full functional coverage** means testing **all meaningful input scenarios** a system may encounter—typical inputs,
 > extreme limits, and values at the edges of ranges—so that both normal behavior and potential failure points are
 > verified.
@@ -784,8 +770,38 @@ class StudentTest {
     }
 }
 
-
 ```
+
+
+**Code Example**
+> test/~/ProductParameterizedTest.java
+
+~~~java
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+//ProductTest, ProductStockRulesTest, ProductBehaviorTest... these names are more convenient in practice.
+class ProductParameterizedTest {
+
+    @ParameterizedTest //Marks the method as a parameterized test.
+    @CsvSource({        // Provides a list of comma-separated values as input parameters.
+            "10, 3, 7",  // Initial stock: 10, reduce by 3, expected stock: 7
+            "5, 5, 0",   // Initial stock: 5, reduce by 5, expected stock: 0
+            "8, 7, 1"    // Initial stock: 8, reduce by 7, expected stock: 1
+    })
+    public void reduceStock_validQuantity_updatesStockCorrectly(int initialStock, int reduceQuantity, int expectedStock) {
+        // Arrange
+        Product product = new Product(1, "Laptop", 999.99, initialStock);
+
+        // Act
+        product.reduceStock(reduceQuantity);
+
+        // Assert
+        assertEquals(expectedStock, product.getStockQuantity(),
+                () -> "Stock quantity should be " + expectedStock + " after reducing " + reduceQuantity + " units from an initial " + initialStock);
+    }
+}
+~~~
 
 ## 6. Test Suite
 
