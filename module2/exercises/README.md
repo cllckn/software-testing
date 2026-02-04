@@ -29,7 +29,8 @@ different conditions.
 * Implement a method to apply a discount to the product’s price (a percentage or fixed amount) and update the price accordingly.
 * Implement validation to ensure the product has a valid price (e.g., it should not be negative).
 
----
+
+***
 
 
 
@@ -43,9 +44,9 @@ You will practice **test-driven thinking**, **fault detection**, and **full func
 
 ## Task 1: Pre-requisite Step
 
-### Step 0: Reuse and Verify Exercise 1 Solution
+### Task 1.1. Reuse and Verify Exercise 1 Solution
 
-1. **Copy the complete solution code from Exercise 1** (e.g., `Product`, stock-related methods, and their tests).
+1. **Copy the complete solution code from Exercise 1** (e.g., `Product`,`ProductTest`).
 2. Run all existing tests and ensure:
    - All tests pass
    - The baseline behavior is correct
@@ -53,7 +54,7 @@ You will practice **test-driven thinking**, **fault detection**, and **full func
 
 ---
 
-### Intentional Fault Injection (Learning Step)
+### Task 1.2. Intentional Fault Injection 
 
 After confirming the correct behavior:
 
@@ -101,7 +102,7 @@ Design a new `Order` class with the following responsibilities:
 
 #### 2. Additional Methods
 
-- `applyTax(double taxRate)`
+- `applyTax(double taxRate)` - reduces totalAmount by taxRate
 - `addItem(double price)` - increases totalAmount
 - `removeItem(double price)` - decreases totalAmount
 
@@ -115,6 +116,8 @@ Each method must:
 ## Task 2: Write JUnit Test Cases
 
 Write **separate test methods** to achieve **full functional coverage**.
+
+> Follow [behavior-oriented naming](../../module2/README.md#3-junit-naming-conventions-behavior-oriented) for test classes and methods.
 
 ### Constructor Tests
 - Valid constructor initializes fields correctly
@@ -153,6 +156,10 @@ Write **separate test methods** to achieve **full functional coverage**.
    - Identify which test caught the defect
    - Fix the implementation
 4. Confirm all tests pass again
+
+
+
+***
 
 
 
