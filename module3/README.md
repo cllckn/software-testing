@@ -12,6 +12,7 @@
     * [Step 3: Refactor the Code (REFACTOR)-Optional](#step-3-refactor-the-code-refactor-optional)
   * [Exercises](#exercises)
   * [What is BDD?](#what-is-bdd)
+    * [Example: ATM Cash Withdrawal](#example-atm-cash-withdrawal)
 <!-- TOC -->
 
 
@@ -19,7 +20,8 @@
 
 ## What is TDD?
 
-**Test-Driven Development (TDD)** is a software development approach in which **tests are written before the production code**. It is a **core practice in Agile software development**, particularly in **Extreme Programming (XP)**.
+**Test-Driven Development (TDD)** is a software development approach in which **tests are written before the production 
+code**. It is a **core practice in Agile software development**, particularly in **Extreme Programming (XP)**.
 
 ### Agile Development Context
 
@@ -30,6 +32,7 @@ Agile is a flexible, iterative methodology that emphasizes:
     - Version 1: Login System
     - Version 2: User Profile
     - Version 3: Payment System
+    - Version 4: Recommendation System
 
 - **Iterative development:** Features are refined in cycles based on feedback.  
   *Example for Login System:*
@@ -37,13 +40,14 @@ Agile is a flexible, iterative methodology that emphasizes:
     - Iteration 2: Improved UI
     - Iteration 3: Two-Factor Authentication
 
-TDD align closely well with Agile because it ensures **tests drive development**, improves **code quality**, and detects **bugs early**.
+TDD align closely well with Agile because it ensures **tests drive development**, improves **code quality**, and 
+detects **defects early**.
 
 ### Benefits of TDD
 
 - ✔ **Tests drive development** – Code is written based on well-defined tests.
 - ✔ **Code quality improves** – Continuous refactoring leads to better structure and maintainability.
-- ✔ **Bugs are reduced early** – Issues are detected before deployment.
+- ✔ **Defects are reduced early** – Issues are detected before deployment.
 
 ---
 
@@ -72,10 +76,16 @@ import org.junit.jupiter.api.Test;
 public class BillingSystemTest {
 
     @Test
-    void testCalculateTotal() {
-        BillingSystem billing = new BillingSystem();
-        double total = billing.calculateTotal(50, 3); // Expected: (50*3) - 10% + 20% tax
-        assertEquals(162.0, total, 0.01);  // Expected total = 150 - 15 + 27 = 162
+    void calculateTotal_validInputWithDiscountAndTax_returnsCorrectTotal() {
+      BillingSystem billing = new BillingSystem();
+  
+      double total = billing.calculateTotal(50, 3);
+      // (50 * 3) = 150
+      // Discount = 15
+      // Tax = 27
+      // Total = 162
+  
+      assertEquals(162.0, total, 0.01);
     }
 }
 ```
@@ -125,31 +135,46 @@ public class BillingSystem {
 Expected behavior: The code becomes more modular and readable, and tests still pass!  (REFACTOR Phase Completed)
 
 
-**Apply these steps for testing exceptions** 
+**Applying TDD for Exception Handling**
+
+Now we apply the same RED → GREEN → REFACTOR cycle to exception cases.
+
+Updated Tests with Proper Naming
 
 ```java
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
 public class BillingSystemTest {
 
-    @Test
-    void testCalculateTotal() {
-        BillingSystem billing = new BillingSystem();
-        double total = billing.calculateTotal(50, 3); // Expected: (50*3) - 10% + 20% tax
-        assertEquals(162.0, total, 0.01);  // Expected total = 150 - 15 + 27 = 162
-    }
+  @Test
+  void calculateTotal_validInputWithDiscountAndTax_returnsCorrectTotal() {
+    BillingSystem billing = new BillingSystem();
+    double total = billing.calculateTotal(50, 3);
+    assertEquals(162.0, total, 0.01);
+  }
 
-    @Test
-    void testNegativePriceThrowsException() {
-        BillingSystem billing = new BillingSystem();
-        assertThrows(IllegalArgumentException.class, () -> billing.calculateTotal(-50, 3));
-    }
+  @Test
+  void calculateTotal_negativePrice_throwsIllegalArgumentException() {
+    BillingSystem billing = new BillingSystem();
 
-    @Test
-    void testNegativeQuantityThrowsException() {
-        BillingSystem billing = new BillingSystem();
-        assertThrows(IllegalArgumentException.class, () -> billing.calculateTotal(50, -3));
-        assertEquals("Price and quantity must be positive", exception.getMessage());
-    }
+    assertThrows(IllegalArgumentException.class,
+            () -> billing.calculateTotal(-50, 3));
+  }
+
+  @Test
+  void calculateTotal_negativeQuantity_throwsIllegalArgumentExceptionWithMessage() {
+    BillingSystem billing = new BillingSystem();
+
+    IllegalArgumentException exception = assertThrows(
+            IllegalArgumentException.class,
+            () -> billing.calculateTotal(50, -3)
+    );
+
+    assertEquals("Price and quantity must be positive", exception.getMessage());
+  }
 }
+
 ```
 
 ## Exercises
@@ -172,7 +197,39 @@ public class BillingSystemTest {
 **Cucumber** is a software tool for Behavior-Driven Development (BDD) that allows you to write automated tests in a 
 human-readable format.
 
-**Example: ATM Cash Withdrawal**
+---
+
+### Example: ATM Cash Withdrawal
+
+```text
+src
+ ├─ main
+ │   └─ java
+ │       └─ cc
+ │           └─ ku
+ │               └─ st
+ │                   └─ module3
+ │                       └─ bdd
+ │                           └─ Account.java      <- Domain code
+ └─ test
+     ├─ java
+     │   └─ cc
+     │       └─ ku
+     │           └─ st
+     │               └─ module3
+     │                   └─ bdd
+     │                       ├─ steps
+     │                       │   └─ CashWithdrawalSteps.java
+     │                       ├─ runner
+     │                       │   └─ TestRunner.java
+     │                       └─ unit
+     │                           └─ AccountTest.java
+     └─ resources
+         └─ features
+             └─ cash_withdrawal.feature
+```
+
+
 
 Cucumber uses **Gherkin** (the Given/When/Then language) to connect human-readable requirements to technical test code.
 
@@ -181,7 +238,7 @@ Cucumber uses **Gherkin** (the Given/When/Then language) to connect human-readab
 
 This is the **Gherkin file**, written in plain English so that business owners, developers, and testers can all understand it.
 
-**Feature:** ATM Cash Withdrawal
+**Feature:** ATM Cash Withdrawal  (SCRUM framework **User Story**)
 - **As a** bank customer
 - **I want to** withdraw cash from the ATM
 - **So that** I can have physical money
@@ -192,6 +249,28 @@ This is the **Gherkin file**, written in plain English so that business owners, 
 - **Then** the ATM should dispense $20
 - **And** the new account balance should be $80
 
+```text
+Feature: ATM Cash Withdrawal
+  As a bank customer
+  I want to withdraw cash from the ATM
+  So that I can have physical money
+
+  Scenario: Successful withdrawal from an account with sufficient balance
+    Given the account balance is $100
+    When the user requests $20
+    Then the ATM should dispense $20
+    And the new account balance should be $80
+
+#
+#  Scenario: Failed withdrawal due to low balance
+#    Given the account balance is $10
+#    When the user requests $50
+#    Then the ATM should show an error "Insufficient balance"
+#    And the account balance should still be $10
+
+
+```
+
 ---
 
 2) Step Definitions
@@ -199,12 +278,96 @@ This is the **Gherkin file**, written in plain English so that business owners, 
 The **Step Definitions** act as the "glue" between the plain-language feature file and the application logic.  
 They map each **Given/When/Then** step to the actual operations in the system.
 
+```java
+
+package cc.st.module3.bdd.steps;
+
+
+
+import cc.st.module3.bdd.Account;
+import io.cucumber.java.en.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+public class CashWithdrawalSteps {
+  private Account account = new Account();
+  private double dispensedAmount;
+  private final double DELTA = 0.001; // Tolerance for floating point math
+  private String errorMessage;
+
+  @Given("the account balance is ${double}")
+  public void the_account_balance_is(Double initialBalance) {
+    account.setBalance(initialBalance);
+  }
+
+  @When("the user requests ${double}")
+  public void the_user_requests(Double amount) {
+    account.withdraw(amount);
+    this.dispensedAmount = amount;
+  }
+
+    /*@When("the user requests ${double}")
+    public void the_user_requests(Double amount) {
+        try {
+            // This might succeed or throw an exception
+            account.withdraw(amount);
+            this.dispensedAmount = amount;
+            this.errorMessage = null; // Reset error message if it succeeds
+        } catch (IllegalArgumentException e) {
+            // Store the error message to check in the "Then" step later
+            this.errorMessage = e.getMessage();
+            this.dispensedAmount = 0; // Nothing was dispensed
+        }
+    }*/
+
+  @Then("the ATM should dispense ${double}")
+  public void the_atm_should_dispense(Double expectedDispensed) {
+    assertEquals(expectedDispensed, dispensedAmount, DELTA);
+  }
+
+  @Then("the new account balance should be ${double}")
+  public void the_new_account_balance_should_be(Double expectedBalance) {
+    assertEquals(expectedBalance, account.getBalance(), DELTA);
+  }
+
+
+
+   /* @Then("the ATM should show an error {string}")
+    public void the_atm_should_show_an_error(String expectedError) {
+        assertNotNull(errorMessage, "An error was expected but none occurred.");
+        assertEquals(expectedError, errorMessage);
+    }
+
+    @Then("the account balance should still be ${double}")
+    public void the_account_balance_should_still_be(Double expectedBalance) {
+        assertEquals(expectedBalance, account.getBalance(), DELTA);
+    }
+*/
+}
+
+
+```
+
 ---
 
 3) Application Code
 
 This is the actual software being tested, also called the **System Under Test (SUT)**.  
 It contains the logic to manage the account balance and dispense cash.
+
+TDD Cycle: Red-Green-Refactor
+
+1. Red – Write a failing scenario
+   - Write the Gherkin scenario (cash_withdrawal.feature).
+   - Implement step definitions that reference application code you haven’t written yet.
+   - Run the test → it fails because the code doesn’t exist.
+2. Green – Implement the minimum code
+   - Create classes/methods that make the scenario pass.
+   - Run the test → it passes (green).
+3. Refactor
+   - Clean up code, remove duplication, improve design.
+   - Test should still pass after refactoring.
+   
 
 ---
 
@@ -228,5 +391,6 @@ When we run Cucumber:
 - 1 Scenario (1 passed)
 - 4 Steps (4 passed)
 
-This demonstrates how **Cucumber connects business-readable scenarios to automated tests**, allowing both technical and non-technical stakeholders to understand and verify system behavior.
+This demonstrates how **Cucumber connects business-readable scenarios to automated tests**, allowing both technical 
+and non-technical stakeholders to understand and verify system behavior.
 
