@@ -1,5 +1,7 @@
 # Exercises
-# Hands-on Exercise1: Extending the Product Class and Writing Unit Tests
+
+># Hands-on Exercise1: Extending the Product Class and Writing Unit Tests
+>
 ### Objective
 In this exercise, you will extend the **[existing Product class](../README.md#writing-your-first-unit-test)** to add a new method that increases the stock. 
 You will also write unit tests in the **[existing ProductTest class](../README.md#writing-your-first-unit-test)** to validate the functionality of this method, ensuring that it works correctly under 
@@ -51,7 +53,8 @@ different conditions.
 
 
 
-# Hands-on Exercise 2: Implementing an Order Class and Comprehensive Unit Testing
+># Hands-on Exercise 2: Implementing an Order Class and Comprehensive Unit Testing
+>
 
 ### Objective
 In this exercise, you will extend an existing e-commerce domain model by implementing an `Order` class and thoroughly testing its behavior using JUnit.  
@@ -197,8 +200,9 @@ Write **separate test methods** to achieve **full functional coverage**.
 
 
 
-# Hands-on Exercise 3: Parameterized Testing, Test Suites, and Automated Test Execution
-
+># Hands-on Exercise 3: Parameterized Testing, Test Suites, and Automated Test Execution
+>
+> 
 ### Objective
 In this exercise, you will enhance your testing strategy by converting existing unit tests into **parameterized tests**.  
 You will systematically test **normal, boundary, and edge case values**, organize tests using a **JUnit test suite**, 
