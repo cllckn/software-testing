@@ -23,7 +23,6 @@
   * [8. Testing With Maven](#8-testing-with-maven)
     * [Introduction to Maven](#introduction-to-maven)
     * [Generating Test Reports](#generating-test-reports)
-  * [Hands-On Exercises](#hands-on-exercises)
 <!-- TOC -->
 
 ---
@@ -597,6 +596,8 @@ class ProductAnnotationsTest {
 
 **Parameterized tests** allow a test developer to **run the same test logic with multiple sets of input data**.  
 
+<img src="../resources/images/parameterized-test-power.png" width="600">
+
 <img src="../resources/images/parameterized-test.png" width="800">
 
 
@@ -1029,29 +1030,27 @@ class OrderServiceTest {
 
 ### Introduction to Maven
 
-**What Is Maven?**
+## What Is Maven?
 
 **Apache Maven** is a build automation and dependency management tool primarily used for Java-based projects.  
-It standardizes how projects are built, tested, and packaged, making development and collaboration more efficient.
+It standardizes how projects are built, tested, and packaged, making development, testing, and collaboration more efficient.
 
 Maven is widely used to:
 
-- Manage external libraries (dependencies)
-- Compile source code
-- Run automated tests
-- Generate reports
-- Package applications for deployment
+- **Manage external libraries (dependencies)**, including testing frameworks and drivers
+- **Compile source code** and **package applications for deployment**
+- **Run automated tests** in a consistent and repeatable way
+- **Generate reports** and support quality assurance activities
+- Enforce a **standard project structure** across teams and environments
+- Enable **repeatable builds and test execution** across different systems
 
----
+By automating the build and test lifecycle, Maven plays a critical role in software testing and quality assurance projects.
 
-**Why Maven Is Used in Testing Projects**
+**Maven Build Lifecycle**
 
-In software testing and quality assurance, Maven plays a critical role by:
+<img src="../resources/images/maven-build-lifecycle.png" width="700">
 
-- Automatically **downloading and managing test libraries** (e.g., unit testing frameworks, database drivers)
-- Providing a **consistent project structure**
-- Enabling **repeatable test execution** across different environments
-- Supporting **test reporting and lifecycle automation**
+
 
 ---
 
