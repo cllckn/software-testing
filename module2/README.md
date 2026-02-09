@@ -21,7 +21,7 @@
   * [6. Test Suite](#6-test-suite)
   * [7. Regression Test](#7-regression-test)
   * [8. Testing With Maven](#8-testing-with-maven)
-    * [Introduction to Maven](#introduction-to-maven)
+    * [What Is Maven?](#what-is-maven)
     * [Generating Test Reports](#generating-test-reports)
 <!-- TOC -->
 
@@ -1030,9 +1030,8 @@ class OrderServiceTest {
 
 ## 8. Testing With Maven
 
-### Introduction to Maven
 
-## What Is Maven?
+### What Is Maven?
 
 `Apache Maven` is a **build automation** and **dependency management** tool primarily used for Java-based projects.  
 It standardizes how projects are built, tested, and packaged, making development, testing, and collaboration more efficient.
@@ -1271,7 +1270,9 @@ Testing is automatically triggered during the **test** phase.
 Test reports provide a structured summary of test execution, highlighting passed, failed, and skipped tests. They help
 identify failures, analyze errors with stack traces, and track test stability over time. Reports improve collaboration
 by allowing teams to share results. They also serve as documentation for compliance, audit purposes, and performance
-analysis by measuring test execution times. Running mvn surefire-report:report generates a detailed HTML report, making
+analysis by measuring test execution times. 
+
+Running `mvn surefire-report:report` generates a detailed HTML report, making
 it easier to monitor software quality and debug issues efficiently.
 
 ```sh
