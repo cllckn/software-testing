@@ -843,7 +843,7 @@ import org.junit.platform.suite.api.Suite;
 @SelectClasses({ProductTest.class, ProductParameterizedTest.class})//,StudentTest.class})
 // @SelectClasses({cc.ku.st.module2.ProductTest.class, ProductParameterizedTest.class, cc.ku.st.module2.exercises.exercise1.ProductTest.class})
 // if the test classes have the same name-they can not exist in the same package.
-//@SelectPackages("cc.st.module2.exercises") We can choose tests by using package names
+//@SelectPackages("cc.st.module2.exercises") //We can choose tests by using package names
 public class ProductTestSuite {
   // This class is a container for the test suite.
 }
@@ -984,14 +984,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ProductTest {
 
-    @Test
+  @Test
+  public void reduceStock_validQuantity_updatesStockCorrectly() {
+
+    //Arrange: Set up the initial conditions (initialize a Product object with 10 units in stock).
+    Product product = new Product("Laptop", 10);
+    product.reduceStock(3);
+    assertEquals(7, product.getStockQuantity(),
+            () -> "Stock quantity should be 7 after reducing 3 units from an initial 10.");
+  }
+
+    /*@Test
     void reduceStock_invalidQuantity_throwsException() {
         Product product = new Product("Laptop", 10);
 
         assertThrows(IllegalArgumentException.class,
                 () -> product.reduceStock(0),
                 "Quantity must be positive");
-    }
+    }*/
 }
 
 
