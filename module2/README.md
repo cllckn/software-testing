@@ -840,9 +840,12 @@ import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@SelectClasses({ProductTest.class, ProductParameterizedTest.class})
+@SelectClasses({ProductTest.class, ProductParameterizedTest.class})//,StudentTest.class})
+// @SelectClasses({cc.ku.st.module2.ProductTest.class, ProductParameterizedTest.class, cc.ku.st.module2.exercises.exercise1.ProductTest.class})
+// if the test classes have the same name-they can not exist in the same package.
+//@SelectPackages("cc.st.module2.exercises") We can choose tests by using package names
 public class ProductTestSuite {
-    // This class is a container for the test suite.
+  // This class is a container for the test suite.
 }
 ~~~
 
