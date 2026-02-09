@@ -849,6 +849,8 @@ public class ProductTestSuite {
 
 ## 7. Regression Test
 
+We frequently encounter issues after modifying the code.
+
 In software, **regression** usually means a new change breaks something that was working before.
 
 A **regression test** verifies that **existing, previously working functionality still behaves correctly after a code change**.
@@ -1032,7 +1034,7 @@ class OrderServiceTest {
 
 ## What Is Maven?
 
-**Apache Maven** is a build automation and dependency management tool primarily used for Java-based projects.  
+`Apache Maven` is a **build automation** and **dependency management** tool primarily used for Java-based projects.  
 It standardizes how projects are built, tested, and packaged, making development, testing, and collaboration more efficient.
 
 Maven is widely used to:
@@ -1047,6 +1049,11 @@ Maven is widely used to:
 By automating the build and test lifecycle, Maven plays a critical role in software testing and quality assurance projects.
 
 **Maven Build Lifecycle**
+
+The Maven Build Lifecycle is a well-defined sequence of phases that Maven follows to build, test, and prepare a 
+Java project for delivery.
+
+After writing the source code, these phases are used to transform it into a finished, ready-to-use product.
 
 <img src="../resources/images/maven-build-lifecycle.png" width="700">
 
