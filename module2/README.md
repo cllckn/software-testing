@@ -19,7 +19,8 @@
     * [Edge Cases and Boundary Values](#edge-cases-and-boundary-values)
     * [Input-Output Pairs for Grade Calculation Testing](#input-output-pairs-for-grade-calculation-testing)
   * [6. Test Suite](#6-test-suite)
-  * [7. Testing With Maven](#7-testing-with-maven)
+  * [7. Regression Test](#7-regression-test)
+  * [8. Testing With Maven](#8-testing-with-maven)
     * [Introduction to Maven](#introduction-to-maven)
     * [Generating Test Reports](#generating-test-reports)
   * [Hands-On Exercises](#hands-on-exercises)
@@ -595,6 +596,10 @@ class ProductAnnotationsTest {
 ## 5. Parameterized Tests
 
 **Parameterized tests** allow a test developer to **run the same test logic with multiple sets of input data**.  
+
+<img src="../resources/images/parameterized-test.png" width="800">
+
+
 This helps to:
 
 * Test **multiple scenarios** efficiently.
@@ -634,11 +639,13 @@ scores**:
 
 * Minimum possible score: 0 → Should return grade F
 * Maximum possible score: 100 → Should return grade A
-* Boundary values around grade thresholds:
+* Boundary values (Tipping Points) around grade thresholds:
     - 89 → B, 90 → A
     - 79 → C, 80 → B
     - 69 → D, 70 → C
     - 59 → F, 60 → D
+
+<img src="../resources/images/parameterized-test-vales.png" width="800">
 
 **Best Practices:**
 
@@ -648,9 +655,10 @@ scores**:
 * Keep tests **independent and repeatable**.
 
 > **Combining normal, boundary, and edge cases ensures full functional coverage** without duplicating code.
+>
 > **Full functional coverage** means testing **all meaningful input scenarios** a system may encounter—typical inputs,
-> extreme limits, and values at the edges of ranges—so that both normal behavior and potential failure points are
-> verified.
+extreme limits, and values at the edges of ranges—so that both normal behavior and potential failure points are
+verified.
 
 ### Input-Output Pairs for Grade Calculation Testing
 
@@ -771,6 +779,17 @@ class StudentTest {
 }
 
 ```
+> Different data sources can be used in a parameterized test.
+>
+>| Annotation        | Source of Data        | Best Use Case |
+>|------------------|----------------------|---------------|
+>| `@ValueSource`    | Inline literals       | Simple single-parameter checks (e.g., IDs, names, flags) |
+>| `@CsvSource`      | Inline strings        | Multiple simple parameters (e.g., score → grade mappings) |
+>| `@MethodSource`   | Java method           | Complex objects or logic-heavy data generation |
+>| `@CsvFileSource`  | External `.csv` file  | Large datasets or data managed outside of code |
+>| `@EnumSource`     | Enum constants        | Testing logic that depends on category, type, or state |
+
+
 
 
 **Code Example**
@@ -826,7 +845,187 @@ public class ProductTestSuite {
 }
 ~~~
 
-## 7. Testing With Maven
+
+## 7. Regression Test
+
+In software, **regression** usually means a new change breaks something that was working before.
+
+A **regression test** verifies that **existing, previously working functionality still behaves correctly after a code change**.
+
+In the following Product–OrderService example, suppose:
+- The **Product module** has a stock logic in reduceStock.
+- The **OrderService module** depends on Product to execute placing an Order.
+- How a Regression Can Occur:
+  - A developer modifies the reduceStock in the Product to fix a bug or add a feature.
+  - The change **unintentionally alters behavior relied on by OrderService**.
+- Regression Detection:
+  - Existing **Order tests fail** even though Order code was not modified.
+  - This signals a **regression**: a previously correct interaction between Product and Order is now broken.
+
+**Code Example**
+> ./regression/Product.java
+
+```java
+package cc.st.module2.regression;
+
+public class Product {
+    private final String name;
+    private int stock;
+
+    public Product(String name, int stock) {
+        if (stock < 0) {
+            throw new IllegalArgumentException("Stock must be non-negative");
+        }
+        this.name = name;
+        this.stock = stock;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void reduceStock(int quantity) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be positive");
+        }
+
+        stock -= quantity;
+    }
+
+    // Regression Introduced
+    // Modified Product Code (Logical Regression)
+    /*public void reduceStock(int quantity) {
+        if (quantity <= 0) {
+            return;   //  silent failure introduced
+        }
+        stock -= quantity;
+    }*/
+}
+
+
+
+```
+
+**Code Example**
+> ./regression/OrderService.java
+
+```java
+package cc.st.module2.regression;
+
+public class OrderService {
+
+    public void placeOrder(Product product, int quantity) {
+        // Business assumption:
+        // reduceStock throws an exception if the order is invalid
+        product.reduceStock(quantity);
+
+        // If we reach here, the order is considered successful
+        System.out.println("Order placed successfully");
+    }
+}
+
+
+
+```
+
+**Code Example**
+> ./regression/Main.java
+
+```java
+
+package cc.st.module2.regression;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Product product = new Product("Laptop", 10);
+        OrderService orderService = new OrderService();
+
+        System.out.println("Initial stock: " + product.getStock());
+
+        // Case 1: Valid order
+        try {
+            orderService.placeOrder(product, 3);
+            System.out.println("Stock after valid order: " + product.getStock());
+        } catch (Exception e) {
+            System.out.println("Error during valid order: " + e.getMessage());
+        }
+
+        // Case 2: Invalid order (quantity = 0)
+        try {
+            orderService.placeOrder(product, 0);
+            System.out.println("Stock after invalid order: " + product.getStock());
+            System.out.println("WARNING: Invalid order was accepted!");
+        } catch (Exception e) {
+            System.out.println("Expected error for invalid order: " + e.getMessage());
+        }
+
+    }
+}
+
+
+```
+
+**Code Example**
+> ./regression/ProductTest.java
+
+```java
+package cc.st.module2.regression;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class ProductTest {
+
+    @Test
+    void reduceStock_invalidQuantity_throwsException() {
+        Product product = new Product("Laptop", 10);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> product.reduceStock(0),
+                "Quantity must be positive");
+    }
+}
+
+
+
+```
+
+**Code Example**
+> ./regression/OrderServiceTest.java
+
+```java
+
+package cc.st.module2.regression;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class OrderServiceTest {
+
+    @Test
+    void placeOrder_invalidQuantity_throwsException() {
+        Product product = new Product("Laptop", 10);
+        OrderService orderService = new OrderService();
+
+        assertThrows(IllegalArgumentException.class,
+                () -> orderService.placeOrder(product, 0),
+                "Placing an order with invalid quantity should fail");
+    }
+}
+
+
+```
+
+
+
+
+
+
+
+## 8. Testing With Maven
 
 ### Introduction to Maven
 
@@ -977,6 +1176,8 @@ Benefits:
 
 **Maven Dependency Scopes**
 
+<img src="../resources/images/maven-scope.png" width="600">
+
 **compile (default)**
 
 - Available during **compilation, testing, and runtime**
@@ -1020,15 +1221,28 @@ Benefits:
 
 Maven follows a **well-defined lifecycle**, which is especially important for testing:
 
-| Phase    | Purpose                       |
-|----------|-------------------------------|
-| validate | Check project structure       |
-| compile  | Compile source code           |
-| test     | Run automated tests           |
-| package  | Package compiled code         |
-| verify   | Run additional checks         |
-| install  | Install artifact locally      |
-| deploy   | Deploy artifact to repository |
+| Phase    | Purpose                                                           |
+|----------|-------------------------------------------------------------------|
+| validate | Check project structure (Check POM validity, verify dependencies) |
+| compile  | Compile main source files to target/classes                       |
+| test     | Run automated tests using configured test framework               |
+| package  | Package compiled code (JAR, WAR, EAR)                             |
+| verify   | Run integration tests                                             |
+| install  | Install artifact locally(Install package in local .m2 repository) |
+| deploy   | Deploy artifact to repository                                     |
+
+
+Developer Workflow:
+1. Write code → `mvn compile`      (check compilation)        validate → compile
+2. Write tests → `mvn test`         (run unit tests)          validate → compile → test
+3. Build → `mvn package`            (create artifact)         ...
+4. Verify → `mvn verify`            (integration tests)       ...
+5. Share → `mvn install/deploy`     (distribute)              validate → compile → test → package → verify → install/deploy
+
+Critical Path: compile → test → package → ... 
+
+If any phase fails, subsequent phases are skipped.
+
 
 Testing is automatically triggered during the **test** phase.
 
@@ -1040,14 +1254,11 @@ Testing is automatically triggered during the **test** phase.
 | `mvn surefire-report:report`           | Generate HTML test report                       | `target/site/surefire-report.html`            |
 | `mvn -Dtest=ClassNameTest test`        | Run a Specific Test Class                       | `target/surefire-reports/`                    |
 | `mvn -Dtest=ClassName#methodName test` | Run Specific Test Methods                       | `target/surefire-reports/`                    |
+| `mvn package -Dmaven.test.skip=true`   | Skip tests                                      | `target/surefire-reports/`                    |
 | `mvn compile exec:java`                | To run your application                         | requires build config in pom.xml              |
 
-**Key Benefits of Using Maven**
 
-- Centralized dependency management
-- Standard project structure
-- Automated testing and reporting
-- Improved team collaboration and consistency
+
 
 ### Generating Test Reports
 
@@ -1067,10 +1278,5 @@ mvn surefire-report:report
 ```
 
 The report file is located at /target/reports/surefire.html.
-
-## Hands-On Exercises
-
-[Exercises](exercises/exercises.md)
-
 
 
