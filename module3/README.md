@@ -5,14 +5,13 @@
 * [Module 3: Test-Driven Development (TDD) and Behavior-Driven Development (BDD)](#module-3-test-driven-development-tdd-and-behavior-driven-development-bdd)
   * [What is TDD?](#what-is-tdd)
     * [Agile Development Context](#agile-development-context)
-    * [Benefits of TDD](#benefits-of-tdd)
-  * [TDD Cycle: Red-Green-Refactor](#tdd-cycle-red-green-refactor)
+    * [TDD Cycle: Red-Green-Refactor](#tdd-cycle-red-green-refactor)
+  * [Case Study: Developing a **Billing System** using TDD approach.](#case-study-developing-a-billing-system-using-tdd-approach)
     * [Step 1: Write a Failing Test (RED)](#step-1-write-a-failing-test-red)
     * [Step 2: Write Just Enough Code to Pass (GREEN)](#step-2-write-just-enough-code-to-pass-green)
     * [Step 3: Refactor the Code (REFACTOR)-Optional](#step-3-refactor-the-code-refactor-optional)
-  * [Exercises](#exercises)
   * [What is BDD?](#what-is-bdd)
-    * [Example: ATM Cash Withdrawal](#example-atm-cash-withdrawal)
+  * [Case Study: ATM Cash Withdrawal](#case-study-atm-cash-withdrawal)
 <!-- TOC -->
 
 
@@ -23,9 +22,23 @@
 **Test-Driven Development (TDD)** is a software development approach in which **tests are written before the production 
 code**. It is a **core practice in Agile software development**, particularly in **Extreme Programming (XP)**.
 
+<img src="../resources/images/what-is-tdd.png" width="600">
+
+
+**Key Characteristic**
+
+- **Tests drive development** – Code is written based on well-defined tests.
+- **Code quality improves** – Continuous refactoring leads to better structure and maintainability.
+- **Defects are reduced early** – Issues are detected before deployment.
+
+
+
 ### Agile Development Context
 
-Agile is a flexible, iterative methodology that emphasizes:
+<img src="../resources/images/agile-methodology.png" width="800">
+
+
+Agile is a flexible and modern software development methodology that emphasizes:
 
 - **Incremental development:** The system is built in small, usable increments, each adding functionality.  
   *Example:*
@@ -43,24 +56,27 @@ Agile is a flexible, iterative methodology that emphasizes:
 TDD align closely well with Agile because it ensures **tests drive development**, improves **code quality**, and 
 detects **defects early**.
 
-### Benefits of TDD
-
-- ✔ **Tests drive development** – Code is written based on well-defined tests.
-- ✔ **Code quality improves** – Continuous refactoring leads to better structure and maintainability.
-- ✔ **Defects are reduced early** – Issues are detected before deployment.
 
 ---
 
-## TDD Cycle: Red-Green-Refactor
+### TDD Cycle: Red-Green-Refactor
+
+<img src="../resources/images/red-green-refactor-cycle.png" width="600">
 
 1. **Red:** Write a failing test because the feature does not exist yet.
 2. **Green:** Write the minimal code to pass the test.
 3. **Refactor:** Improve the code while keeping all tests passing.
 
 
+
+## Case Study: Developing a **Billing System** using TDD approach.
+
+
+<img src="../resources/images/tdd-case-study.png" width="600">
+
+
 ### Step 1: Write a Failing Test (RED)
 
-We will develop a **Billing System** using TDD approach.
  
 First write a **JUnit test** for the `calculateTotal()` method.
 
@@ -177,15 +193,16 @@ public class BillingSystemTest {
 
 ```
 
-## Exercises
-[Exercises](exercises/exercises.md)
-
 ---
 
 ## What is BDD?
 
 **Behavior-Driven Development (BDD)** extends TDD by focusing on **system behavior from the user’s perspective** using 
 **natural language scenarios**.
+
+BDD focuses on what the system should do from the user or business perspective, using a shared language.
+
+<img src="../resources/images/bdd-definition.png" width="700">
 
 **Key Points**
 
@@ -199,7 +216,7 @@ human-readable format.
 
 ---
 
-### Example: ATM Cash Withdrawal
+## Case Study: ATM Cash Withdrawal
 
 ```text
 src
@@ -238,6 +255,9 @@ Cucumber uses **Gherkin** (the Given/When/Then language) to connect human-readab
 
 This is the **Gherkin file**, written in plain English so that business owners, developers, and testers can all understand it.
 
+<img src="../resources/images/bdd-gherkin-file.png" width="700">
+
+
 **Feature:** ATM Cash Withdrawal  (SCRUM framework **User Story**)
 - **As a** bank customer
 - **I want to** withdraw cash from the ATM
@@ -273,7 +293,7 @@ Feature: ATM Cash Withdrawal
 
 ---
 
-2) Step Definitions
+2) Step Definitions (`CashWithdrawalSteps.java`)
 
 The **Step Definitions** act as the "glue" between the plain-language feature file and the application logic.  
 They map each **Given/When/Then** step to the actual operations in the system.
@@ -350,7 +370,7 @@ public class CashWithdrawalSteps {
 
 ---
 
-3) Application Code
+3) Application Code (`Account.java`)
 
 This is the actual software being tested, also called the **System Under Test (SUT)**.  
 It contains the logic to manage the account balance and dispense cash.
@@ -362,7 +382,7 @@ TDD Cycle: Red-Green-Refactor
    - Implement step definitions that reference application code you haven’t written yet.
    - Run the test → it fails because the code doesn’t exist.
 2. Green – Implement the minimum code
-   - Create classes/methods that make the scenario pass.
+   - Define classes/methods that make the scenario pass.
    - Run the test → it passes (green).
 3. Refactor
    - Clean up code, remove duplication, improve design.
