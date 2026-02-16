@@ -1,4 +1,60 @@
 # Exercises
+
+
+<!-- TOC -->
+* [Exercises](#exercises)
+* [Hands-on Exercise1: Extending the Product Class and Writing Unit Tests](#hands-on-exercise1-extending-the-product-class-and-writing-unit-tests)
+    * [Objective](#objective)
+    * [Task 1: Extend the Product Class](#task-1-extend-the-product-class)
+    * [Task 2: Write JUnit Test Cases](#task-2-write-junit-test-cases)
+    * [Task 3: Run and Analyze Your Tests](#task-3-run-and-analyze-your-tests)
+    * [Additional Challenges (Optional)](#additional-challenges-optional)
+* [Hands-on Exercise 2: Implementing an Order Class and Comprehensive Unit Testing](#hands-on-exercise-2-implementing-an-order-class-and-comprehensive-unit-testing)
+    * [Objective](#objective-1)
+  * [Task 1: Pre-requisite Step](#task-1-pre-requisite-step)
+    * [Task 1.1. Reuse and Verify Exercise 1 Solution](#task-11-reuse-and-verify-exercise-1-solution)
+    * [Task 1.2. Intentional Error Injection](#task-12-intentional-error-injection-)
+  * [Task 2: Implement the Order Class](#task-2-implement-the-order-class)
+    * [Attributes](#attributes)
+    * [Constructor](#constructor)
+    * [Business Methods](#business-methods)
+      * [1. `applyDiscount(double discount)`](#1-applydiscountdouble-discount)
+      * [2. Additional Methods](#2-additional-methods)
+  * [Task 2: Write JUnit Test Cases](#task-2-write-junit-test-cases-1)
+    * [Constructor Tests](#constructor-tests)
+    * [Discount Tests](#discount-tests)
+    * [Additional Method Tests](#additional-method-tests)
+    * [General Rules](#general-rules)
+  * [Task 3: Run, Analyze, and Reflect](#task-3-run-analyze-and-reflect)
+* [Hands-on Exercise 3: Parameterized Testing, Test Suites, and Automated Test Execution](#hands-on-exercise-3-parameterized-testing-test-suites-and-automated-test-execution)
+    * [Objective](#objective-2)
+  * [Pre-requisite Step](#pre-requisite-step)
+  * [Task 1: Refactor Tests into Parameterized Tests](#task-1-refactor-tests-into-parameterized-tests)
+    * [Apply Parameterized Tests to All Business Methods](#apply-parameterized-tests-to-all-business-methods)
+    * [Input Categories to Cover](#input-categories-to-cover)
+      * [Normal Values](#normal-values)
+      * [Boundary Values (Tipping Points)](#boundary-values-tipping-points)
+      * [Edge / Invalid Values](#edge--invalid-values)
+  * [Task 2: Design Input–Output Tables](#task-2-design-inputoutput-tables)
+  * [Task 3: Design a JUnit Test Suite](#task-3-design-a-junit-test-suite)
+  * [Task 4: Run Tests and Generate Reports Using Maven](#task-4-run-tests-and-generate-reports-using-maven)
+  * [Reflection Questions](#reflection-questions)
+* [Hands-on Exercise 4: Testing an Order and Payment Service (Parameterized & Regression Testing)](#hands-on-exercise-4-testing-an-order-and-payment-service-parameterized--regression-testing)
+  * [Task 1: System Design](#task-1-system-design)
+  * [1.1 Order Class](#11-order-class)
+  * [1.2 PaymentService Class](#12-paymentservice-class)
+    * [Business Rules](#business-rules)
+* [Task 2: Unit Testing](#task-2-unit-testing)
+  * [2.1 Order Tests](#21-order-tests)
+  * [2.2 PaymentService Tests](#22-paymentservice-tests)
+* [Task 3: Parameterized Tests](#task-3-parameterized-tests)
+  * [3.1 Payment Scenarios](#31-payment-scenarios)
+* [Task 4: Regression Testing](#task-4-regression-testing)
+* [Task 5: Test Suite](#task-5-test-suite)
+* [Task 6: Generate HTML Test Report](#task-6-generate-html-test-report)
+<!-- TOC -->
+
+
 # Hands-on Exercise1: Extending the Product Class and Writing Unit Tests
 ### Objective
 In this exercise, you will extend the **[existing Product class](../README.md#writing-your-first-unit-test)** to add a new method that increases the stock. 
@@ -334,3 +390,171 @@ Execute all tests using Maven from the project root:
 ---
 
 
+
+
+
+
+
+
+
+# Hands-on Exercise 4: Testing an Order and Payment Service (Parameterized & Regression Testing)
+
+---
+
+**Objective**
+
+In this exercise, students will:
+
+- Design a simple **Order** and **PaymentService**
+- Write unit tests
+- Implement parameterized tests
+- Perform regression testing
+- Create a JUnit test suite
+- Generate an HTML test report using Maven Surefire
+
+The focus is on **business rule validation**, **boundary value analysis**, and **regression safety nets**.
+
+---
+
+## Task 1: System Design
+
+## 1.1 Order Class
+
+**Attributes**
+
+- `orderId` — unique identifier
+- `amount` — total order amount
+- `status` — possible values: `NEW`, `PAID`, `FAILED`
+
+**Methods**
+
+- `getAmount()`
+- `getStatus()`
+- `markPaid()`
+- `markFailed()`
+
+
+**Business Rules**
+
+- Order amount must be **greater than 0**
+- Status can only change through `PaymentService`
+
+---
+
+## 1.2 PaymentService Class
+
+**Method**
+
+```java
+//Processes payments for an order.
+processPayment(Order order, double paymentAmount){}
+```
+
+
+
+### Business Rules
+
+1. Payment amount must be **greater than 0**
+2. Payment amount must be **equal to or greater than order amount**
+3. If valid:
+    - Order status becomes `PAID`
+4. If invalid:
+    - Order status becomes `FAILED`
+    - Invalid inputs should throw an exception
+
+---
+
+# Task 2: Unit Testing
+
+## 2.1 Order Tests
+
+Verify:
+
+- Order is initialized with status `NEW`
+- New order with zero or negative amount throws exception
+- markPaid() changes status correctly
+- markFailed() changes status correctly
+
+---
+
+## 2.2 PaymentService Tests
+
+Students must verify:
+
+- Valid payment marks order as `PAID`
+- Payment less than order amount marks order as `FAILED`
+- Zero payment throws exception
+- Negative payment throws exception
+- Order state does not change incorrectly after failed validation
+
+---
+
+# Task 3: Parameterized Tests
+
+Use JUnit Parameterized Tests (e.g., `@CsvSource`) to test multiple payment scenarios efficiently.
+
+---
+
+## 3.1 Payment Scenarios
+
+| Order Amount | Payment Amount | Expected Result |Type
+|--------------|---------------|----------------|--------------|
+| 100.0 | 100.0 | PAID | Normal|
+| 100.0 | 150.0 | PAID |Normal|
+| 100.0 | 99.99 | FAILED |Boundary|
+| 100.0 | 0.0 | Exception |Edge Exception|
+| 100.0 | -10.0 | Exception |Edge Exception|
+
+
+Verify:
+
+- Correct status transition
+- Correct exception handling
+- No unintended side effects
+
+---
+
+# Task 4: Regression Testing
+
+After confirming all tests pass:
+
+1. Introduce **one logical mistake at a time**, such as:
+    - Using `>` instead of `>=`
+    - Forgetting to update order status
+    - Removing validation for zero payments
+2. Re-run all tests
+3. Observe:
+    - Which test fails
+    - Why it fails
+4. Fix the defect
+5. Confirm all tests pass again
+
+Students must explain:
+
+- Why this is considered regression testing
+- Which tests acted as defect detectors
+- Whether parameterized tests caught boundary defects
+
+---
+
+# Task 5: Test Suite
+
+Create a test suite that groups:
+
+- Order tests
+- PaymentService tests
+- Parameterized tests
+
+The suite must execute all tests in a single run.
+
+---
+
+# Task 6: Generate HTML Test Report
+
+Run:
+
+    mvn test
+
+Locate report in:
+
+    target/surefire-reports
