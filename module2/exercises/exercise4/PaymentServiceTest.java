@@ -30,7 +30,6 @@ class PaymentServiceTest {
 
                 () -> assertThrows(IllegalArgumentException.class,
                         () -> service.processPayment(order, 0)),
-
                 () -> assertThrows(IllegalArgumentException.class,
                         () -> service.processPayment(order, -10))
         );
