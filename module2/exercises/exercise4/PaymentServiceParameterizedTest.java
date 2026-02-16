@@ -29,7 +29,8 @@ class PaymentServiceParameterizedTest {
     @ParameterizedTest
     @CsvSource({
             "0",
-            "-10"
+            "-10",
+            "-0.1"
     })
     void processPayment_invalidAmount_throwsIllegalArgumentException(double paymentAmount) {
 
