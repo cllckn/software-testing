@@ -35,14 +35,10 @@ class PaymentServiceParameterizedTest {
 
         Order order = new Order("O3", 100);
 
-        assertAll("Invalid payment amounts should throw IllegalArgumentException",
+        assertThrows(IllegalArgumentException.class,
+                () -> service.processPayment(order, paymentAmount),
+                () -> "Invalid payment amounts should throw IllegalArgumentException.");
 
-                () -> assertThrows(IllegalArgumentException.class,
-                        () -> service.processPayment(order, paymentAmount)),
-
-                () -> assertThrows(IllegalArgumentException.class,
-                        () -> service.processPayment(order, paymentAmount))
-        );
     }
 
 }
