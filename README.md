@@ -121,12 +121,12 @@ Students will be evaluated based on the following components:
 
 ## Exams Schedule
 
-| **Component**                   | **Date** |
-|---------------------------------|----------|
-| Assignment 1 Oral Examination   | Week X (starting Week X) |
+| **Component**                   | **Date**                 |
+|---------------------------------|--------------------------|
+| Assignment 1 Oral Examination   | Week 7 (the week starting March 2, 2026) |
 | Assignment 2 Oral Examination   | Week X (starting Week X) |
-| Midterm Exam                    | Z        |
-| Final Exam                      | Z        |
+| Midterm Exam                    | Z                        |
+| Final Exam                      | Z                        |
 
 ---
 
