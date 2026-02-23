@@ -1,25 +1,44 @@
 # Software Testing and Quality Assurance
 
-This course provides a practical introduction to software testing. Students will learn the fundamentals of testing,
-including **unit testing**, **integration testing**, **end-to-end (E2E) testing**, **API testing**, and 
-**load and stress testing**.
-Through hands-on exercises, students will gain practical experience in **writing, executing, and 
-maintaining test cases** for software applications.
+Software testing is the process of evaluating a software system to detect defects and verify that it meets specified 
+functional and non-functional requirements. It is essential for ensuring software quality, reliability, and performance 
+throughout the development lifecycle.
+
+This course provides a hands-on introduction to software testing concepts and techniques, covering unit testing, 
+integration testing, RESTful API testing, end-to-end (E2E) testing, and load and stress testing.
+Through practical exercises, they will gain experience in designing, implementing, executing, and analyzing test cases 
+using modern testing tools and frameworks.
 
 ---
 
 ## Course Objectives
 
-By the end of this course, students will be able to:
+This course aims to:
 
-- Understand the fundamentals of software testing.
-- Write and execute **unit tests** for individual software components.
-- Perform **integration testing** to ensure components work together correctly.
-- Conduct **end-to-end testing** to validate complete system workflows.
-- Test **APIs** and verify data exchange between systems.
-- Understand and perform **load and stress testing** to evaluate system performance under different conditions.
-- Generate and analyze **test reports**.
-- Gain practical experience in **writing, executing, and maintaining test cases**.
+1. Introduce fundamental concepts, terminology, and principles of software testing.
+2. Develop practical skills in unit, integration, acceptance, end-to-end, and performance testing.
+3. Apply structured testing methodologies including Test-Driven Development (TDD) and Behavior-Driven Development (BDD).
+4. Enable students to test RESTful APIs and database-backed applications.
+5. Train students to use modern testing tools and frameworks (e.g., JUnit, Cucumber, Jest, HTTP clients, Cypress, Artillery).
+6. Develop the ability to analyze test coverage, performance metrics, and system resource utilization.
+7. Cultivate systematic thinking in designing, executing, and documenting software tests.
+
+
+## Course Learning Outcomes
+
+Upon successful completion of this course, students will be able to:
+
+1. Explain core software testing concepts, terminology, and testing levels.
+2. Design and implement unit tests using JUnit, including assertions, parameterized tests, and test suites.
+3. Apply the Red–Green–Refactor cycle within a TDD workflow.
+4. Develop behavior-oriented test scenarios using BDD principles.
+5. Construct and execute integration tests for RESTful APIs with database interaction.
+6. Implement automated end-to-end test cases.
+7. Measure and interpret test coverage metrics.
+8. Design and conduct load and stress tests.
+9. Analyze performance results including latency, throughput, and error rate.
+10. Produce structured test reports and evaluate testing effectiveness.
+
 
 ---
 
@@ -59,7 +78,7 @@ By the end of this course, students will be able to:
 - Understanding Integration Testing
 - What Is a RESTful API
 - Integration Testing with IntelliJ HTTP Client
-- Testing Web Applications with Testing Frameworks
+- Testing Web Applications with Testing Frameworks Jest and Supertest
 - Test Coverage
 - Integration Testing of REST APIs with Database Support
 - The Role of Mocking in Integration Testing
@@ -147,6 +166,7 @@ Students will be evaluated based on the following components:
 
 ## Acknowledgement
 
-In preparing these course materials, the instructor **leveraged AI agents** as a support tool for drafting lecture notes, generating examples and figures, and organizing content.  
-All outputs were **reviewed, edited, and contextualized** prior to inclusion.
+In preparing these course materials, the instructor used AI-based tools as support for drafting lecture notes, 
+generating examples and figures, and organizing content.
 
+All AI-generated outputs were reviewed, edited, and contextualized by the instructor prior to inclusion.
