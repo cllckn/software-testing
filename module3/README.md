@@ -85,6 +85,9 @@ First write a **JUnit test** for the `calculateTotal()` method.
 - Apply a **10% discount** if subtotal > $100.
 - Apply a **20% tax** on the discounted amount.
 
+**Code Example**
+> test/~/BillingSystemTest.java
+
 ```java
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
@@ -112,6 +115,8 @@ Expected behavior: The test fails because BillingSystem does not exist yet. (RED
 
 Implement a basic version of the calculateTotal() method inside BillingSystem.java to make the test pass.
 
+**Code Example**
+> main/~/BillingSystem.java
 
 ```java
 public class BillingSystem {
@@ -128,6 +133,10 @@ Expected behavior: The test passes.(GREEN phase completed)
 ### Step 3: Refactor the Code (REFACTOR)-Optional
 
 Refactor the code by extracting helper methods to improve readability and maintainability.
+
+
+**Code Example**
+> main/~/BillingSystem.java
 
 ```java
 public class BillingSystem {
@@ -156,6 +165,9 @@ Expected behavior: The code becomes more modular and readable, and tests still p
 Now we apply the same RED → GREEN → REFACTOR cycle to exception cases.
 
 Updated Tests with Proper Naming
+
+**Code Example**
+> test/~/BillingSystemTest.java
 
 ```java
 import static org.junit.jupiter.api.Assertions.*;
@@ -214,6 +226,10 @@ BDD focuses on what the system should do from the user or business perspective, 
 **Cucumber** is a software tool for Behavior-Driven Development (BDD) that allows you to write automated tests in a 
 human-readable format.
 
+**Gherkin** is a domain-specific language (DSL) used to describe software requirements in a structured, 
+semi-natural language format using the **Given/When/Then** structure.
+
+
 ---
 
 ## Case Study: ATM Cash Withdrawal
@@ -265,9 +281,12 @@ This is the **Gherkin file**, written in plain English so that business owners, 
 
 **Scenario:** Successful withdrawal from an account with sufficient balance
 - **Given** the account balance is $100
-- **When** the user requests $20
+- **When** the user withdraws $20
 - **Then** the ATM should dispense $20
 - **And** the new account balance should be $80
+
+**Code Example**
+> test/resources/features/cash_withdrawal.feature
 
 ```text
 Feature: ATM Cash Withdrawal
@@ -277,17 +296,15 @@ Feature: ATM Cash Withdrawal
 
   Scenario: Successful withdrawal from an account with sufficient balance
     Given the account balance is $100
-    When the user requests $20
+    When the user withdraws $20
     Then the ATM should dispense $20
     And the new account balance should be $80
 
-#
 #  Scenario: Failed withdrawal due to low balance
 #    Given the account balance is $10
-#    When the user requests $50
+#    When the user withdraws $50
 #    Then the ATM should show an error "Insufficient balance"
 #    And the account balance should still be $10
-
 
 ```
 
@@ -297,6 +314,9 @@ Feature: ATM Cash Withdrawal
 
 The **Step Definitions** act as the "glue" between the plain-language feature file and the application logic.  
 They map each **Given/When/Then** step to the actual operations in the system.
+
+**Code Example**
+> test/~/steps/CashWithdrawalSteps.java
 
 ```java
 
@@ -315,19 +335,19 @@ public class CashWithdrawalSteps {
   private final double DELTA = 0.001; // Tolerance for floating point math
   private String errorMessage;
 
-  @Given("the account balance is ${double}")
-  public void the_account_balance_is(Double initialBalance) {
-    account.setBalance(initialBalance);
-  }
+    @Given("the account balance is ${double}")
+    public void the_account_balance_is(Double initialBalance) {
+        account.setBalance(initialBalance);
+    }
 
-  @When("the user requests ${double}")
-  public void the_user_requests(Double amount) {
-    account.withdraw(amount);
-    this.dispensedAmount = amount;
-  }
+    @When("the user withdraws ${double}")
+    public void the_user_withdraws(Double amount) {
+        account.withdraw(amount);
+        this.dispensedAmount = amount;
+    }
 
-    /*@When("the user requests ${double}")
-    public void the_user_requests(Double amount) {
+    /*@When("the user withdraws ${double}")
+    public void the_user_withdraws(Double amount) {
         try {
             // This might succeed or throw an exception
             account.withdraw(amount);
@@ -340,15 +360,15 @@ public class CashWithdrawalSteps {
         }
     }*/
 
-  @Then("the ATM should dispense ${double}")
-  public void the_atm_should_dispense(Double expectedDispensed) {
-    assertEquals(expectedDispensed, dispensedAmount, DELTA);
-  }
+    @Then("the ATM should dispense ${double}")
+    public void the_atm_should_dispense(Double expectedDispensed) {
+        assertEquals(expectedDispensed, dispensedAmount, DELTA);
+    }
 
-  @Then("the new account balance should be ${double}")
-  public void the_new_account_balance_should_be(Double expectedBalance) {
-    assertEquals(expectedBalance, account.getBalance(), DELTA);
-  }
+    @Then("the new account balance should be ${double}")
+    public void the_new_account_balance_should_be(Double expectedBalance) {
+        assertEquals(expectedBalance, account.getBalance(), DELTA);
+    }
 
 
 
@@ -370,7 +390,64 @@ public class CashWithdrawalSteps {
 
 ---
 
-3) Application Code (`Account.java`)
+3) Cucumber libraries (`pom.xml`)
+
+```xml
+
+<!-- Cucumber Java -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>7.15.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Cucumber JUnit -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>7.15.0</version>
+            <scope>test</scope>
+        </dependency>
+
+```
+
+
+---
+
+4) Entry point for JUnit to discover and run Cucumber features. (`RunCucumberIT.java`)
+
+**Code Example**
+> test/~/steps/CashWithdrawalSteps.java
+
+```java
+
+package cc.ku.st.module3.bdd.steps;
+
+import org.junit.platform.suite.api.ConfigurationParameter;
+import org.junit.platform.suite.api.IncludeEngines;
+import org.junit.platform.suite.api.SelectClasspathResource;
+import org.junit.platform.suite.api.Suite;
+
+import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME;
+import static io.cucumber.junit.platform.engine.Constants.GLUE_PROPERTY_NAME;
+
+@Suite
+@IncludeEngines("cucumber")
+@SelectClasspathResource("features")
+@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "cc.st.module3.bdd.steps")
+@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty, html:target/cucumber-report.html")
+public class RunCucumberIT {
+    // This class remains empty.
+    // It acts as an entry point for JUnit to discover and run Cucumber features.
+}
+
+```
+
+
+---
+
+5Application Code (`Account.java`)
 
 This is the actual software being tested, also called the **System Under Test (SUT)**.  
 It contains the logic to manage the account balance and dispense cash.
@@ -387,7 +464,38 @@ TDD Cycle: Red-Green-Refactor
 3. Refactor
    - Clean up code, remove duplication, improve design.
    - Test should still pass after refactoring.
-   
+
+**Code Example**
+> main/~/Account.java
+
+```java
+
+package cc.ku.st.module3.bdd;
+
+public class Account {
+    private double balance;
+
+    public void setBalance(Double initialBalance) {
+        this.balance=initialBalance;
+    }
+
+    public void withdraw(Double amount) {
+        if(amount >= balance) {
+            throw new IllegalArgumentException ("Insufficient balance");
+        }
+        this.balance-=amount;
+    }
+
+    public double getBalance() {
+        return this.balance;
+    }
+
+}
+
+
+```
+
+
 
 ---
 
