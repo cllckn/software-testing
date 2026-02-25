@@ -67,5 +67,18 @@ class OrderTest {
 
 ```
 
+---
+
+
+---
+
+
+# **Hands-On Exercise 2: Behavior-Driven Development (BDD) – ATM Cash Withdrawal**
+
+**Task:**
+
+Implement the [ATM Cash Withdrawal](../module3/README.md#case-study-atm-cash-withdrawal) scenario.
+
+
 
 
