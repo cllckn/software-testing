@@ -77,7 +77,7 @@ class OrderTest {
 
 **Task:**
 
-Implement the [ATM Cash Withdrawal](../module3/README.md#case-study-atm-cash-withdrawal) scenario.
+Implement the [ATM Cash Withdrawal](../README.md#case-study-atm-cash-withdrawal) scenario.
 
 
 
