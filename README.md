@@ -74,14 +74,14 @@ Upon successful completion of this course, students will be able to:
 
 ---
 
-### Module 4: Integration Testing, RESTful API
-- Understanding Integration Testing
-- What Is a RESTful API
+### Module 4: Integration Testing of RESTful APIs
+- Integration Testing
+- Fundamentals Of Web Services
+- Developing RESTful Endpoints Using NodeJS
 - Integration Testing with IntelliJ HTTP Client
-- Testing Web Applications with Testing Frameworks Jest and Supertest
-- Test Coverage
+- Testing Web Applications with Testing Frameworks
 - Integration Testing of REST APIs with Database Support
-- The Role of Mocking in Integration Testing
+- Role of Mocking in Integration Testing
 - Hands-On Exercises
 
 ---
