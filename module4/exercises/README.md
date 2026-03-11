@@ -22,7 +22,15 @@ The API will support basic bank operations.
   - `name` (string)
   - `balance` (float)
   - `currency` (string, e.g., "USD", "EUR")
-  - `createdAt` (date string)
+
+```json
+{
+  "accountNumber": 1001,
+  "name": "John Doe",
+  "balance": 1500.75,
+  "currency": "USD"
+}
+```
 
 
 
@@ -50,17 +58,10 @@ Develop the following RESTful routes:
 - Remove an account by `accountNumber`.
 - Respond with a success message.
 
-#### **POST /api/accounts/:accountNumber/deposit**
+#### **PATCH /api/accounts/:accountNumber**
 - Accept a **JSON request body** with an amount.
-- Increase the account balance.
+- Increase/decrease the account balance.
 - If not found, return a **404 error**.
-- Add validation to accept only **positive numbers**.
-
-#### **POST /api/accounts/:accountNumber/withdraw**
-- Accept a **JSON request body** with an amount.
-- Decrease the account balance, ensuring no overdrafts.
-- If not found or insufficient funds, return an appropriate error.
-- Add validation to accept only **positive numbers**.
 
 
 
@@ -74,60 +75,3 @@ Develop the following RESTful routes:
 - The API should be functional with **GET, POST, PUT, DELETE** routes.
 - Deposit and withdrawal operations should correctly modify balances.
 - Tests should pass successfully.
-
-
-
-## **Additional Challenges (Optional)**
-These tasks are for students to implement at home:
-
-- Implement a **transaction history feature** (`GET /api/accounts/:accountNumber/transactions`).
-- Add a **search feature** (`GET /api/accounts?currency=USD`) to filter accounts by currency.
-
----
-
-
-
-
-
-
-
-# **Hands-on Exercise 3: Extending Bank Account REST API in Exercise 1**
-
-
-## **Tasks**
-
-
-## **1. Convert REST API to a Web App**
-- Develop web interface to test all the endpoints, using JQuery.
-- Add logging module for the server, using morgan and winston libraries.
-
-
-## **4. Running the API as a Service with PM2**
-- Install **PM2** globally.
-- Run the API as **two separate services**:
-  - One on **port 3000**.
-  - Another on **port 4000**.
-- Ensure both services restart automatically on failure.
-
-
-## **5. Writing REST API Tests**
-- Use **http client** to test all API endpoints.
-- Validate that all operations behave as expected.
-- Define environment variables for:
-  - URLs (`PORT=3000` and `PORT=4000`).
-
-
-## **Completion Criteria**
-- The API should be functional with **GET, POST, PUT, DELETE** routes.
-- Deposit and withdrawal operations should correctly modify balances.
-- API should be running as **two services** on **3000 and 4000** using **PM2**.
-- Environment variables should be correctly configured and used.
-- Tests should pass successfully.
-
-
-
-## **Additional Challenges (Optional)**
-These tasks are for students to implement at home:
-
-- Implement a **transaction history feature** (`GET /api/accounts/:accountNumber/transactions`).
-- Add a **search feature** (`GET /api/accounts?currency=USD`) to filter accounts by currency.
