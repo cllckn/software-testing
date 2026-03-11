@@ -1,0 +1,109 @@
+
+### Get all products
+GET {{hosturi}}/api/products
+Accept: application/json
+
+> {%
+  client.test("getAllProducts_whenCalled_returns200Ok", function() {
+    client.assert(response.status === 200, "Expected 200 but received " + response.status);
+  });
+
+  client.test("getAllProducts_validRequest_returnsJsonWithCharset", function() {
+    var contentType = response.headers.valueOf("Content-Type");
+    client.assert(contentType === "application/json; charset=utf-8", "Expected JSON with UTF-8 but got " + contentType);
+  });
+
+  client.test("getAllProducts_whenDataExists_returnsNonEmptyArray", function() {
+    client.assert(Array.isArray(response.body), "Response body is not an array");
+    client.assert(response.body.length > 0, "The product list is unexpectedly empty");
+  });
+%}
+
+
+
+
+### Get a single product by ID
+GET {{hosturi}}/api/products/2
+Accept: application/json
+
+> {%
+  client.test("getProductById_existingId_returns200Ok", function() {
+    client.assert(response.status === 200, "Expected 200 but received " + response.status);
+  });
+
+  client.test("getProductById_validRequest_returnsJsonWithCharset", function() {
+    var contentType = response.headers.valueOf("Content-Type");
+    client.assert(contentType === "application/json; charset=utf-8", "Expected JSON with UTF-8 but got " + contentType);
+  });
+
+  client.test("getProductById_existingId_returnsCorrectProductDetails", function() {
+    client.assert(response.body.id === 2, "Expected ID 2 but got " + response.body.id);
+    client.assert(response.body.name === "Phone", "Expected 'Phone' but got " + response.body.name);
+    client.assert(response.body.price === 499.99, "Expected 499.99 but got " + response.body.price);
+  });
+%}
+
+
+
+### Add a new product
+POST {{hosturi}}/api/products
+Content-Type: application/json
+
+{"name": "SSD", "price": 500}
+
+> {%
+  client.test("addProduct_validPayload_returns201Created", function() {
+    client.assert(response.status === 201, "Expected 201 but received " + response.status);
+  });
+
+  client.test("addProduct_validPayload_returnsJsonWithCharset", function() {
+    var contentType = response.headers.valueOf("Content-Type");
+    client.assert(contentType === "application/json; charset=utf-8", "Expected JSON with UTF-8 but got " + contentType);
+  });
+
+  client.test("addProduct_successfulExecution_returnsSavedProductWithId", function() {
+    client.assert(response.body.id != null, "The saved product is missing an ID");
+    client.assert(response.body.name === "SSD", "Expected name 'SSD' but got " + response.body.name);
+    client.assert(response.body.price === 500, "Expected price 500 but got " + response.body.price);
+  });
+%}
+
+
+
+### Update a product
+PUT {{hosturi}}/api/products/3
+Content-Type: application/json
+
+{"name": "Updated Laptop", "price": 1099.99}
+
+> {%
+  client.test("updateProduct_existingId_returns200Ok", function() {
+    client.assert(response.status === 200, "Expected 200 but received " + response.status);
+  });
+
+  client.test("updateProduct_validPayload_returnsJsonWithCharset", function() {
+    var contentType = response.headers.valueOf("Content-Type");
+    client.assert(contentType === "application/json; charset=utf-8", "Expected JSON with UTF-8 but got " + contentType);
+  });
+
+  client.test("updateProduct_validPayload_updatesDetailsCorrectly", function() {
+    client.assert(response.body.id === 3, "Expected ID 3 but got " + response.body.id);
+    client.assert(response.body.name === "Updated Laptop", "Name update failed. Got: " + response.body.name);
+    client.assert(response.body.price === 1099.99, "Price update failed. Got: " + response.body.price);
+  });
+%}
+
+
+### Delete a product
+DELETE {{hosturi}}/api/products/3
+
+> {%
+  client.test("deleteProduct_existingId_returns200Ok", function() {
+    client.assert(response.status === 200, "Expected 200 but received " + response.status);
+  });
+
+  client.test("deleteProduct_successfulExecution_returnsConfirmationMessage", function() {
+    client.assert(response.body.message === "Product deleted",
+      "Expected 'Product deleted' message but got: " + response.body.message);
+  });
+%}
