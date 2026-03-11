@@ -296,7 +296,7 @@ When a request enters your Express application, it follows this sequence:
 
 ### A simple Node.js-based RESTful API
 
->**[Code Example](./simple-restful/server.js)**
+>**[Code Example:(./simple-restful/server.js)](./simple-restful/server.js)**
 
 
 **Endpoints (Routes) of the developed API**
@@ -388,7 +388,7 @@ curl -X DELETE http://localhost:3000/api/products/1
 
 **HTTP Client**
 
->**[Code Example](./simple-restful/restful-api-test.http)**
+>**[Code Example:(./simple-restful/restful-api-test.http)](./simple-restful/restful-api-test.http)**
 
 ---
 
@@ -403,9 +403,9 @@ Benefits of Using a Router
 * Reusability – Routes can be modular and reusable across different parts of the application.
 * Easier maintenance – Adding new routes does not clutter the main server file.
 
-**Code Example: ./router/server.js**
+>**[Code Example:(./router/server.js)](./router/server.js)**
 
-**Code Example: ./router/routes/product.js**
+>**[Code Example:(./router/routes/product.js)](./router/routes/product.js)**
 
 
 
@@ -439,7 +439,7 @@ pm2 unstartup systemd  # Remove init script
 
 **Starting the same node app as two separate instances with different ports using PM2.**
 
->**[Code Example](./pm2/server.js)**
+>**[Code Example:(./pm2/server.js)](./pm2/server.js)**
 
 
 ```shell
