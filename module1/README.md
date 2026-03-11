@@ -147,13 +147,14 @@ expected, leading to incorrect invoices and customer complaints. This visible in
 - **Failure:** Users experience incorrect pricing in real usage.
 
 
-![](../resources/images/failure-anatomy.png)
+![](../resources/images/failure-anatomy-1.png)
 
 - **Error → Defect → Bug → Failure**
 
 >An error is the cause, a defect is the result in the software artifact, and a failure is the result in system behavior.
 
 ---
+
 
 ### Verification
 
@@ -173,7 +174,8 @@ expected, leading to incorrect invoices and customer complaints. This visible in
 - Conducting peer code reviews.
 - Using static analysis tools to detect issues without executing the software.
 
----
+<img src="../resources/images/verification-validation.png" width="900">
+
 
 ### Validation
 
@@ -216,7 +218,11 @@ modern software systems.
 
 
 This graph shows that detecting a defect early—such as during development—is inexpensive to fix, while discovering it 
-in production can cost a company tens or even hundreds of times more, considering both financial impact and reputational damage.
+in production can cost a company tens or even hundreds of times more, considering both financial impact and 
+reputational damage.
+
+>Defects in critical software systems—such as nuclear reactor control systems, aircraft or spacecraft flight control 
+> systems, and military systems—may lead to catastrophic consequences.
 
 
 Software testing plays a vital role in modern software development for the following reasons:
@@ -247,6 +253,8 @@ and **Non-Functional Testing**.
 ### 4.1 Functional Testing
 
 Functional testing verifies that the software behaves according to specified requirements.
+
+
 
 #### Unit Testing
 
@@ -400,7 +408,7 @@ Hello World
 ~~~
 
 
->To write a simple unit test, follow the instructions **[here](../module2/README.md#writing-your-first-unit-test)**.
+>To write a simple unit test, follow the instructions **[here](../module2/README.md#module-2-introduction-to-unit-testing)**.
 
 * To run tests using maven
 
