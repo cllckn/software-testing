@@ -254,7 +254,7 @@ and **Non-Functional Testing**.
 
 Functional testing verifies that the software behaves according to specified requirements.
 
-
+![](../resources/images/functional-testing-types.png)
 
 #### Unit Testing
 
