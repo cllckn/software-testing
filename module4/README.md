@@ -269,7 +269,7 @@ Each route consists of:
 
 1. **An HTTP method** (GET, POST, etc.)
 2. **A URL pattern** (e.g., `/api/customers/:id`)
-3. **A callback function / route handler ** to handle the request
+3. **A callback function / route handler** to handle the request
 
 Example of a simple route in Express.js:
 
@@ -296,7 +296,7 @@ When a request enters your Express application, it follows this sequence:
 
 ### A simple Node.js-based RESTful API
 
->**Code Example: ./simple-restful/server.js**
+>**[Code Example](./simple-restful/server.js)**
 
 
 **Endpoints (Routes) of the developed API**
@@ -388,7 +388,7 @@ curl -X DELETE http://localhost:3000/api/products/1
 
 **HTTP Client**
 
->**Code Example: ./simple-restful/restful-api-test.http**
+>**[Code Example](./simple-restful/restful-api-test.http)**
 
 ---
 
@@ -439,24 +439,8 @@ pm2 unstartup systemd  # Remove init script
 
 **Starting the same node app as two separate instances with different ports using PM2.**
 
-**Code Example: ./pm2/server.js**
+>**[Code Example](./pm2/server.js)**
 
-
-```javascript
-const express = require("express");
-const app = express();
-
-const PORT = process.env.PORT || 3000; // Use environment variable or default to 3000
-
-app.get("/", (req, res) => {
-    res.send(`Server running on port ${PORT}`);
-});
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
-
-```
 
 ```shell
 # for linux/mac
@@ -485,7 +469,7 @@ pm2 status
 }
 ```
 
-**To Test: ./simple-restful/restful-api-test.http**
+>**[To Test](./simple-restful/restful-api-test.http)**
 
 
 ---
@@ -513,7 +497,7 @@ client.test(testName, function() {
 client.assert(condition, failureMessage);
 ```
 
-**Write tests for the Rest API: ./simple-restful/server.js**
+**[Write tests for the Rest API](./simple-restful/server.js)**
 
 
 
@@ -527,151 +511,7 @@ client.assert(condition, failureMessage);
 }
 ```
 
-* ./http-client-test/rest-api-test.http
-
-```plain
-### Get all products
-GET {{hosturi}}/api/products
-Accept: application/json
-
-> {%
-    // Assert response status code
-    client.test("Request executed successfully", function() {
-        // Check if the response status code is 200 (OK)
-        client.assert(response.status === 200, "Response status is not 200");
-    });
-
-    // Assert response headers
-    client.test("Response content-type is JSON", function() {
-        // Check if the 'Content-Type' header is 'application/json; charset=utf-8'
-        client.assert(response.headers.valueOf("Content-Type") === "application/json; charset=utf-8", "Expected 'application/json; charset=utf-8'");
-    });
-
-    // Assert response body
-    client.test("Response contains products", function() {
-        // Check if the response body is an array
-        client.assert(Array.isArray(response.body), "Response body is not an array");
-        // Check if the array is not empty
-        client.assert(response.body.length > 0, "Response body is empty");
-    });
-%}
-
-###
-
-### Get a single product by ID
-GET {{hosturi}}/api/products/2
-Accept: application/json
-
-> {%
-    // Assert response status code
-    client.test("Request executed successfully", function() {
-        // Check if the response status code is 200 (OK)
-        client.assert(response.status === 200, "Response status is not 200");
-    });
-
-    // Assert response headers
-    client.test("Response content-type is JSON", function() {
-        // Check if the 'Content-Type' header is 'application/json; charset=utf-8'
-        client.assert(response.headers.valueOf("Content-Type") === "application/json; charset=utf-8", "Expected 'application/json; charset=utf-8'");
-    });
-
-    // Assert response body
-    client.test("Response contains the correct product", function() {
-        // Check if the product ID in the response is 2
-        client.assert(response.body.id === 2, "Product ID is not 2");
-        // Check if the product name is 'Phone'
-        client.assert(response.body.name === "Phone", "Product name is not 'Phone'");
-        // Check if the product price is 499.99
-        client.assert(response.body.price === 499.99, "Product price is not 499.99");
-    });
-%}
-
-###
-
-### Add a new product
-POST {{hosturi}}/api/products
-Content-Type: application/json
-
-{"name": "SSD", "price": 500}
-
-> {%
-    // Assert response status code
-    client.test("Request executed successfully", function() {
-        // Check if the response status code is 201 (Created)
-        client.assert(response.status === 201, "Response status is not 201");
-    });
-
-    // Assert response headers
-    client.test("Response content-type is JSON", function() {
-        // Check if the 'Content-Type' header is 'application/json; charset=utf-8'
-        client.assert(response.headers.valueOf("Content-Type") === "application/json; charset=utf-8", "Expected 'application/json; charset=utf-8'");
-    });
-
-    // Assert response body
-    client.test("Response contains the new product", function() {
-        // Check if the response body contains an 'id' field
-        client.assert(response.body.id, "Product ID is missing");
-        // Check if the product name is 'SSD'
-        client.assert(response.body.name === "SSD", "Product name is not 'SSD'");
-        // Check if the product price is 500
-        client.assert(response.body.price === 500, "Product price is not 500");
-    });
-%}
-
-###
-
-### Update a product
-PUT {{hosturi}}/api/products/3
-Content-Type: application/json
-
-{"name": "Updated Laptop", "price": 1099.99}
-
-> {%
-    // Assert response status code
-    client.test("Request executed successfully", function() {
-        // Check if the response status code is 200 (OK)
-        client.assert(response.status === 200, "Response status is not 200");
-    });
-
-    // Assert response headers
-    client.test("Response content-type is JSON", function() {
-        // Check if the 'Content-Type' header is 'application/json; charset=utf-8'
-        client.assert(response.headers.valueOf("Content-Type") === "application/json; charset=utf-8", "Expected 'application/json; charset=utf-8'");
-    });
-
-    // Assert response body
-    client.test("Response contains the updated product", function() {
-        // Check if the product ID in the response is 3
-        client.assert(response.body.id === 3, "Product ID is not 3");
-        // Check if the product name is 'Updated Laptop'
-        client.assert(response.body.name === "Updated Laptop", "Product name is not 'Updated Laptop'");
-        // Check if the product price is 1099.99
-        client.assert(response.body.price === 1099.99, "Product price is not 1099.99");
-    });
-%}
-
-###
-
-### Delete a product
-DELETE {{hosturi}}/api/products/3
-
-> {%
-    // Assert response status code
-    client.test("Request executed successfully", function() {
-        // Check if the response status code is 200 (OK)
-        client.assert(response.status === 200, "Response status is not 200");
-    });
-
-    // Assert response body
-    client.test("Response confirms deletion", function() {
-        // Check if the response body contains a 'message' field with the value 'Product deleted'
-        client.assert(response.body.message === "Product deleted", "Deletion message is incorrect");
-    });
-%}
-
-###
-
-```
+* [http client tests](./http-client-test/rest-api-test.http)
 
 **Key Explanations**
 
