@@ -24,6 +24,7 @@
   * [5.Testing Web Applications with Testing Frameworks](#5testing-web-applications-with-testing-frameworks)
     * [1. Jest](#1-jest)
     * [2. Supertest](#2-supertest)
+    * [jest&supertest code examples](#jestsupertest-code-examples)
     * [3.Test Coverage](#3test-coverage)
   * [**Hands-on Exercise 2**](#hands-on-exercise-2)
   * [6. Case Study: Integration Testing of REST APIs with Database Support](#6-case-study-integration-testing-of-rest-apis-with-database-support)
@@ -134,6 +135,7 @@ RESTful refers to web services that adhere to the principles of REST (Representa
 
 RESTful is an approach for building scalable, stateless web APIs that use standard HTTP methods and principles.
 
+<img src="../resources/images/RESTful-anatomy.png" width="80%" alt="RESTful anatomy"></img>
 
 **Key Characteristics**
 
@@ -264,6 +266,8 @@ It allows developers to install, share, and manage dependencies (libraries and t
 ### Route definition in Express.js
 
 A **route** in Express.js defines an endpoint where clients send requests to interact with the service.
+
+<img src="../resources/images/express-route-structure.png" alt="Express.js Route Structure Structure" width="70%"></img>
 
 Each route consists of:
 
@@ -444,12 +448,12 @@ pm2 unstartup systemd  # Remove init script
 
 ```shell
 # for linux/mac
-PORT=5000 pm2 start web-app-server.js --name "my-server5" -f
-PORT=4000 pm2 start web-app-server.js --name "my-server4" -f
+PORT=4000 pm2 start server.js --name "my-dev-server"
+PORT=5000 pm2 start server.js --name "my-test-server"
 
 # for windows
-$env:PORT=5000; pm2 start web-app-server.js --name "my-server5" -f
-$env:PORT=4000; pm2 start web-app-server.js --name "my-server4" -f
+$env:PORT=4000; pm2 start server.js --name "my-dev-server"
+$env:PORT=5000; pm2 start server.js --name "my-test-server"
 
 pm2 status
 ```
@@ -460,16 +464,16 @@ pm2 status
 
 ```json
 {
-  "dev": {
-    "hosturi": "http://localhost:3000"
+  "dev-server": {
+    "hosturi": "http://localhost:4000"
   },
   "test-server": {
-    "hosturi": "http://localhost:4000"
+    "hosturi": "http://localhost:5000"
   }
 }
 ```
 
->**[To Test](./simple-restful/restful-api-test.http)**
+>**[To Test](./pm2/restful-api-test.http)**
 
 
 ---
@@ -511,7 +515,7 @@ client.assert(condition, failureMessage);
 }
 ```
 
-* [http client tests](./http-client-test/rest-api-test.http)
+* [http client tests](./http-client-test/restful-api-test.http)
 
 **Key Explanations**
 
@@ -529,7 +533,7 @@ response.status:
 
         200 for successful GET requests.
 
-        201 for successful POST requests.
+        201 for successful POST requests-for example; adding a new resource.
 
         400 for bad requests.
 
@@ -585,8 +589,9 @@ Error Handling:
 
 
 ### 1. Jest
-[Jest](https://jestjs.io/) is a JavaScript testing framework developed by Facebook.
+[Jest](https://jestjs.io/) is a JavaScript testing framework developed by Meta.
 It is widely used for testing **Node.js, React, and other JavaScript applications**.
+It requires zero config to get started and includes everything you need in one package.
 
 **Key Features**
 - **Fast and isolated tests** – Each test runs independently.
@@ -595,27 +600,44 @@ It is widely used for testing **Node.js, React, and other JavaScript application
 - **Code coverage** – Generates reports to track untested code.
 
 
----
-
-### 2. Supertest
-[Supertest](https://www.npmjs.com/package/supertest) is a library for testing HTTP servers.
-It works **on top of Jest** (or Mocha, Chai, etc.) and is used to test REST APIs.
-
-**Key Features**
-- Sends HTTP requests to your Express app **without actually starting the server**.
-- Supports **GET, POST, PUT, DELETE, PATCH** requests.
-- Works seamlessly with Jest.
-- Allows testing response **status codes, headers, and JSON data**.
-
-**Setting up the environment**
-
-* Installation
-```shell
+**Install**
+```bash
 # Since jest and supertest are testing tools, they are only required during 
 # development and should not be included in the final production build.
-npm install --save-dev jest supertest 
+npm install --save-dev jest
 ```
-* Update package.json to include a test script
+
+**Run tests**
+```bash
+npx jest              # run all tests
+npx jest --watch      # re-run on file changes
+npx jest --coverage   # show code coverage report
+```
+
+**File naming conventions**
+Jest automatically picks up files matching:
+```
+*.test.js
+*.spec.js
+__tests__/*.js
+```
+
+**Basic structure**
+
+**Code Example:./first-jest-test/simple.jest.test.js
+```js
+describe("sum", () => {
+  it("adds two positive numbers", () => {
+    expect(1+2).toBe(3);
+  });
+
+  it("returns 0 when both inputs are 0", () => {
+    expect(5*4).toBe(20);
+  });
+});
+```
+
+**package.json integration**
 ```json
 {
   "scripts": {
@@ -623,139 +645,111 @@ npm install --save-dev jest supertest
   }
 }
 ```
+Then just run `npm test`.
 
-* Run the tests
-```shell
-npm test
-```
+**Key features**
+- Zero config — works out of the box for most projects
+- Built-in code coverage via `--coverage`
+- Mock system — mock functions, modules, and timers
+- Works with TypeScript via `ts-jest` or Babel
 
-**Naming Conventions for Test Files**
 
-Use .test.js or .spec.js suffixes.
 
-Jest automatically detects test files with these suffixes:
-server.test.js
-product.spec.js
+**Jest core methods**
 
-**Example**
+**Test structure**
+- `describe(name, fn)` — groups related tests into a suite
+- `it(name, fn)` / `test(name, fn)` — defines a single test case (identical)
+- `beforeEach / afterEach` — runs before/after every test in the block
+- `beforeAll / afterAll` — runs once before/after the whole suite
 
-* /part1/first-jest-test/server.js
+**Assertions (`expect`)**
+- `toBe(val)` — strict equality (`===`), for primitives
+- `toEqual(val)` — deep equality, for objects/arrays
+- `toBeTruthy()` / `toBeFalsy()` — loose truthy/falsy check
+- `toBeNull()` / `toBeUndefined()` / `toBeDefined()`
+- `toContain(item)` — array or string contains a value
+- `toHaveLength(n)` — checks `.length`
+- `toThrow()` — expects a function to throw
+- `toMatch(regex)` — string matches a pattern
 
-```javascript
-const express = require("express");
-const app = express();
-const PORT = process.env.PORT || 3000; // Use environment variable or default to 3000
+**Negation**
+- `.not` — inverts any matcher: `expect(x).not.toBe(null)`
 
-// Middleware to parse JSON request bodies
-app.use(express.json());
+**Mocks**
+- `jest.fn()` — creates a mock function
+- `jest.spyOn(obj, 'method')` — wraps an existing method to track calls
+- `.toHaveBeenCalled()` / `.toHaveBeenCalledWith(args)` — assert on mock calls
+- `jest.mock('module')` — auto-mocks an entire module
 
-// Simple GET endpoint for the root route
-app.get("/", (req, res) => {
-  res.json({ message: "Hello, world!" });
-});
+**Skipping & focusing**
+- `it.skip(...)` / `describe.skip(...)` — skips a test without deleting it
+- `it.only(...)` / `describe.only(...)` — runs only that test/suite
 
-// POST endpoint to greet a user by name
-app.post("/greet", (req, res) => {
-  const { name } = req.body; // Extract 'name' from the request body
-  if (!name) {
-    // If 'name' is missing, return a 400 error with a message
-    return res.status(400).json({ error: "Name is required" });
-  }
-  // If 'name' is provided, return a greeting
-  res.json({ message: `Hello, ${name}!` });
-});
 
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
-
-// Export the app for testing
-module.exports = app;
-```
-
-* /test/module5/part1/first-jest-test/server.test.js
-
-```javascript
-// Import supertest for making HTTP requests and the Express app
-const request = require("supertest");
-const app = require("../../../../../src/st/module5/part2/first-jest-test/server");
-
-// Describe a test suite for the GET / endpoint
-describe("GET request for /", () => {
-  // Test case: Check if the root endpoint returns the correct response
-  it("should return a welcome message", async () => {
-    // Make a GET request to the root endpoint. request(app) initialize a test instance of your Express app.
-    // This allows you to simulate HTTP requests.
-    const response = await request(app).get("/");
-
-    // Assert that the status code is 200 (OK)
-    expect(response.statusCode).toBe(200);
-
-    // Assert that the response body matches the expected JSON
-    expect(response.body).toEqual({ message: "Hello, world!" });
-  });
-});
-
-// Describe a test suite for the POST /greet endpoint
-describe("POST request for /greet", () => {
-  // Test case: Check if the endpoint greets the user with their name
-  it("should greet the user with their name", async () => {
-    // Make a POST request to the /greet endpoint with a JSON body
-    const response = await request(app)
-      .post("/greet")
-      .send({ name: "John" }); // Send 'name' in the request body
-
-    // Assert that the status code is 200 (OK)
-    expect(response.statusCode).toBe(200);
-
-    // Assert that the response body matches the expected greeting
-    expect(response.body).toEqual({ message: "Hello, John!" });
-  });
-
-  // Test case: Check if the endpoint returns an error when 'name' is missing
-  it("should return an error if name is missing", async () => {
-    // Make a POST request to the /greet endpoint without a 'name'
-    const response = await request(app)
-      .post("/greet")
-      .send({}); // Send an empty object
-
-    // Assert that the status code is 400 (Bad Request)
-    expect(response.statusCode).toBe(400);
-
-    // Assert that the response body contains the expected error message
-    expect(response.body).toEqual({ error: "Name is required" });
-  });
-});
-```
-
-**Key Points Explained in Comments**
-describe:
-
-    Groups related test cases together. For example, all tests for the GET / endpoint are grouped under one describe block.
-
-it:
-
-    Defines an individual test case. Each it block tests a specific functionality.
-
-request(app):
-
-    Initialize a test instance of your Express app. This allows you to simulate HTTP requests.
-
-expect:
-
-    Used to assert the expected outcome of a test. For example:
-
-        expect(response.statusCode).toBe(200) checks if the status code is 200.
-
-        expect(response.body).toEqual({ message: "Hello, world!" }) checks if the response body matches the expected JSON.
-
-send:
-
-    Used to send a JSON payload in POST requests.
-
-Error Handling:
-
-    The second test case for POST /greet checks how the app handles invalid input (missing name).
 
 ---
+
+### 2. Supertest
+
+
+[Supertest](https://www.npmjs.com/package/supertest) tests HTTP endpoints in Node.js by wrapping your Express app
+and firing real requests without starting a server.
+
+**Setup**
+
+```js
+const request = require("supertest");
+const app = require("../app"); // your Express app
+```
+
+**Making requests**
+
+```js
+request(app).get("/path")
+request(app).post("/path").send({ key: "value" })
+request(app).put("/path").send({ key: "value" })
+request(app).delete("/path")
+```
+
+**Chaining options**
+
+```js
+.send({ key: "value" })                    // request body (JSON by default)
+.set("Authorization", "Bearer token")      // set a header
+.query({ page: 1 })                        // add query string params
+.attach("file", "./file.png")              // multipart file upload
+```
+
+**Asserting the response**
+
+```js
+const res = await request(app).get("/");
+
+res.statusCode   // e.g. 200
+res.body         // parsed JSON body
+res.headers      // response headers
+res.text         // raw response string
+```
+
+**Using with Jest**
+
+```js
+expect(res.statusCode).toBe(200);
+expect(res.body).toEqual({ message: "Hello, world!" });
+```
+
+
+>Supertest handles opening and closing the connection per request
+>automatically. No need for `app.listen()` in your test files —
+>just export the bare `app` and pass it to `request()`.
+
+### jest&supertest code examples
+
+>[Code Example:(./first-jest-test/server.js)](./first-jest-test/server.js)
+
+>[To test:(./first-jest-test/server.test.js)](./first-jest-test/server.test.js)
+
 
 ### 3.Test Coverage
 
@@ -788,7 +782,6 @@ Instead, focusing on critical functionalities is often more practical.
 
 * Prioritize Critical Code – Focus on business logic, edge cases, error handling, and high-risk areas.
 * Avoid Redundant Tests – Testing trivial code (e.g., getters/setters) adds little value.
-
 
 
 To generate a coverage report, you need to configure Jest to collect coverage information.
