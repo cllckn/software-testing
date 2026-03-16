@@ -501,7 +501,10 @@ client.test(testName, function() {
 client.assert(condition, failureMessage);
 ```
 
-**[Write tests for the Rest API](./simple-restful/server.js)**
+
+**Code Example:**
+
+* Write tests for [this Rest API](./simple-restful/server.js)
 
 
 
@@ -695,6 +698,15 @@ Then just run `npm test`.
 
 [Supertest](https://www.npmjs.com/package/supertest) tests HTTP endpoints in Node.js by wrapping your Express app
 and firing real requests without starting a server.
+
+
+**Install**
+```bash
+# Since jest and supertest are testing tools, they are only required during 
+# development and should not be included in the final production build.
+npm install --save-dev supertest
+```
+
 
 **Setup**
 
