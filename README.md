@@ -114,19 +114,17 @@ Students will be evaluated based on the following components:
 |---------------------------------|------------|
 | Assignment 1 (Oral Examination) | TBA        |
 | Assignment 2 (Oral Examination) | TBA        |
-| Midterm Exam                    | TBA        |
 | Final Exam                      | TBA        |
 
 ---
 
 ## Exams Schedule
 
-| **Component**                   | **Date**                 |
-|---------------------------------|--------------------------|
-| Assignment 1 Oral Examination   | Week 7 (the week starting March 2, 2026) |
-| Assignment 2 Oral Examination   | Week X (starting Week X) |
-| Midterm Exam                    | Z                        |
-| Final Exam                      | Z                        |
+| **Component**                   | **Date**                                   |
+|---------------------------------|--------------------------------------------|
+| Assignment 1 Oral Examination   | Week 7 (the week starting March 2, 2026)   |
+| Assignment 2 Oral Examination   | Week 14 (the week starting April 20, 2026) |
+| Final Exam                      | TBA                                        |
 
 ---
 
