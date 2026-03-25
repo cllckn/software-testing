@@ -1,0 +1,11 @@
+GET http://localhost:3000/
+
+###
+
+### Send POST request with json body
+POST http://localhost:3000/greet
+Content-Type: application/json
+
+{
+  "name": "Jack"
+}
