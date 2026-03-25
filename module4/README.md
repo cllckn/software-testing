@@ -21,12 +21,12 @@
     * [Deploy app to a server](#deploy-app-to-a-server)
   * [4. Integration Testing with IntelliJ HTTP Client](#4-integration-testing-with-intellij-http-client)
   * [**Hands-on Exercise 1**](#hands-on-exercise-1)
-  * [5.Testing Web Applications with Testing Frameworks](#5testing-web-applications-with-testing-frameworks)
-    * [1. Jest](#1-jest)
-    * [2. Supertest](#2-supertest)
-    * [jest&supertest code examples](#jestsupertest-code-examples)
-    * [3.Test Coverage](#3test-coverage)
   * [**Hands-on Exercise 2**](#hands-on-exercise-2)
+  * [5. Testing Web Applications with Testing Frameworks](#5-testing-web-applications-with-testing-frameworks)
+    * [5.1 Jest](#51-jest)
+    * [5.2 Supertest](#52-supertest)
+    * [5.3 Test Coverage](#53-test-coverage)
+  * [**Hands-on Exercise 3: Automated Testing With The Jest and SuperTest for the Bank Account REST API Developed in Module 4 Exercise 1**](#hands-on-exercise-3-automated-testing-with-the-jest-and-supertest-for-the-bank-account-rest-api-developed-in-module-4-exercise-1)
   * [6. Case Study: Integration Testing of REST APIs with Database Support](#6-case-study-integration-testing-of-rest-apis-with-database-support)
     * [1. Construct Database Structures](#1-construct-database-structures)
     * [2. Develop the Application](#2-develop-the-application)
@@ -582,18 +582,23 @@ Error Handling:
 
 
 ---
+
 ## **Hands-on Exercise 1**
+
+## **Hands-on Exercise 2**
 
 ---
 
 
 
-## 5.Testing Web Applications with Testing Frameworks
+## 5. Testing Web Applications with Testing Frameworks
 
 
-### 1. Jest
+### 5.1 Jest
 [Jest](https://jestjs.io/) is a JavaScript testing framework developed by Meta.
+
 It is widely used for testing **Node.js, React, and other JavaScript applications**.
+
 It requires zero config to get started and includes everything you need in one package.
 
 **Key Features**
@@ -650,11 +655,6 @@ describe("sum", () => {
 ```
 Then just run `npm test`.
 
-**Key features**
-- Zero config — works out of the box for most projects
-- Built-in code coverage via `--coverage`
-- Mock system — mock functions, modules, and timers
-- Works with TypeScript via `ts-jest` or Babel
 
 
 
@@ -693,7 +693,7 @@ Then just run `npm test`.
 
 ---
 
-### 2. Supertest
+### 5.2 Supertest
 
 
 [Supertest](https://www.npmjs.com/package/supertest) tests HTTP endpoints in Node.js by wrapping your Express app
@@ -756,14 +756,14 @@ expect(res.body).toEqual({ message: "Hello, world!" });
 >automatically. No need for `app.listen()` in your test files —
 >just export the bare `app` and pass it to `request()`.
 
-### jest&supertest code examples
+**jest&supertest code examples**
 
 >[Code Example:(./first-jest-test/server.js)](./first-jest-test/server.js)
 
 >[To test:(./first-jest-test/server.test.js)](./first-jest-test/server.test.js)
 
 
-### 3.Test Coverage
+### 5.3 Test Coverage
 
 Test coverage is a metric that measures how much of your source code is executed when your automated tests are run.
 
@@ -860,9 +860,9 @@ Uncovered Line #s:
 
 
 ---
-## **Hands-on Exercise 2**
+## **Hands-on Exercise 3: Automated Testing With The Jest and SuperTest for the Bank Account REST API Developed in Module 4 Exercise 1**
 
-* Automated Testing With The Jest and SuperTest for the Bank Account REST API Developed in Module 4 Exercise 1**
+* **
 
 * After adding each test case, check the generated coverage report.
 
