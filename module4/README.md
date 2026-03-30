@@ -847,14 +847,9 @@ npm run test:coverage
 
 
 
+  
 
-
-
-
-
-
-
-## 6. Case Study: Integration Testing of REST APIs with Database Support
+## 6. Integration Testing of REST APIs with Database Support
 
 **Instead of the real one, using a test database for testing helps protect the main database from unintended 
 modifications and accidental data corruption.**
