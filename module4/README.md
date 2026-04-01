@@ -27,9 +27,9 @@
     * [5.2 Supertest](#52-supertest)
   * [**Hands-on Exercise 3: Automated Testing With The Jest and SuperTest for the Bank Account REST API Developed in Module 4 Exercise 1**](#hands-on-exercise-3-automated-testing-with-the-jest-and-supertest-for-the-bank-account-rest-api-developed-in-module-4-exercise-1)
     * [5.3 Test Coverage](#53-test-coverage)
-  * [6. Case Study: Integration Testing of REST APIs with Database Support](#6-case-study-integration-testing-of-rest-apis-with-database-support)
-    * [4. Extending the Scenario: Service-Based Testing](#4-extending-the-scenario-service-based-testing)
-  * [7. Role of Mocking in Testing](#7-role-of-mocking-in-testing)
+  * [6. Integration Testing of REST APIs with Database Support](#6-integration-testing-of-rest-apis-with-database-support)
+  * [7. Service-Based Testing](#7-service-based-testing)
+  * [8. Role of Mocking in Testing](#8-role-of-mocking-in-testing)
     * [Mocking a Database?](#mocking-a-database)
 <!-- TOC -->
 
@@ -885,25 +885,9 @@ values ('SSD',600),
 
 >[Code Example:(./restapi-with-db/server.js)](./restapi-with-db/server.js)
 
-
-
-
 ---
 
 **3. Write and Execute Integration Tests**
-
-To test the provided REST API:
-1. **Start the Express server** with a test database connection.
-2. **Use SuperTest** to make HTTP requests to API endpoints.
-3. **Check database changes** after performing operations.
-4. **Validate HTTP responses** and error handling.
-
-**Required Dependencies**
-
-
-**Test File Structure**
-- `./restapi-with-db/server.js` → Main Express server with PostgreSQL connection.
-- `~/test/~/restapi-with-db/server.test.js` → Integration tests for API endpoints.
 
 **API Endpoints to Test**
 The tests will verify:
@@ -920,11 +904,6 @@ Each test should:
 * Clean up the database after each test to ensure isolation.
 
 
-**Install Dependencies**
-Run the following command to install the required packages:
-
-    npm install --save-dev jest supertest pg
-
 **Implement Integration Tests**
 
 >[To test:(~/test/.../restapi-with-db/server.test.js)](~/test/.../restapi-with-db/server.test.js)
@@ -935,7 +914,7 @@ Run the following command to install the required packages:
 
 
 
-### 4. Extending the Scenario: Service-Based Testing
+## 7. Service-Based Testing
 
 To apply real-world integration testing:
 
@@ -954,7 +933,7 @@ To apply real-world integration testing:
 
 
 
-## 7. Role of Mocking in Testing
+## 8. Role of Mocking in Testing
 
 
 **What is Mocking?**
