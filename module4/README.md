@@ -906,7 +906,7 @@ Each test should:
 
 **Implement Integration Tests**
 
->[To test:(~/test/.../restapi-with-db/server.test.js)](~/test/.../restapi-with-db/server.test.js)
+>[To test:(~/test/.../restapi-with-db/server.test.js)](./restapi-with-db/server.test.js)
 
 * Execute the tests using the following script, after configuring jest in the package.json:
 
