@@ -1,3 +1,42 @@
+<!-- TOC -->
+* [**Hands-on Exercise 1: Developing Bank Account REST API Using Node.js**](#hands-on-exercise-1-developing-bank-account-rest-api-using-nodejs)
+  * [**Objective**](#objective)
+  * [**Tasks**](#tasks)
+    * [**1. Setup a Basic Express Server**](#1-setup-a-basic-express-server)
+    * [**2. Define an In-Memory Database**](#2-define-an-in-memory-database)
+    * [**3. Implement API Endpoints**](#3-implement-api-endpoints)
+      * [**GET /api/accounts**](#get-apiaccounts)
+      * [**GET /api/accounts/:accountNumber**](#get-apiaccountsaccountnumber)
+      * [**POST /api/accounts**](#post-apiaccounts)
+      * [**PUT /api/accounts/:accountNumber**](#put-apiaccountsaccountnumber)
+      * [**DELETE /api/accounts/:accountNumber**](#delete-apiaccountsaccountnumber)
+      * [**PATCH /api/accounts/:accountNumber**](#patch-apiaccountsaccountnumber)
+    * [**4. Writing REST API Tests**](#4-writing-rest-api-tests)
+* [**Hands-on Exercise 2: Automated Testing for the Bank Account REST API Developed in Module 4 Exercise 1**](#hands-on-exercise-2-automated-testing-for-the-bank-account-rest-api-developed-in-module-4-exercise-1)
+  * [**Objective**](#objective-1)
+  * [Test Cases to Implement](#test-cases-to-implement)
+  * [Running the API as a Service with PM2](#running-the-api-as-a-service-with-pm2)
+  * [**Running REST API Tests for Both Servers**](#running-rest-api-tests-for-both-servers)
+* [**Hands-on Exercise 3: Automated Testing With The Jest and SuperTest for the Bank Account REST API Developed in Module 4 Exercise 1**](#hands-on-exercise-3-automated-testing-with-the-jest-and-supertest-for-the-bank-account-rest-api-developed-in-module-4-exercise-1)
+  * [Overview](#overview)
+  * [Step 1 — Export the In-Memory Store From the Server](#step-1--export-the-in-memory-store-from-the-server)
+  * [Step 2 — Understand the Test Isolation Strategy](#step-2--understand-the-test-isolation-strategy)
+    * [The Problem](#the-problem)
+    * [The Solution: `beforeEach` + `accounts.length = 0`](#the-solution-beforeeach--accountslength--0)
+  * [Step 3 — Behaviour-Oriented Test Naming](#step-3--behaviour-oriented-test-naming)
+  * [Step 4 — Write the Test Suite](#step-4--write-the-test-suite)
+    * [4.1 — File Setup](#41--file-setup)
+    * [4.2 — GET /api/accounts](#42--get-apiaccounts)
+    * [4.3 — GET /api/accounts/:accountNumber](#43--get-apiaccountsaccountnumber)
+    * [4.4 — POST /api/accounts](#44--post-apiaccounts)
+    * [4.5 — PUT /api/accounts/:accountNumber](#45--put-apiaccountsaccountnumber)
+    * [4.6 — DELETE /api/accounts/:accountNumber](#46--delete-apiaccountsaccountnumber)
+    * [4.7 — PATCH /api/accounts/:accountNumber](#47--patch-apiaccountsaccountnumber)
+* [**Hands-on Exercise 4: Implement the application in module 4 section 6**](#hands-on-exercise-4-implement-the-application-in-module-4-section-6)
+* [**Hands-on Exercise 5: Implement the application in module 4 section 5**](#hands-on-exercise-5-implement-the-application-in-module-4-section-5)
+<!-- TOC -->
+
+
 # **Hands-on Exercise 1: Developing Bank Account REST API Using Node.js**
 
 ## **Objective**
@@ -65,20 +104,15 @@ Develop the following RESTful routes:
 
 
 
-## **4. Writing REST API Tests**
+### **4. Writing REST API Tests**
 - Use **http client** to test all API endpoints.
 - Validate that all operations behave as expected.
 
 
 
-## **Completion Criteria**
-- The API should be functional with **GET, POST, PUT, DELETE** routes.
-- Deposit and withdrawal operations should correctly modify balances.
-- Tests should pass successfully.
+***
 
 
-
----
 
 
 # **Hands-on Exercise 2: Automated Testing for the Bank Account REST API Developed in Module 4 Exercise 1**
@@ -94,34 +128,34 @@ Your goal is to validate the following aspects for each endpoint:
 By the end of this exercise, you will have a fully automated API test suite.
 
 
-### Test Cases to Implement
+## Test Cases to Implement
 
-#### **Test 1: Get All Accounts (`GET /api/accounts`)**
+**Test 1: Get All Accounts (`GET /api/accounts`)**
 - Verify that the request returns a **200 OK**.
 - Ensure the response is in **JSON format**.
 - Validate that the response contains an **array of accounts**.
 
-#### **Test 2: Get Account by Account Number (`GET /api/accounts/:accountNumber`)**
+**Test 2: Get Account by Account Number (`GET /api/accounts/:accountNumber`)**
 - Verify that a valid account number returns a **200 OK**.
 - Check if the response contains the correct **account details**.
 - Handle cases where an **invalid account number** returns a **404 Not Found**.
 
-#### **Test 3: Add a New Account (`POST /api/accounts`)**
+**Test 3: Add a New Account (`POST /api/accounts`)**
 - Ensure that adding a new account returns a **201 Created**.
 - Verify that the response contains the **newly added account details**.
 - Add a test case for **invalid input** (e.g., missing `name` or `balance` should return **400 Bad Request**).
 
-#### **Test 4: Update an Account (`PUT /api/accounts/:accountNumber`)**
+**Test 4: Update an Account (`PUT /api/accounts/:accountNumber`)**
 - Verify that updating an existing account returns a **200 OK**.
 - Check if the response contains the **updated account details**.
 - Handle cases where an **invalid account number** returns a **404 Not Found**.
 
-#### **Test 5: Delete an Account (`DELETE /api/accounts/:accountNumber`)**
+**Test 5: Delete an Account (`DELETE /api/accounts/:accountNumber`)**
 - Ensure that deleting an existing account returns a **200 OK**.
 - Verify that the response contains a **success message**.
 - Handle cases where an **invalid account number** returns a **404 Not Found**.
 
-#### **Test 6: Deposit/Withdraw Money (`PATCH /api/accounts/:accountNumber`)**
+**Test 6: Deposit/Withdraw Money (`PATCH /api/accounts/:accountNumber`)**
 - Ensure depositing/withdrawing money returns a **200 OK**.
 - Verify that the account balance increases/decreases correctly.
 - Handle cases where the account does not exist (`404 Not Found`).
@@ -129,7 +163,7 @@ By the end of this exercise, you will have a fully automated API test suite.
 - Ensure withdrawal is **not allowed** if the amount exceeds the balance (`400 Bad Request` for overdrafts).
 
 
-### Running the API as a Service with PM2
+## Running the API as a Service with PM2
 - Install **PM2** globally.
 - Run the API as **two separate services**:
   - One on **port 3000**.
@@ -143,7 +177,13 @@ By the end of this exercise, you will have a fully automated API test suite.
 - Validate that all operations behave as expected in both services.
 
 
----
+
+
+
+
+***
+
+
 
 
 
@@ -201,8 +241,6 @@ createAccount_whenRequiredFieldsAreMissing_returns400WithErrorMessage
 adjustBalance_whenAmountExceedsBalance_returns400InsufficientFunds
 ```
 
- 
----
 
 ---
 
@@ -232,6 +270,8 @@ Add a nested `describe` block for this endpoint and write two tests:
 | `getAllAccounts_whenNoAccountsExist_returnsEmptyArray` | None | `GET /api/accounts` | Status `200`, body is `[]` |
 | `getAllAccounts_afterCreatingAccount_returnsArrayWithAccount` | `POST` the `testAccount` first | `GET /api/accounts` | Status `200`, array has 1 item that matches `testAccount` |
  
+
+
 ---
 
 ### 4.3 — GET /api/accounts/:accountNumber
@@ -243,7 +283,10 @@ Add a nested `describe` block and write two tests:
 | `getAccountByNumber_whenAccountExists_returnsAccount` | `POST` the `testAccount` first | `GET /api/accounts/12345` | Status `200`, body matches `testAccount` |
 | `getAccountByNumber_whenAccountDoesNotExist_returns404WithErrorMessage` | None | `GET /api/accounts/99999` | Status `404`, body is `{ error: "Account 99999 not found" }` |
  
+
+
 ---
+
 
 ### 4.4 — POST /api/accounts
 
@@ -255,7 +298,11 @@ Add a nested `describe` block and write three tests:
 | `createAccount_whenRequiredFieldsAreMissing_returns400WithErrorMessage` | None | `POST /api/accounts` with only `{ name: "Test User" }` | Status `400`, body is `{ error: "accountNumber, name, balance, and currency are required" }` |
 | `createAccount_whenAccountNumberAlreadyExists_returns409WithErrorMessage` | `POST` the `testAccount` first | `POST /api/accounts` with the same `testAccount` again | Status `409`, body is `{ error: "Account 12345 already exists" }` |
  
+
+
 ---
+
+
 
 ### 4.5 — PUT /api/accounts/:accountNumber
 
@@ -266,7 +313,11 @@ Add a nested `describe` block and write two tests:
 | `updateAccount_whenAccountExists_returnsUpdatedAccount` | `POST` the `testAccount` first | `PUT /api/accounts/12345` with `{ name: "Alice Smith", balance: 1500 }` | Status `200`, response `name` and `balance` match the sent values |
 | `updateAccount_whenAccountDoesNotExist_returns404WithErrorMessage` | None | `PUT /api/accounts/99999` with any body | Status `404`, body is `{ error: "Account 99999 not found" }` |
  
+
+
 ---
+
+
 
 ### 4.6 — DELETE /api/accounts/:accountNumber
 
@@ -277,7 +328,9 @@ Add a nested `describe` block and write two tests:
 | `deleteAccount_whenAccountExists_returnsSuccessMessage` | `POST` the `testAccount` first | `DELETE /api/accounts/12345` | Status `200`, body is `{ message: "Account 12345 deleted successfully" }` |
 | `deleteAccount_whenAccountDoesNotExist_returns404WithErrorMessage` | None | `DELETE /api/accounts/99999` | Status `404`, body is `{ error: "Account 99999 not found" }` |
  
+
 ---
+
 
 ### 4.7 — PATCH /api/accounts/:accountNumber
 
@@ -291,6 +344,30 @@ The `PATCH` endpoint handles both deposits (positive `amount`) and withdrawals (
 | `adjustBalance_whenAmountFieldIsMissing_returns400WithErrorMessage` | `POST` the `testAccount` first | `PATCH /api/accounts/12345` with empty body `{}` | Status `400`, body is `{ error: "A numeric 'amount' field is required" }` |
 | `adjustBalance_whenAccountDoesNotExist_returns404WithErrorMessage` | None | `PATCH /api/accounts/99999` with `{ amount: 100 }` | Status `404`, body is `{ error: "Account 99999 not found" }` |
  
----
+
+
+
+
+***
+
+# **Hands-on Exercise 4: Implement the application in module 4 section 6**
+
+
+
+
+
+
+
+
+
+***
+
+# **Hands-on Exercise 5: Implement the application in module 4 section 5**
+
+
+
+
+
+
 
 
