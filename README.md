@@ -81,12 +81,13 @@ Upon successful completion of this course, students will be able to:
 - Integration Testing with IntelliJ HTTP Client
 - Testing Web Applications with Testing Frameworks
 - Integration Testing of REST APIs with Database Support
+- Service-Based Testing
 - Role of Mocking in Integration Testing
 - Hands-On Exercises
 
 ---
 
-### Module 5: Introduction Acceptance Testing And End-To-End Testing
+### Module 5: Introduction To Acceptance Testing And End-To-End Testing
 - What Is End-To-End(E2E) Testing
 - Acceptance Testing and Its Relation to E2E
 - Overview Of Cypress
