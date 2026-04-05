@@ -414,6 +414,9 @@ Benefits of Using a Router
 ### Running Node.js apps as service using pm2
 PM2 is a popular, open-source, production-grade process manager for Node.js applications. It helps you manage and keep your 
 Node.js applications running in the background, even after system reboots or crashes.
+
+
+
 ```shell
 npm install pm2@latest -g
 
@@ -436,6 +439,12 @@ pm2 startup  #This command will generate a script that you can copy and paste in
 
 pm2 unstartup systemd  # Remove init script
 ```
+
+In a professional development workflow, you use different "environments" to ensure that code is proved and bug-free
+before it reaches real users. PM2 (a process manager for Node.js) is a useful tool for managing these environments
+on a single machine or across multiple servers.
+
+<img src="../resources/images/application-development-environment.png" alt="" width="80%">
 
 **Starting the same node app as two separate instances with different ports using PM2.**
 
@@ -589,6 +598,7 @@ Error Handling:
 
 ## 5. Testing Web Applications with Testing Frameworks
 
+<img src="../resources/images/jest-test-example.png" alt="Jest-test example" width="80%">
 
 ### 5.1 Jest
 [Jest](https://jestjs.io/) is a JavaScript testing framework developed by Meta.
@@ -772,6 +782,9 @@ A quantitative measure of the amount of source code executed during automated te
 
 It shows how much of your source code is executed (or "hit") by your tests.
 
+<img src="../resources/images/code-coverage.png" alt="Jest-test example" width="80%">
+
+
 Maintaining a good level of code coverage is important as it helps identify untested parts of the code, reduces the 
 risk of bugs, and improves overall software reliability.
 
@@ -853,6 +866,9 @@ npm run test:coverage
 
 **Instead of the real one, using a test database for testing helps protect the main database from unintended 
 modifications and accidental data corruption.**
+
+
+<img src="../resources/images/testdb.png"  width="80%">
 
 ---
 
@@ -940,6 +956,10 @@ To apply real-world integration testing:
 
 Mocking is the process of simulating fake implementations of modules,
 functions, or dependencies to test components in isolation.
+
+
+<img src="../resources/images/mocking.png"  width="80%">
+
 
 - **Avoid dependency on external systems** (e.g., databases, APIs).
 - **Increase test speed and reliability** by replacing slow operations.
