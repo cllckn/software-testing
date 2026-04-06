@@ -979,8 +979,8 @@ When testing a Node.js module that interacts with a database:
 
 **Jest Mock Example for PostgreSQL Pool**
 
->[Code Example:(./mocking/service.js)](./mocking/service.js)
+>[Code Example:(./mocking/service.js)](./mocking/server.js)
  
->[To test:(~/test/.../mocking/service.test.js)](~/test/.../mocking/service.test.js)
+>[To test:(~/test/.../mocking/service.test.js)](./mocking/server.test.js)
 
 * Break the price validation logic to see a fail in test.
