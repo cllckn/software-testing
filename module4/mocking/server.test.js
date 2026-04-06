@@ -1,11 +1,14 @@
 const request = require("supertest");
-const { app } = require("../../../src/module4/mocking/server");
+const { app } = require("../../../../src/st/module4/mocking/server");
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Mock Setup
-// Replace the real `pg` module before any imports load it — Jest hoists
-// jest.mock() calls to the top of the file automatically, so the app module
-// receives the mock Pool the moment it is required below.
+// Replace the real `pg` module before any imports load it.
+// When Jest sees `jest.mock("pg")`, it replaces the `pg` entry in its module cache before any file gets a chance to
+// `require("pg")`. It does not matter which file makes the `require` call — they all draw from the same cache.
+//
+// mClient object is returned by the following code, so all modules calling new Pool() -even source code- uses the same
+// object.
 // ─────────────────────────────────────────────────────────────────────────────
 jest.mock("pg", () => {
     const mClient = {
@@ -35,12 +38,10 @@ const mockProduct = { id: PRODUCT_ID, name: "Laptop", price: 999.99 };
 // ─────────────────────────────────────────────────────────────────────────────
 describe("Product API", () => {
 
-    // Resets all mock calls before each test.
-    // Ensures that old mock calls do not interfere with new ones.
+    //Clears call history and queued return values before each test to prevent any interference.
     beforeEach(() => jest.clearAllMocks());
 
-    // Ensure mock pool is closed — mirrors real teardown so the
-    // Jest process exits cleanly without a hanging open-handle warning.
+    // Ensure mock pool is closed — mirrors real teardown so that resources can be freed.
     afterAll(async () => { await db.end(); });
 
     // ── GET /api/products ──────────────────────────────────────────────────────
