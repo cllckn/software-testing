@@ -32,8 +32,8 @@
     * [4.5 — PUT /api/accounts/:accountNumber](#45--put-apiaccountsaccountnumber)
     * [4.6 — DELETE /api/accounts/:accountNumber](#46--delete-apiaccountsaccountnumber)
     * [4.7 — PATCH /api/accounts/:accountNumber](#47--patch-apiaccountsaccountnumber)
-* [**Hands-on Exercise 4: Implement the application found in module 4, section 6**](#hands-on-exercise-4-implement-the-application-found-in-module-4-section-6)
-* [**Hands-on Exercise 5: Implement the application found in module 4, section 7**](#hands-on-exercise-5-implement-the-application-found-in-module-4-section-7)
+* [**Hands-on Exercise 4**](#hands-on-exercise-4)
+* [**Hands-on Exercise 5**](#hands-on-exercise-5)
 <!-- TOC -->
 
 
@@ -350,7 +350,9 @@ The `PATCH` endpoint handles both deposits (positive `amount`) and withdrawals (
 
 ***
 
-# **Hands-on Exercise 4: Implement the application found in module 4, section 6**
+# **Hands-on Exercise 4**
+
+[Implement the application found in module 4, section 6](../README.md#6-integration-testing-of-rest-apis-with-database-support)
 
 
 
@@ -362,7 +364,10 @@ The `PATCH` endpoint handles both deposits (positive `amount`) and withdrawals (
 
 ***
 
-# **Hands-on Exercise 5: Implement the application found in module 4, section 7**
+# **Hands-on Exercise 5**
+
+[Implement the application found in module 4, section 7](../README.md#7-service-based-testing)
+
 
 
 
