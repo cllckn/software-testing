@@ -34,6 +34,11 @@
     * [4.7 — PATCH /api/accounts/:accountNumber](#47--patch-apiaccountsaccountnumber)
 * [**Hands-on Exercise 4**](#hands-on-exercise-4)
 * [**Hands-on Exercise 5**](#hands-on-exercise-5)
+* [**Hands-on Exercise 6**](#hands-on-exercise-6)
+  * [Task 1](#task-1)
+  * [Task 2: Extend this application](#task-2-extend-this-application)
+    * [Add a New Endpoint: Rename Product](#add-a-new-endpoint-rename-product)
+  * [Task 3](#task-3)
 <!-- TOC -->
 
 
@@ -371,6 +376,50 @@ The `PATCH` endpoint handles both deposits (positive `amount`) and withdrawals (
 
 
 
+
+
+
+
+***
+
+
+
+# **Hands-on Exercise 6**
+
+## Task 1
+
+[Implement the application found in module 4, section 8](../README.md#8-role-of-mocking-in-testing)
+
+---
+
+## Task 2: Extend this application
+
+### Add a New Endpoint: Rename Product
+
+Implement an endpoint to update the name of a product.
+
+```http
+PATCH /products/:id
+{
+  "name": "Updated Product Name"
+}
+```
+**Expected Behavior**
+
+- If a valid `name` is provided:
+  - Update the product name in the database
+    - `const sql = 'UPDATE products SET name = $1 WHERE id = $2 RETURNING *';` returns the updated product
+  - Return `200 OK`
+- If `name` is missing or empty:
+  - Return `400 Bad Request`
+- If product is not found:
+  - Return `404 Not Found`
+
+---
+
+## Task 3
+
+* Develop the test case `renameProduct_whenValidName_updatesProduct` using mocked database operation.
 
 
 
