@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <style>
+    /* ── Reset & base ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f0f2f5;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* ── Card ─────────────────────────────────────────────────── */
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 380px;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #6b7280;
+      font-size: 0.9rem;
+      margin-bottom: 32px;
+    }
+
+    /* ── Form ─────────────────────────────────────────────────── */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: #111827;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      border-color: #4f46e5;
+    }
+
+    /* ── Error message ────────────────────────────────────────── */
+    .error {
+      background: #fef2f2;
+      border: 1px solid #fca5a5;
+      color: #b91c1c;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .error.visible { display: block; }
+
+    /* ── Button ───────────────────────────────────────────────── */
+    button {
+      width: 100%;
+      padding: 11px;
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 4px;
+    }
+
+    button:hover { background: #4338ca; }
+
+    /* ── Hint ─────────────────────────────────────────────────── */
+    .hint {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 0.78rem;
+      margin-top: 24px;
+    }
+
+    .hint code {
+      background: #f3f4f6;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-family: monospace;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Welcome Back</h1>
+    <p class="subtitle">Sign in to continue</p>
+
+    <!-- Error banner — shown when ?error=1 is present in the URL -->
+    <div class="error" id="errorBanner">
+      Invalid username or password. Please try again.
+    </div>
+
+    <!-- Login form — submits as a standard POST so Cypress can interact naturally -->
+    <form method="POST" action="/login" id="loginForm">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          data-cy="username"
+          placeholder="Enter username"
+          autocomplete="username"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          data-cy="password"
+          placeholder="Enter password"
+          autocomplete="current-password"
+          required
+        />
+      </div>
+
+      <button type="submit" data-cy="login-btn">Sign In</button>
+    </form>
+
+    <p class="hint">
+      Demo credentials: <code>user</code> / <code>password</code>
+    </p>
+  </div>
+
+  <script>
+    // Show the error banner if the server redirected back with ?error=1
+    if (new URLSearchParams(window.location.search).get("error") === "1") {
+      document.getElementById("errorBanner").classList.add("visible");
+    }
+  </script>
+</body>
+</html>
