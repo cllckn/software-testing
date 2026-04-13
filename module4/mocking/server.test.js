@@ -139,7 +139,7 @@ describe("Product API", () => {
 
 
 
-
+    // ── PUT /api/products ─────────────────────────────────────────────────────
     describe("PUT /api/products/:id", () => {
 
         it("updateProduct_whenValidDataProvided_returns200WithUpdatedProduct", async () => {
