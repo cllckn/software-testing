@@ -180,6 +180,8 @@ to your CI/CD pipeline.
 Cypress is a modern JavaScript-based testing framework specifically designed for web applications.
 It is primarily used for E2E testing but also supports integration and unit tests.
 
+>**Cypress can simulate real user behaviours.**
+
 <img src="../resources/images/cypress.png" alt="E2E Testing Via Cypress" width="80%">
 
 
@@ -447,6 +449,45 @@ describe("Welcome Page — accessed via cy.request() login bypass", () => {
         // After the request above the server has set any session state.
         // cy.visit() now takes us directly to /welcome without going through the login form.
         cy.visit("/welcome");
+        
+        
+        
+        /*
+        cy.request({
+          method: "POST",
+          url: "/login",
+          body: { username: "user", password: "password" },
+          form: true, // matches the Content-Type the Express server expects
+        }).then((response) => {
+          // Extract the JWT from the response body.
+          // Adjust the property name to match your server's actual response shape:
+          //   { token: "eyJ..." }  → response.body.token
+          //   { jwt:   "eyJ..." }  → response.body.jwt
+          //   { accessToken: "eyJ..." } → response.body.accessToken
+          const token = response.body.token;
+      
+          // cy.window() accesses the browser's window object —
+          // the same object that holds localStorage and sessionStorage.
+          // We store the JWT here so the app's JavaScript can read it
+          // on the next page load exactly as it would after a real login.
+          cy.window().then((win) => {
+            // localStorage persists across page navigations within the same origin.
+            // Use this when your app reads the token from localStorage.
+            win.localStorage.setItem("token", token);
+      
+            // ── Alternative: sessionStorage ──────────────────────────────────
+            // sessionStorage is cleared when the tab is closed.
+            // Use this if your app reads the token from sessionStorage instead.
+            // win.sessionStorage.setItem("token", token);
+      
+            // ── Alternative: Cypress.env() ───────────────────────────────────
+            // Stores the token in Cypress's own environment so it can be read
+            // across multiple spec files via Cypress.env("token").
+            // Cypress.env("token", token);
+          });
+
+        */
+      
     });
 
     it("welcomePage_whenAccessedAfterLogin_displaysWelcomeMessage", () => {
