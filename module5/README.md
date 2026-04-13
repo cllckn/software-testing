@@ -313,12 +313,18 @@ describe("Login Page", () => {
   it("login_whenValidCredentialsProvided_redirectsToWelcomePage", () => {
     // cy.get() finds a DOM element using a CSS selector.
     // [data-cy="username"] targets the element with the attribute data-cy="username".
+    // "#username" can select the element by id attribute.
     // Using data-cy attributes as selectors is Cypress best practice —
     // they are dedicated test hooks that survive CSS or class name changes.
     cy.get('[data-cy="username"]').type("user");     // .type() simulates keyboard input
     cy.get('[data-cy="password"]').type("password"); // types into the password field
     cy.get('[data-cy="login-btn"]').click();          // .click() simulates a mouse click on the button
 
+    //Select elements using their id attribute
+    /*cy.get("#username").type("user");
+    cy.get("#password").type("password");
+    cy.get("#login-btn").click();*/
+    
     // cy.url() reads the current browser URL after the server responds.
     // .should() is an assertion — the test fails if the condition is not met.
     // "include" checks that the URL contains the given substring.
