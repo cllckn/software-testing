@@ -1,10 +1,14 @@
 # Module 6: Load and Stress Testing
 <!-- TOC -->
-* [Module 7: Load and Stress Testing](#module-7-load-and-stress-testing)
+* [Module 6: Load and Stress Testing](#module-6-load-and-stress-testing)
   * [Fundamentals of Load and Stress Testing](#fundamentals-of-load-and-stress-testing)
-  * [Writing First Test](#writing-first-test)
+  * [Conducting The First Load Test](#conducting-the-first-load-test)
+  * [Some of the Performance Metrics for ICT Systems](#some-of-the-performance-metrics-for-ict-systems)
+    * [1. Latency Metrics](#1-latency-metrics)
+    * [2. Throughput Metrics](#2-throughput-metrics)
+    * [3. Utilisation Metrics](#3-utilisation-metrics)
+  * [Load Testing Report Details](#load-testing-report-details)
   * [Generating Test Report](#generating-test-report)
-    * [Load Test Report Details](#load-test-report-details)
   * [Comparative Analysis of Test Results](#comparative-analysis-of-test-results)
   * [Monitoring Resource Utilisation During Tests](#monitoring-resource-utilisation-during-tests)
   * [Extending load tests](#extending-load-tests)
@@ -37,48 +41,162 @@ APIs, web sockets, and other backend services.
 * Infrastructure Optimization: Provide data for hardware and software capacity planning.
 * User Experience: Ensure acceptable response times and a smooth user experience under load.
 
-## Writing First Test
+## Conducting The First Load Test
+
+* Run the application to be tested
+
+```shell
+node module5/app/server.js
+```
+
 
 * Install artillery
 ```shell
 npm install --save-dev artillery 
 ```
 
-* Write a sample load test script (/test/module7/load-test-v1.yml)
+* Write a sample load test script (/test/module6/st-load-test-get-10clients-v1.yml)
 
 ```yaml
 config:
   target: 'http://localhost:3000' # Replace with your application's URL if different
   phases:
-    - duration: 60 # Run the test for 60 seconds
-      arrivalRate: 20 # Simulate 20 new virtual users arriving per second
+    - duration: 30 # Run the test for 30 seconds
+      arrivalRate: 10 # Simulate 10 new virtual users arriving per second
   defaults:
     headers:
       Content-Type: 'application/json' # Assuming your API uses JSON
 
 scenarios:
-  - name: Load Test - homepage
+  - name: get login page
     flow:
       - get:
           url: '/' # Test the homepage
-
 ```
 
-* Go to /test/module7/ and run the load test
+* Go to /test/module6/ and run the load test
 ```shell
-artillery run load-test-v1.yml
+artillery run st-load-test-get-10clients-v1.yml
 ```
 
-## Generating Test Report
-
-  - register to the Artillery Cloud (https://app.artillery.io)
-```shell
-artillery run load-test-v1.yml --record --key a9_yomj66tcygft1lryqig2ge...
-```
-    Run URL: https://app.artillery.io/oxf4vxtdmcfsd/load-tests/t5wpy_cxpgm4tw6xwfhrb38bgna3mzgzhaa_5mb6
 
 
-### Load Test Report Details
+## Some of the Performance Metrics for ICT Systems
+
+
+
+This section summarizes commonly used performance metrics for ICT systems.
+
+In ICT (Information and Communication Technology) systems, performance is measured by more than just speed. To get a
+complete picture, you need to look at how resources are consumed, how reliable the data is, and how the system
+behaves under pressure.
+
+Here is a summary of the key performance metrics, examples, and best practices.
+
+---
+
+### 1. Latency Metrics
+
+Time taken to complete a single operation. Latency is the "speed" of your system. It measures the delay introduced
+by processing and network travel.
+
+<img src="../resources/images/latency.png" alt="Latency Metrics" width="80%">
+
+| Examples | Usage Example | Best Practices |
+|--------|---------------|----------------|
+| Average latency | Rough performance overview | Do not rely on averages alone |
+| p50 (median) | Typical user experience | Use percentiles for analysis |
+| p95, p99 | Tail latency and worst-case delays | Define SLOs (e.g., p95 < 200 ms) |
+
+The Percentile Strategy ($p50, p95, p99$):
+* Average latency: Rough performance overview. The average (mean) latency is often unreliable for performance analysis.
+  * Some users may experience long delays while average indicates “acceptable performance".
+
+* $p50$ (Median): It's the "average" experience. 50% of your users are faster than this, and 50% are slower.
+
+* $p95$: The "Tail Latency." 95% of requests are faster than this.
+  It’s the industry standard for judging if an app feels "snappy/good" for almost everyone.
+  It is the gold standard for Service Level Objectives (SLOs)-internal performance targets.
+
+* $p99$: The "Worst Case." 99% of requests are faster than this. If this is high, 1 out of every 100 users is having a
+  terrible experience such as Garbage Collection (GC) pauses or heavy database re-indexing (db locking).
+
+**Recommended Latency SLOs (Typical Web Services)**
+
+| Metric | Good | Acceptable | Poor |
+|------|------|------------|------|
+| **p50 (median)** | ≤ 100 ms | 100–200 ms | > 200 ms |
+| **p95** | ≤ 200 ms | 200–500 ms | > 500 ms |
+| **p99** | ≤ 500 ms | 500–1000 ms | > 1 s |
+
+
+
+* Best Practice: Monitor the spread between $p50$ and $p99$. If the gap grows during a load test, it indicates the
+* system is becoming unstable even if the "average" looks okay.
+
+
+---
+
+### 2. Throughput Metrics
+
+Rate of successful work completion per time unit.
+
+<img src="../resources/images/throughput.png" alt="Throughput Metrics" width="80%">
+
+| Examples | Usage Example | Best Practices |
+|--------|---------------|----------------|
+| Requests per second (req/sec) | Measure the success and capacity of a web service or REST API | Measure sustained throughput; correlate with latency and errors |
+| Transactions per second (TPS) | Evaluate database or financial transaction systems | Avoid relying on short bursts |
+| Messages per second | Assess message brokers and streaming systems | Test under realistic workloads |
+| Mbps | Network data transfer rate |  |
+
+
+**For The Case Study:**
+
+* Number of responses completed per unit time.
+* Throughput is the actual, measured rate at which data is successfully transferred over a network path from source to
+  destination in a given time frame.
+
+>In an ideal world: Request throughput ≈ Response throughput (all requests succeed)
+>
+>In reality: As load increases, response throughput may plateau or drop while request throughput continues to increase.
+
+> Saturation is confirmed when:
+>- Throughput plateaus
+>- Latency increases sharply
+>- Error rate rises
+>- CPU utilization approaches high levels
+>
+>Do not determine saturation from a single spike.
+
+
+Artillery latency percentiles are computed only over completed responses; under overload, requests may fail before
+completion, causing failure rates to rise while p95/p99 remain deceptively stable.
+
+During the test, as the request rate increased beyond ~724 req/sec, the number of successful responses began to decline
+while failures continued to rise. This indicates the system reached and exceeded its saturation point, where it can no
+longer process all incoming requests efficiently.
+
+
+
+### 3. Utilisation Metrics
+
+<img src="../resources/images/utilisation-availability-accuracy.png" alt="Utilisation Availability Accuracy" width="90%">
+
+Percentage of resource capacity being used.
+
+| Examples | Usage Example | Best Practices |
+|--------|---------------|----------------|
+| CPU utilisation (%) | Detect CPU bottlenecks in application servers | Keep sustained usage below ~80% |
+| Memory usage (GB or %) | Identify memory leaks or insufficient RAM | Avoid swapping |
+| Disk I/O utilisation | Evaluate storage performance | Monitor queue length |
+| Network bandwidth usage | Detect network saturation | Leave headroom |
+
+
+
+
+
+## Load Testing Report Details
 
 
 **HTTP Status Codes**
@@ -169,6 +287,14 @@ p99: ......................................................................... 6
 - Response times were consistently low with no errors or failures.
 - Slight variance in session lengths, but performance is very stable and responsive under this level of load.
 
+## Generating Test Report
+
+- register to the Artillery Cloud (https://app.artillery.io)
+```shell
+artillery run load-test-v1.yml --record --key a9_yomj66tcygft1lryqig2ge...
+```
+    Run URL: https://app.artillery.io/oxf4vxtdmcfsd/load-tests/t5wpy_cxpgm4tw6xwfhrb38bgna3mzgzhaa_5mb6
+
 
 
 ## Comparative Analysis of Test Results
@@ -178,14 +304,12 @@ p99: ......................................................................... 6
 ```shell
 artillery run load-test-v1.yml --record --key a9_yomj66tcygft1lryqig2ge...
 ```
-    Run URL: https://app.artillery.io/oxf4vxtdmcfsd/load-tests/t5wpy_cxpgm4tw6xwfhrb38bgna3mzgzhaa_5mb6
 
 * Generate the load test report 2
     - Make a copy of `load-test-v1.yml` and name it `load-test-v2.yml`. Update the arrivalRate parameter accordingly.
 ```shell
 artillery run load-test-v2.yml --record --key a9_yomj66tcygft1lryqig2ge...
 ```
-    Run URL: https://app.artillery.io/oxf4vxtdmcfsd/load-tests/t5wpy_cxpgm4tw6xwfhrb38bgna3mzgzhaa_5mb6
 
 * Compare the results on the Artillery Cloud (https://app.artillery.io)
 
