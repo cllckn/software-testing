@@ -230,7 +230,7 @@ npx cypress open
 
 ### Case Study: E2E Testing of a Sample Web Application
 
-1. [Download and install the application](./app) and run it.
+1. [Download and run this application](./app).
 
 2. Copy the following cypress config file `cypress.config.js` into the cypress testing folder (i.e. ~/test/.../).
 
