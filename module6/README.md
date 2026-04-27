@@ -11,22 +11,26 @@
   * [Generating Test Report](#generating-test-report)
   * [Comparative Analysis of Test Results](#comparative-analysis-of-test-results)
   * [Monitoring Resource Utilisation During Tests](#monitoring-resource-utilisation-during-tests)
-  * [Extending load tests](#extending-load-tests)
 <!-- TOC -->
 
 ## Fundamentals of Load and Stress Testing
 
 
-**Load Testing:** Simulating realistic user traffic on your application to understand its behavior under expected peak loads. 
-This helps identify performance bottlenecks, ensure scalability, and maintain a good user experience.
+**Load Testing:**
 
-**Stress Testing:** Pushing your system beyond its normal operating conditions to identify breaking points, understand 
-its resilience, and determine its maximum capacity. This helps uncover stability issues and potential failure scenarios.
+* Simulates expected real-world user traffic to evaluate system behavior under normal and peak load conditions.
+* Helps identify performance bottlenecks (e.g., slow endpoints, database queries, resource contention).
+* Ensures the system meets response time and throughput SLAs for a given user concurrency level.
+* Validates scalability by measuring how adding resources improves performance.
+
+**Stress Testing:**
+
+* Pushes the system beyond its intended capacity to find its breaking point.
+* Determines maximum throughput before errors, timeouts, or crashes occur.
+* Reveals failure modes (e.g., graceful degradation vs. crash) and recovery behavior after overload.
+* Uncovers stability issues like memory leaks, deadlocks, or connection pool exhaustion that only appear under extreme load.
 
 
-**Artillery** is a powerful and versatile open-source load testing and stress testing tool written in Node.js. It's designed to be 
-easy to use for developers while providing the necessary features for comprehensive performance evaluation of web applications, 
-APIs, web sockets, and other backend services.
 
 **The Benefits of Load and Stress Testing:**
 
@@ -40,6 +44,14 @@ APIs, web sockets, and other backend services.
 * Network Capacity: Assess network bandwidth and latency under load.
 * Infrastructure Optimization: Provide data for hardware and software capacity planning.
 * User Experience: Ensure acceptable response times and a smooth user experience under load.
+
+**Artillery:**
+
+It is a powerful, open-source load and stress testing tool built on Node.js. It natively supports HTTP, WebSocket, and 
+Socket.io, with additional support for gRPC and other protocols via plugins. Designed to be developer-friendly while 
+remaining feature-rich, it enables comprehensive performance evaluation of web applications, APIs, and backend services 
+at any scale.
+
 
 ## Conducting The First Load Test
 
@@ -132,14 +144,14 @@ The Percentile Strategy ($p50, p95, p99$):
 
 
 * Best Practice: Monitor the spread between $p50$ and $p99$. If the gap grows during a load test, it indicates the
-* system is becoming unstable even if the "average" looks okay.
+system is becoming unstable even if the "average" looks okay.
 
 
 ---
 
 ### 2. Throughput Metrics
 
-Rate of successful work completion per time unit.
+Rate of successful work completion per unit time.
 
 <img src="../resources/images/throughput.png" alt="Throughput Metrics" width="80%">
 
@@ -320,109 +332,4 @@ artillery run load-test-v2.yml --record --key a9_yomj66tcygft1lryqig2ge...
 ```shell
 pm2 start server.js
 pm2 monit
-```
-
-## Extending load tests
-
-* Load Testing for register API and db (/test/module7/load-test-v3.yml)
-
-```yaml
-config:
-  target: 'http://localhost:3000'
-  phases:
-    - duration: 60
-      arrivalRate: 20
-  defaults:
-    headers:
-      Content-Type: 'application/json'
-  processor: '../../../src/utilities/general-functions.js'  # Correctly reference your JS file
-  engines:
-    js: {}
-
-scenarios:
-  - name: Load Test - homepage
-    flow:
-      - get:
-          url: '/'
-
-  - name: Load Test - register with unique usernames
-    flow:
-      - function: "generateUniqueUsername"
-      - post:
-          url: '/register'
-          json:
-            username: "{{ username }}"
-            password: '1'
-            firstname: 'load test first name'
-            lastname: 'load test lastname'
-            role: '3'
-
-
-```
-* it requires the following js file (general-functions.js) for generating unique usernames- in the load test scripts above 
-adjust this line properly: processor: '../../../src/utilities/general-functions.js'
-
-```javascript
-let counter = 0; //  Keep a counter to ensure uniqueness across requests
-
-module.exports = {
-  generateUniqueUsername: (context, events, done) => {
-    counter++;
-    const uniqueUsername = `user${Date.now()}-${counter}`; // Very likely to be unique
-    context.vars['username'] = uniqueUsername; // Store in Artillery's context
-    return done(); //  Important:  Tell Artillery to move to the next step
-  },
-};
-```
-
-```shell
-artillery run load-test-v3.yml 
-```
-
-* Load Testing for Login API and JWT (/test/module7/load-test-v4.yml)
-```yaml
-config:
-  target: 'http://localhost:3000'
-  phases:
-    - duration: 10
-      arrivalRate: 20
-  defaults:
-    headers:
-      Content-Type: 'application/json'
-
-
-scenarios:
-  #  - name: Load Test - homepage
-  #    flow:
-  #      - get:
-  #          url: '/'
-
-  #  - name: Load Test - register with unique usernames
-  #    flow:
-  #      - function: "generateUniqueUsername"
-  #      - post:
-  #          url: '/register'
-  #          json:
-  #            username: "{{ username }}"
-  #            password: '1'
-  #            firstname: 'load test first name'
-  #            lastname: 'load test lastname'
-  #            role: '3'
-
-  - name: Load Test - login and JWT
-    flow:
-      - post:
-          url: '/login' #  Your login endpoint
-          json:
-            username: 'admin1' #  A valid username for the test
-            password: '1' #  The password for the test user
-          capture: # Capture the JWT token from the response
-            json: '$.token' #  Path to the token in the response.  Adjust as needed!
-            as: accessToken #  Store the token in a variable called "accessToken"
-      - get: #  A subsequent request that uses the JWT token
-          url: '/dashboard' #  An example protected endpoint
-          headers:
-            Authorization: 'Bearer {{accessToken}}' #  Use the captured token
-
-
 ```
